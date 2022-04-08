@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "moduleResolution": "node",
+    // Remix takes care of building everything in `remix build`.
+    "noEmit": true,
+    "paths": {
+      "~/*": ["./app/*"]
+    },
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "ES2019"
+  },
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"]
+}

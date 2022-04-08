@@ -1,0 +1,48 @@
+{
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.suggest.insertMode": "replace"
+  },
+  "codemetrics.nodeconfiguration.ArrowFunction": 0,
+  "codemetrics.nodeconfiguration.BreakStatement": 0,
+  "codemetrics.nodeconfiguration.CaseClause": 0,
+  "codemetrics.nodeconfiguration.DefaultClause": 0,
+  "codemetrics.nodeconfiguration.JsxSelfClosingElement": 0,
+  "codemetrics.nodeconfiguration.ObjectLiteralExpression": 0,
+  "codemetrics.nodeconfiguration.ReturnStatement": 0,
+  "codemetrics.nodeconfiguration.SwitchStatement": 0,
+  "css.lint.unknownAtRules": "ignore",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.tslint": true
+  },
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.rulers": [70],
+  "editor.tabSize": 2,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "extensions.ignoreRecommendations": false,
+  "files.autoSave": "off",
+  "files.encoding": "utf8",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "html.autoClosingTags": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "rewrap.autoWrap.enabled": true,
+  "rewrap.wrappingColumn": 75,
+  "search.exclude": {
+    "node_modules/**": true,
+    "public/**": true
+  },
+  "stylelint.packageManager": "yarn",
+  "tailwindCSS.emmetCompletions": true,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "workbench.colorCustomizations": {}
+}
