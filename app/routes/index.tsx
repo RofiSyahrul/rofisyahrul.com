@@ -1,19 +1,4 @@
-function Header() {
-  return (
-    <header className='relative z-10 h-12 md:h-16'>
-      <div className='w-full fixed shadow-lg top-0 px-3 bg-neutral-bright dark:bg-neutral-dim'>
-        <div className='flex justify-between items-center w-full max-w-5xl mx-auto h-12 md:h-16'>
-          <h1 className='font-bold text-lg'>rofisyahrul.com</h1>
-          <button className='w-6 h-6' title='Change color mode'>
-            <span className='block w-0 h-0 overflow-hidden'>
-              Change color mode
-            </span>
-          </button>
-        </div>
-      </div>
-    </header>
-  );
-}
+import Header from '~/components/header';
 
 interface Social {
   name: string;
