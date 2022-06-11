@@ -22,6 +22,8 @@
   --font-body: -apple-system, system-ui, sans-serif, 'Segoe UI',
     Helvetica Neue, Helvetica, Roboto, Arial, 'Apple Color Emoji',
     'Segoe UI Emoji';
+
+  height: 100%;
 }
 
 * {
@@ -30,7 +32,7 @@
 }
 
 body {
-  @apply m-0 w-full p-0 bg-neutral-bright dark:bg-neutral-dim text-neutral-dim dark:text-neutral-bright;
+  @apply m-0 w-full h-full p-0 bg-neutral-bright dark:bg-neutral-dim text-neutral-dim dark:text-neutral-bright;
   font-family: var(--font-body);
 }
 
@@ -117,4 +119,53 @@ input:focus,
 textarea:focus,
 button:focus {
   outline: none;
+}
+
+.centered-page {
+  width: 100%;
+  height: calc(100% - 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.fancy-text,
+.fancy-text > span {
+  @apply text-9xl sm:text-[10rem] font-bold;
+}
+
+.fancy-text_small,
+.fancy-text_small > span {
+  @apply text-7xl;
+}
+
+.fancy-text > span {
+  background-position: bottom 2.25rem right 50%;
+  background-size: 3rem;
+}
+
+.fancy-text_small > span {
+  background-size: 1.5rem;
+  background-position: bottom 1.25rem right 50%;
+}
+
+.fancy-text > span,
+.fancy-text_small > span {
+  background-image: url(https://res.cloudinary.com/rofi/image/upload/c_fit,q_auto:good,w_80/v1640233522/samples/rho-pi.png);
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 640px) {
+  .fancy-text > span {
+    background-position: bottom 2.75rem right 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .centered-page {
+    height: calc(100% - 4rem);
+  }
 }

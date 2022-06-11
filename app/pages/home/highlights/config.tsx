@@ -14,7 +14,7 @@ export const highlights: Highlight[] = [
     ),
     label: 'Blog',
     name: 'blog',
-    url: '/posts',
+    url: '/highlights/blog',
   },
   {
     iconPath: (
@@ -25,7 +25,7 @@ export const highlights: Highlight[] = [
     ),
     label: 'Portfolio',
     name: 'portfolio',
-    url: '/portfolios',
+    url: '/highlights/portfolio',
   },
   {
     iconPath: (
@@ -36,6 +36,6 @@ export const highlights: Highlight[] = [
     ),
     label: 'Experiences',
     name: 'experiences',
-    url: '/experiences',
+    url: '/highlights/experiences',
   },
 ];

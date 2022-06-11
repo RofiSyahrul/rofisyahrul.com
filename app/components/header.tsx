@@ -1,8 +1,11 @@
+import type { ReactNode } from 'react';
+
 import { useToggleColorMode } from '~/store/color-mode';
 
 import VisuallyHidden from './visually-hidden';
 
 interface HeaderProps {
+  children?: ReactNode;
   title?: string;
 }
 
@@ -59,12 +62,14 @@ function ToggleColorModeButton() {
 }
 
 export default function Header({
+  children,
   title = 'rofisyahrul.com',
 }: HeaderProps) {
   return (
     <header className='relative z-10 h-12 md:h-16'>
       <div className='w-full fixed shadow-lg dark:shadow-sm dark:shadow-neutral-dim2 top-0 px-3 bg-neutral-bright dark:bg-neutral-dim'>
         <div className='flex justify-between items-center w-full max-w-5xl mx-auto h-12 md:h-16'>
+          {children}
           <h1 className='font-bold text-lg'>{title}</h1>
           <ToggleColorModeButton />
         </div>
