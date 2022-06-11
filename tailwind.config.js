@@ -1,8 +1,25 @@
+const plugin = require('tailwindcss/plugin');
+
 /** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
   content: ['./app/**/*.{ts,tsx}'],
   darkMode: 'class',
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    plugin(({ addVariant, e }) => {
+      addVariant(
+        'aria-selected',
+        ({ modifySelectors, separator }) => {
+          modifySelectors(
+            ({ className }) =>
+              '.' +
+              e(`aria-selected${separator}${className}`) +
+              '[aria-selected="true"]',
+          );
+        },
+      );
+    }),
+  ],
   theme: {
     colors: {
       current: 'currentColor',

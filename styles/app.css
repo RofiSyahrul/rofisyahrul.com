@@ -25,11 +25,12 @@
 }
 
 * {
-  @apply text-neutral-dim dark:text-neutral-bright m-0 p-0;
+  @apply m-0 p-0;
+  color: inherit;
 }
 
 body {
-  @apply m-0 w-full p-0 bg-neutral-bright dark:bg-neutral-dim;
+  @apply m-0 w-full p-0 bg-neutral-bright dark:bg-neutral-dim text-neutral-dim dark:text-neutral-bright;
   font-family: var(--font-body);
 }
 

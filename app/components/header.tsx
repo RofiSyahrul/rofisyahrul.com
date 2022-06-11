@@ -1,5 +1,7 @@
 import { useToggleColorMode } from '~/store/color-mode';
 
+import VisuallyHidden from './visually-hidden';
+
 interface HeaderProps {
   title?: string;
 }
@@ -7,7 +9,7 @@ interface HeaderProps {
 function MoonIcon() {
   return (
     <svg
-      className='fill-secondary-bright w-5 h-5 dark:hidden'
+      className='fill-primary-bright w-5 h-5 dark:hidden'
       viewBox='0 0 20 20'
       xmlns='http://www.w3.org/2000/svg'
     >
@@ -19,7 +21,7 @@ function MoonIcon() {
 function SunIcon() {
   return (
     <svg
-      className='fill-secondary-dim w-5 h-5 hidden dark:block'
+      className='fill-primary-dim w-5 h-5 hidden dark:block'
       viewBox='0 0 20 20'
       xmlns='http://www.w3.org/2000/svg'
     >
@@ -45,15 +47,13 @@ function ToggleColorModeButton() {
 
   return (
     <button
-      className='p-2 rounded bg-secondary-dim dark:bg-secondary-bright hover:[filter:brightness(0.8)]'
+      className='p-2 rounded bg-primary-dim dark:bg-primary-bright hover:[filter:brightness(0.8)]'
       onClick={toggleColorMode}
       title={toggleColorModeDesc}
     >
       <SunIcon />
       <MoonIcon />
-      <span className='block w-0 h-0 overflow-hidden'>
-        {toggleColorModeDesc}
-      </span>
+      <VisuallyHidden>{toggleColorModeDesc}</VisuallyHidden>
     </button>
   );
 }
@@ -63,7 +63,7 @@ export default function Header({
 }: HeaderProps) {
   return (
     <header className='relative z-10 h-12 md:h-16'>
-      <div className='w-full fixed shadow-lg top-0 px-3 bg-neutral-bright dark:bg-neutral-dim'>
+      <div className='w-full fixed shadow-lg dark:shadow-sm dark:shadow-neutral-dim2 top-0 px-3 bg-neutral-bright dark:bg-neutral-dim'>
         <div className='flex justify-between items-center w-full max-w-5xl mx-auto h-12 md:h-16'>
           <h1 className='font-bold text-lg'>{title}</h1>
           <ToggleColorModeButton />
