@@ -10,7 +10,7 @@ export default function TopFold() {
     <section className='flex gap-4 w-full px-3 items-center sm:items-start'>
       <img
         alt='Syahrul Rofi'
-        src='https://res.cloudinary.com/rofi/image/upload/v1640233522/samples/rho-pi.png'
+        src='https://res.cloudinary.com/rofi/image/upload/c_fit,q_auto:good,w_176/v1640233522/samples/rho-pi.png'
         width={176}
         height={176}
         loading='eager'

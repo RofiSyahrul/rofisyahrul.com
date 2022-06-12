@@ -44,5 +44,6 @@
   "stylelint.packageManager": "yarn",
   "tailwindCSS.emmetCompletions": true,
   "typescript.tsdk": "./node_modules/typescript/lib",
+  "tsInterfaceSorter.emptyLineBetweenProperties": false,
   "workbench.colorCustomizations": {}
 }

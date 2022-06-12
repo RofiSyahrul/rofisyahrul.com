@@ -27,6 +27,8 @@
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
     "cssnano": "^5.1.11",
+    "dotenv": "^16.0.1",
+    "esbuild-register": "^3.3.3",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.4",
@@ -47,14 +49,19 @@
   "private": true,
   "scripts": {
     "build": "yarn build:css:prod && yarn build:remix",
+    "build:local": "yarn clean && yarn generate-manifest && yarn build:css:prod && BUILD_ENV=local yarn build:remix",
     "build:remix": "cross-env NODE_ENV=production remix build",
     "build:css": "postcss styles/**/*.css --base styles --dir app/styles",
     "build:css:prod": "yarn build:css --env production",
-    "clean": "rm -rf api public/build",
+    "clean": "rm -rf api build public/build",
     "css:watch": "yarn build:css --w",
     "dev": "concurrently -k -p \"[{name} @ {time}]\" -n \"CSS,Remix\" -c \"cyan.bold,green.bold\" \"yarn css:watch\" \"yarn dev:remix\"",
     "dev:remix": "cross-env NODE_ENV=development PORT=8765 remix dev",
-    "postinstall": "remix setup node"
+    "generate-manifest": "node -r esbuild-register scripts/generate-manifest.ts",
+    "postinstall": "remix setup node",
+    "prebuild": "yarn generate-manifest",
+    "predev": "yarn generate-manifest",
+    "start:local": "PORT=9706 node -r dotenv/config node_modules/.bin/remix-serve build"
   },
   "sideEffects": false,
   "version": "0.1.0"

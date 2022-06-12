@@ -19,7 +19,10 @@ export default function CatchPage({
   const fancyStatus = String(status).replace(/0/g, '<span>0</span>');
   return (
     <>
-      <HeaderNav title={title || `${status} ${statusText}`} />
+      <HeaderNav
+        title={title || `${status} ${statusText}`}
+        shouldHideColorModeToggle
+      />
       <main className='centered-page'>
         <div
           className='fancy-text'

@@ -6,6 +6,7 @@ import VisuallyHidden from './visually-hidden';
 
 interface HeaderProps {
   children?: ReactNode;
+  shouldHideColorModeToggle?: boolean;
   title?: string;
 }
 
@@ -63,6 +64,7 @@ function ToggleColorModeButton() {
 
 export default function Header({
   children,
+  shouldHideColorModeToggle,
   title = 'rofisyahrul.com',
 }: HeaderProps) {
   return (
@@ -71,7 +73,11 @@ export default function Header({
         <div className='flex justify-between items-center w-full max-w-5xl mx-auto h-12 md:h-16'>
           {children}
           <h1 className='font-bold text-lg'>{title}</h1>
-          <ToggleColorModeButton />
+          {shouldHideColorModeToggle ? (
+            <div style={{ height: 42, width: 42 }} />
+          ) : (
+            <ToggleColorModeButton />
+          )}
         </div>
       </div>
     </header>

@@ -4,9 +4,12 @@ node_modules
 .env
 .vercel
 .output
+.DS_Store
 
 /build/
 /public/build
+/public/browserconfig.xml
+/public/manifest.json
 /api/index.js
 /api/index.js.map
 /app/styles/**/*.css

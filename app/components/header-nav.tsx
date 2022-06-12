@@ -7,6 +7,7 @@ import Header from './header';
 import VisuallyHidden from './visually-hidden';
 
 interface HeaderNavProps {
+  shouldHideColorModeToggle?: boolean;
   title?: string;
 }
 
@@ -47,9 +48,9 @@ function BackButton() {
   );
 }
 
-export default function HeaderNav({ title }: HeaderNavProps) {
+export default function HeaderNav(props: HeaderNavProps) {
   return (
-    <Header title={title}>
+    <Header {...props}>
       <BackButton />
     </Header>
   );
