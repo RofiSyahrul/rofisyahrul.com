@@ -1,7 +1,12 @@
+import { AdvancedImage } from '@cloudinary/react';
+import { fill } from '@cloudinary/url-gen/actions/resize';
+import { face } from '@cloudinary/url-gen/qualifiers/focusOn';
+import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import clsx from 'clsx';
 import { useLoaderData } from 'remix';
 
 import VisuallyHidden from '~/components/visually-hidden';
+import { useCldImage } from '~/contexts/cloudinary';
 
 import Bio from '../bio';
 import Counts from '../counts';
@@ -9,21 +14,32 @@ import type { HomeData } from '../types';
 import { socials } from './config';
 import VerifiedIcon from './icons/verified';
 
+const imageSize = 176;
+
 export default function TopFold() {
   const { profile } = useLoaderData<HomeData>();
 
+  const cldImage = useCldImage(profile.photoPublicID);
+
+  cldImage.resize(
+    fill()
+      .width(imageSize)
+      .height(imageSize)
+      .gravity(focusOn(face())),
+  );
+
   return (
     <section className='flex gap-4 w-full px-3 items-center sm:items-start'>
-      <img
+      <AdvancedImage
         alt='Syahrul Rofi'
-        src={`https://res.cloudinary.com/rofi/image/upload/c_fill,g_faces,h_176,w_176/v1640233522/${profile.photoPublicID}.png`}
-        width={176}
-        height={176}
-        loading='eager'
         className={clsx(
           'w-20 h-20 rounded-full sm:w-32 sm:h-32 md:w-44 md:h-44 object-contain',
           'border border-solid border-neutral-bright1 dark:border-neutral-dim1',
         )}
+        cldImg={cldImage}
+        height={imageSize}
+        loading='eager'
+        width={imageSize}
       />
       <div className='flex flex-col gap-2 w-auto sm:flex-wrap sm:flex-row sm:items-center'>
         <div className='flex gap-1 items-center'>

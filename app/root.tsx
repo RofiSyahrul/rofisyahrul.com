@@ -19,6 +19,7 @@ import {
 } from 'remix';
 
 import config from './config';
+import { CloudinaryProvider } from './contexts/cloudinary/provider';
 import type { ColorMode } from './lib/color-mode';
 import { getColorModeSession } from './lib/color-mode.server';
 import { buildLinks } from './lib/links';
@@ -230,12 +231,14 @@ export default function App() {
   const data = useLoaderData<LoaderData>();
   return (
     <Document colorMode={data.colorMode}>
-      <Outlet />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-        }}
-      />
+      <CloudinaryProvider>
+        <Outlet />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
+      </CloudinaryProvider>
     </Document>
   );
 }
