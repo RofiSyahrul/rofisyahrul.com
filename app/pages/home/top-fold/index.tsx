@@ -1,25 +1,34 @@
+import clsx from 'clsx';
+import { useLoaderData } from 'remix';
+
 import VisuallyHidden from '~/components/visually-hidden';
 
 import Bio from '../bio';
 import Counts from '../counts';
+import type { HomeData } from '../types';
 import { socials } from './config';
 import VerifiedIcon from './icons/verified';
 
 export default function TopFold() {
+  const { profile } = useLoaderData<HomeData>();
+
   return (
     <section className='flex gap-4 w-full px-3 items-center sm:items-start'>
       <img
         alt='Syahrul Rofi'
-        src='https://res.cloudinary.com/rofi/image/upload/c_fit,q_auto:good,w_176/v1640233522/samples/rho-pi.png'
+        src={`https://res.cloudinary.com/rofi/image/upload/c_fill,g_faces,h_176,w_176/v1640233522/${profile.photoPublicID}.png`}
         width={176}
         height={176}
         loading='eager'
-        className='w-20 h-20 rounded-full sm:w-32 sm:h-32 md:w-44 md:h-44'
+        className={clsx(
+          'w-20 h-20 rounded-full sm:w-32 sm:h-32 md:w-44 md:h-44 object-contain',
+          'border border-solid border-neutral-bright1 dark:border-neutral-dim1',
+        )}
       />
       <div className='flex flex-col gap-2 w-auto sm:flex-wrap sm:flex-row sm:items-center'>
         <div className='flex gap-1 items-center'>
           <h2 className='font-bold text-2xl sm:text-3xl'>
-            Syahrul Rofi
+            {profile.fullName}
           </h2>
           <VerifiedIcon />
         </div>

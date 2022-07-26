@@ -12,7 +12,7 @@ export default function Highlights() {
           key={name}
           className='flex flex-col gap-2 items-center justify-center'
         >
-          <div className='w-24 h-24 rounded-full p-0.5 border border-solid border-neutral-bright2 dark:border-neutral-dim2'>
+          <div className='w-14 h-14 rounded-full p-0.5 border border-solid border-neutral-bright2 dark:border-neutral-dim2'>
             <Link
               className='w-full h-full rounded-full flex justify-center items-center bg-primary-dim dark:bg-primary-bright hover:[filter:brightness(0.8)]'
               to={url}
@@ -21,8 +21,8 @@ export default function Highlights() {
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 24 24'
-                width='36'
-                height='36'
+                width='24'
+                height='24'
                 className='text-primary-bright dark:text-primary-dim'
               >
                 {iconPath}
@@ -30,9 +30,9 @@ export default function Highlights() {
               <VisuallyHidden>{label}</VisuallyHidden>
             </Link>
           </div>
-          <h6 className='font-semibold text-primary-dim dark:text-primary-bright'>
+          <small className='font-semibold text-primary-dim dark:text-primary-bright'>
             {label}
-          </h6>
+          </small>
         </li>
       ))}
     </ul>

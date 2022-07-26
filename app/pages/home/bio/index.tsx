@@ -1,4 +1,7 @@
 import clsx from 'clsx';
+import { useLoaderData } from 'remix';
+
+import type { HomeData } from '../types';
 
 interface BioProps {
   className?: string;
@@ -9,21 +12,15 @@ export default function Bio({
   component: Component = 'div',
   className,
 }: BioProps) {
+  const { profile } = useLoaderData<HomeData>();
+
   return (
     <Component className={clsx('w-full', className)}>
-      <h3 className='font-semibold text-base'>Rofi</h3>
+      <h3 className='font-semibold text-base'>{profile.shortName}</h3>
       <p className='text-neutral-dim2 dark:text-neutral-bright2'>
-        Software Engineer (Web Platform)
+        {profile.jobRole}
       </p>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-        Praesentium consequuntur labore ipsam delectus quos. Atque in
-        nobis quis neque porro ut iusto eveniet, mollitia sed. Itaque
-        architecto ducimus sequi saepe. Lorem ipsum dolor sit, amet
-        consectetur adipisicing elit. Praesentium consequuntur labore
-        ipsam delectus quos. Atque in nobis quis neque porro ut iusto
-        eveniet, mollitia sed. Itaque architecto ducimus sequi saepe.
-      </p>
+      <p>{profile.description}</p>
     </Component>
   );
 }
