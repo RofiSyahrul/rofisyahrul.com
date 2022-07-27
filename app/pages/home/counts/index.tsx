@@ -1,13 +1,39 @@
-import clsx from 'clsx';
-import { Link } from 'remix';
+import { useMemo } from 'react';
 
-import { countData } from './config';
+import clsx from 'clsx';
+import { Link, useLoaderData } from 'remix';
+
+import type { HomeData } from '../types';
+
+interface CountItem {
+  title: string;
+  url: string;
+  value: number;
+}
 
 interface CountsProps {
   className: string;
 }
 
 export default function Counts({ className }: CountsProps) {
+  const { portfolio } = useLoaderData<HomeData>();
+  const totalPortfolio = portfolio.total;
+
+  const countData = useMemo<CountItem[]>(() => {
+    return [
+      {
+        title: 'Portfolios',
+        url: '/#portfolios',
+        value: totalPortfolio,
+      },
+      {
+        title: 'Technical Skills',
+        url: '/technical-skills',
+        value: 10,
+      },
+    ];
+  }, [totalPortfolio]);
+
   return (
     <ul
       className={clsx(

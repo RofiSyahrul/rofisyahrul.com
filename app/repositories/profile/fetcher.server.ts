@@ -1,3 +1,8 @@
+import { fill } from '@cloudinary/url-gen/actions/resize';
+import { face } from '@cloudinary/url-gen/qualifiers/focusOn';
+import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
+
+import { cld } from '~/lib/cloudinary';
 import fetcher from '~/repositories/fetcher.server';
 
 import type { ProfileContent, ProfileResponse } from './types';
@@ -22,6 +27,13 @@ export async function fetchProfile() {
       profileContent[name] = content;
     }
   });
+
+  if (profileContent.photoPublicID) {
+    const profileImage = cld.image(profileContent.photoPublicID);
+    profileContent.photoPublicID = profileImage
+      .resize(fill().width(200).height(200).gravity(focusOn(face())))
+      .toURL();
+  }
 
   return profileContent;
 }

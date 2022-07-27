@@ -1,12 +1,7 @@
-import { AdvancedImage } from '@cloudinary/react';
-import { fill } from '@cloudinary/url-gen/actions/resize';
-import { face } from '@cloudinary/url-gen/qualifiers/focusOn';
-import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import clsx from 'clsx';
 import { useLoaderData } from 'remix';
 
 import VisuallyHidden from '~/components/visually-hidden';
-import { useCldImage } from '~/contexts/cloudinary';
 
 import Bio from '../bio';
 import Counts from '../counts';
@@ -19,24 +14,15 @@ const imageSize = 176;
 export default function TopFold() {
   const { profile } = useLoaderData<HomeData>();
 
-  const cldImage = useCldImage(profile.photoPublicID);
-
-  cldImage.resize(
-    fill()
-      .width(imageSize)
-      .height(imageSize)
-      .gravity(focusOn(face())),
-  );
-
   return (
     <section className='flex gap-4 w-full px-3 items-center sm:items-start'>
-      <AdvancedImage
-        alt='Syahrul Rofi'
+      <img
+        alt={profile.fullName}
         className={clsx(
           'w-20 h-20 rounded-full sm:w-32 sm:h-32 md:w-44 md:h-44 object-contain',
           'border border-solid border-neutral-bright1 dark:border-neutral-dim1',
         )}
-        cldImg={cldImage}
+        src={profile.photoPublicID}
         height={imageSize}
         loading='eager'
         width={imageSize}

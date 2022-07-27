@@ -1,60 +1,33 @@
-import { Link } from 'remix';
+import clsx from 'clsx';
+import { useLoaderData } from 'remix';
 
-import VisuallyHidden from '~/components/visually-hidden';
-
-interface PortfolioItem {
-  slug: string;
-  thumbnailURL: string;
-  title: string;
-}
-
-const imagePlaceholder = 'https://via.placeholder.com/150';
-
-const data: PortfolioItem[] = [
-  {
-    slug: 'gif-finder',
-    thumbnailURL: imagePlaceholder,
-    title: 'GIF Finder',
-  },
-  {
-    slug: 'rofi.link',
-    thumbnailURL: imagePlaceholder,
-    title: 'rofi.link',
-  },
-  {
-    slug: 'age-calculator',
-    thumbnailURL: imagePlaceholder,
-    title: 'Age Calculator',
-  },
-  {
-    slug: 'catch-pokemons',
-    thumbnailURL: imagePlaceholder,
-    title: 'Catch Pokemons',
-  },
-  {
-    slug: 'movie-explorer',
-    thumbnailURL: imagePlaceholder,
-    title: 'Movie Explorer',
-  },
-];
+import type { HomeData } from '../types';
+import PortfolioItem from './portfolio-item';
 
 export default function PortfolioGrid() {
+  const { portfolio } = useLoaderData<HomeData>();
+
   return (
-    <ul className='grid grid-cols-3 gap-0.5 border-top-mobile sm:px-3'>
-      {data.map(item => (
-        <li key={item.title} className='w-full aspect-square'>
-          <Link to={`/p/${item.slug}`}>
-            <img
-              alt={item.title}
-              className='object-cover w-full aspect-square'
-              height={150}
-              src={item.thumbnailURL}
-              width={150}
-            />
-            <VisuallyHidden>{item.title}</VisuallyHidden>
-          </Link>
-        </li>
-      ))}
+    <ul
+      className={clsx(
+        'grid grid-cols-2 gap-1 border-top-mobile',
+        'sm:grid-cols-3 sm:px-3 sm:gap-3 md:gap-6 lg:gap-8',
+      )}
+    >
+      {portfolio.feeds.map(item => {
+        if (!item.mediaList.length) return null;
+        return (
+          <PortfolioItem
+            icon={item.icon}
+            key={item.slug}
+            repository={item.repository}
+            slug={item.slug}
+            thumbnail={item.mediaList[0]}
+            title={item.title}
+            url={item.url}
+          />
+        );
+      })}
     </ul>
   );
 }

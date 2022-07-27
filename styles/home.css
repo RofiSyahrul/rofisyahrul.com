@@ -30,3 +30,13 @@
 .counts-container a:hover strong {
   @apply underline;
 }
+
+.portfolio-grid-item {
+  @apply w-full aspect-square rounded border mt-2;
+  @apply border-solid border-neutral-bright1 dark:border-neutral-dim1;
+  @apply shadow-sm cursor-pointer;
+}
+
+.portfolio-grid-item a:hover {
+  opacity: 50%;
+}

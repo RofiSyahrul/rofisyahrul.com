@@ -1,13 +1,10 @@
 import { stringify } from 'qs';
 
 import serverConfig from '~/config.server';
+import type { GeneralResponse } from '~/types/response';
 
+import type { FetcherParams } from './types';
 import { FetchError } from './utils.server';
-
-interface FetcherParams {
-  path: string;
-  query?: Record<string, any>;
-}
 
 function parseURL(path: string, query?: Record<string, any>) {
   if (!query) return `${serverConfig.apiURL}${path}`;
@@ -16,10 +13,11 @@ function parseURL(path: string, query?: Record<string, any>) {
   return `${serverConfig.apiURL}${path}?${queryString}`;
 }
 
-export default async function fetcher<T>({
-  path,
-  query,
-}: FetcherParams): Promise<T> {
+export default async function fetcher<
+  T = GeneralResponse<Record<string, any>>,
+  F = Record<string, any>,
+  P = Record<string, any>,
+>({ path, query }: FetcherParams<F, P>): Promise<T> {
   const response = await fetch(parseURL(path, query), {
     headers: {
       Authorization: `Bearer ${serverConfig.apiToken}`,

@@ -1,18 +1,12 @@
 import type { ReactNode } from 'react';
 
-import { Cloudinary } from '@cloudinary/url-gen';
+import { cld } from '~/lib/cloudinary';
 
 import { CloudinaryContext } from './context';
 
 interface CloudinaryProviderProps {
   children: ReactNode;
 }
-
-const cld = new Cloudinary({
-  cloud: {
-    cloudName: 'rofi',
-  },
-});
 
 export function CloudinaryProvider({
   children,
