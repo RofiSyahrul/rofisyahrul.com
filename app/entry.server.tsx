@@ -3,9 +3,9 @@ import { PassThrough } from 'stream';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import { renderToPipeableStream } from 'react-dom/server';
 
+import { RemixServer } from '@remix-run/react';
 import isbot from 'isbot';
 import type { EntryContext } from 'remix';
-import { RemixServer } from 'remix';
 
 export default function handleRequest(
   request: Request,

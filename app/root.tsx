@@ -1,14 +1,7 @@
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 
-import NProgress from 'nprogress';
-import type {
-  HtmlMetaDescriptor,
-  LinkDescriptor,
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-} from 'remix';
+import type { HtmlMetaDescriptor } from '@remix-run/react';
 import {
   useTransition,
   useCatch,
@@ -19,6 +12,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+} from '@remix-run/react';
+import NProgress from 'nprogress';
+import type {
+  LinkDescriptor,
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
 } from 'remix';
 
 import config from './config';

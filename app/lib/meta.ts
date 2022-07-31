@@ -1,4 +1,4 @@
-import type { HtmlMetaDescriptor } from 'remix';
+import type { HtmlMetaDescriptor } from '@remix-run/react';
 
 export const defaultTitle = 'Syahrul Rofi';
 export const defaultDescription = `A Software Engineer and frontend web development enthusiast`;

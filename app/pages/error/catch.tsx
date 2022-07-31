@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { ThrownResponse } from 'remix';
+import type { ThrownResponse } from '@remix-run/react';
 
 import HeaderNav from '~/components/header-nav';
 

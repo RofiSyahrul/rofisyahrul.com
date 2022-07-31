@@ -1,4 +1,4 @@
-import { Link } from 'remix';
+import { Link } from '@remix-run/react';
 
 import VisuallyHidden from '~/components/visually-hidden';
 import type { PortfolioFeed } from '~/repositories/portfolio/types';

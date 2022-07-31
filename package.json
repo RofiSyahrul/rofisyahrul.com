@@ -71,11 +71,17 @@
     "css:watch": "yarn build:css --w",
     "dev": "concurrently -k -p \"[{name} @ {time}]\" -n \"CSS,Remix\" -c \"cyan.bold,green.bold\" \"yarn css:watch\" \"yarn dev:remix\"",
     "dev:remix": "cross-env NODE_ENV=development PORT=8765 remix dev",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx . --color --cache",
+    "eslint:fix": "yarn eslint --fix",
     "generate-manifest": "node -r esbuild-register scripts/generate-manifest.ts",
+    "lint": "yarn eslint && yarn stylelint",
+    "lint:fix": "yarn eslint:fix && yarn stylelint:fix",
     "postinstall": "remix setup node",
     "prebuild": "yarn generate-manifest",
     "predev": "yarn generate-manifest",
-    "start:local": "PORT=9706 node -r dotenv/config node_modules/.bin/remix-serve build"
+    "start:local": "PORT=9706 node -r dotenv/config node_modules/.bin/remix-serve build",
+    "stylelint": "stylelint styles/**/*.css --color",
+    "stylelint:fix": "yarn stylelint --fix"
   },
   "sideEffects": false,
   "version": "0.1.0"
