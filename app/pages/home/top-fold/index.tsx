@@ -1,5 +1,5 @@
+import { useOutletContext } from '@remix-run/react';
 import clsx from 'clsx';
-import { useLoaderData } from 'remix';
 
 import VisuallyHidden from '~/components/visually-hidden';
 
@@ -12,7 +12,7 @@ import VerifiedIcon from './icons/verified';
 const imageSize = 176;
 
 export default function TopFold() {
-  const { profile } = useLoaderData<HomeData>();
+  const { profile } = useOutletContext<HomeData>();
 
   return (
     <section className='flex gap-4 w-full px-3 items-center sm:items-start'>
