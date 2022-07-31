@@ -6,6 +6,7 @@ node_modules
 .output
 .DS_Store
 
+/api/
 /build/
 /public/build
 /public/browserconfig.xml

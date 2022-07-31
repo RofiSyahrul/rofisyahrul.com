@@ -18,7 +18,14 @@ export default async function fetcher<
   F = Record<string, any>,
   P = Record<string, any>,
 >({ path, query }: FetcherParams<F, P>): Promise<T> {
-  const response = await fetch(parseURL(path, query), {
+  const url = parseURL(path, query);
+
+  if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line no-console
+    console.log('Fetcher URL', url);
+  }
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${serverConfig.apiToken}`,
     },

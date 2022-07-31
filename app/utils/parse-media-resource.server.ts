@@ -4,7 +4,7 @@ import { cld } from '~/lib/cloudinary';
 import type { SimpleMediaItem } from '~/types/general';
 import type { MediaItem } from '~/types/response';
 
-export default function paraseMediaResource(params: {
+export default function parseMediaResource(params: {
   height?: number;
   media?: MediaItem | null;
   title: string;
@@ -16,6 +16,7 @@ export default function paraseMediaResource(params: {
     return {
       alt: title,
       height: height ?? 32,
+      mime: '',
       resourceType: 'image',
       url: '',
       width: width ?? 32,
@@ -23,7 +24,7 @@ export default function paraseMediaResource(params: {
   }
 
   const attr = media.attributes;
-  const { alternativeText, name, provider_metadata } = attr;
+  const { alternativeText, mime, name, provider_metadata } = attr;
   const alt = alternativeText || name || title;
   const mediaHeight = height ?? attr.height;
   const mediaWidth = width ?? attr.width;
@@ -34,6 +35,7 @@ export default function paraseMediaResource(params: {
     return {
       alt,
       height: mediaHeight,
+      mime,
       resourceType,
       url: '',
       width: mediaWidth,
@@ -61,6 +63,7 @@ export default function paraseMediaResource(params: {
   return {
     alt,
     height: mediaHeight,
+    mime,
     resourceType,
     url: mediaURL,
     width: mediaWidth,

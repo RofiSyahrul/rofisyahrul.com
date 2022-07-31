@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
+import { useEffect } from 'react';
 
+import NProgress from 'nprogress';
 import type {
   HtmlMetaDescriptor,
   LinkDescriptor,
@@ -8,6 +10,7 @@ import type {
   MetaFunction,
 } from 'remix';
 import {
+  useTransition,
   useCatch,
   useLoaderData,
   Links,
@@ -19,15 +22,24 @@ import {
 } from 'remix';
 
 import config from './config';
+import { storageKeys } from './constants/storage-keys';
 import { CloudinaryProvider } from './contexts/cloudinary/provider';
+import { UserAgentContext } from './contexts/user-agent/context';
 import type { ColorMode } from './lib/color-mode';
 import { getColorModeSession } from './lib/color-mode.server';
 import { buildLinks } from './lib/links';
 import { buildMeta, defaultTitle } from './lib/meta';
+import { parseUserAgent } from './lib/ua-parser.server';
 import CatchPage from './pages/error/catch';
+import type { HomeData } from './pages/home/types';
+import { fetchPortfolioFeeds } from './repositories/portfolio/fetcher.server';
+import { fetchProfile } from './repositories/profile/fetcher.server';
 import { useInitColorMode } from './store/color-mode';
 import appStyleURL from './styles/app.css';
+import nProgressStyleURL from './styles/nprogress.css';
 import tailwindStyleURL from './styles/tailwind.css';
+import type { UserAgent } from './types/general';
+import parseURL from './utils/parse-url.server';
 
 const faviconSizes = ['16', '32'];
 
@@ -82,7 +94,7 @@ function buildManifestIconLinks(): LinkDescriptor[] {
 
 export const links: LinksFunction = () => {
   return buildLinks(
-    [tailwindStyleURL, appStyleURL],
+    [tailwindStyleURL, appStyleURL, nProgressStyleURL],
     [
       {
         rel: 'manifest',
@@ -139,16 +151,40 @@ export const meta: MetaFunction = () => {
 interface LoaderData {
   colorMode: ColorMode | null;
   ENV: WindowEnv;
+  generalData: HomeData | null;
+  userAgent: UserAgent;
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getColorModeSession(request);
+  const userAgent = parseUserAgent(request);
+  const { pathname } = parseURL(request);
+  const shouldFetchHomeData =
+    pathname === '/' ||
+    (!userAgent.isMobile && pathname.startsWith('/p/'));
+
+  let generalData: HomeData | null = null;
+  if (shouldFetchHomeData) {
+    const [profile, portfolio] = await Promise.all([
+      fetchProfile(),
+      fetchPortfolioFeeds(),
+    ]);
+
+    generalData = {
+      profile,
+      portfolio,
+    };
+  }
+
   const data: LoaderData = {
     colorMode: session.getColorMode(),
     ENV: {
       APP_URL: process.env.APP_URL || 'https://rofisyahrul.com',
     },
+    generalData,
+    userAgent,
   };
+
   return data;
 };
 
@@ -174,18 +210,38 @@ function setColorMode() {
 interface DocumentProps {
   children: ReactNode;
   colorMode?: ColorMode | null;
+  isMobile?: boolean;
   title?: string;
 }
 
 function Document({
   children,
   colorMode: colorModeProp = null,
+  isMobile,
   title = defaultTitle,
 }: DocumentProps) {
   const { colorMode } = useInitColorMode(colorModeProp);
+  const transition = useTransition();
+
+  useEffect(() => {
+    if (transition.state === 'idle') NProgress.done();
+    else {
+      NProgress.start();
+      if (transition.state === 'loading') {
+        sessionStorage.setItem(storageKeys.isInternalRouting, 'true');
+      }
+    }
+
+    return () => {
+      sessionStorage.removeItem(storageKeys.isInternalRouting);
+    };
+  }, [transition.state]);
 
   return (
-    <html lang='en' className={colorMode}>
+    <html
+      lang='en'
+      className={`${colorMode} ${isMobile ? 'mobile' : 'desktop'}`}
+    >
       <head>
         <meta charSet='utf-8' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
@@ -230,25 +286,32 @@ function Document({
 export default function App() {
   const data = useLoaderData<LoaderData>();
   return (
-    <Document colorMode={data.colorMode}>
+    <Document
+      colorMode={data.colorMode}
+      isMobile={data.userAgent.isMobile}
+    >
       <CloudinaryProvider>
-        <Outlet />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        />
+        <UserAgentContext.Provider value={data.userAgent}>
+          <Outlet context={data.generalData} />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+            }}
+          />
+        </UserAgentContext.Provider>
       </CloudinaryProvider>
     </Document>
   );
 }
 
 export function CatchBoundary() {
-  const { status, statusText } = useCatch();
+  const { data, status, statusText } = useCatch();
 
   return (
     <Document title={`${status} ${statusText}`}>
-      <CatchPage status={status} statusText={statusText} />
+      <CatchPage status={status} statusText={statusText}>
+        {typeof data === 'string' ? data : ''}
+      </CatchPage>
     </Document>
   );
 }

@@ -38,15 +38,19 @@ export function buildMeta({
   const metaTitle =
     title === defaultTitle ? title : `${title} | ${defaultTitle}`;
   const url = buildCanonicalUrl(pathname);
+  const sanitizedDescription = description.replace(
+    /(<([^>]+)>)/gi,
+    '',
+  );
 
   return {
     ...(!shouldHideTitle && { title: metaTitle }),
     'og:title': metaTitle,
     'twitter:title': metaTitle,
     ...(url && { 'og:url': url }),
-    description,
-    'og:description': description,
-    'twitter:description': description,
+    description: sanitizedDescription,
+    'og:description': sanitizedDescription,
+    'twitter:description': sanitizedDescription,
     'og:image': image,
     'twitter:image': image,
     'twitter:card': 'summary_large_image',

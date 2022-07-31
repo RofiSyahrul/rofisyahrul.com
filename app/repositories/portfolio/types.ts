@@ -1,30 +1,13 @@
-import type { FetcherQuery } from '~/repositories/types';
 import type { SimpleMediaItem } from '~/types/general';
 import type {
   GeneralResponse,
-  Item,
-  MultipleMediaResource,
   PortfolioFields,
-  SingleMediaResource,
-  TechStackFields,
+  PortfolioRelations,
+  TechStackItem,
 } from '~/types/response';
-
-export interface PortfolioRelations {
-  highlightMedia: MultipleMediaResource;
-  icon: SingleMediaResource;
-  media: MultipleMediaResource<true>;
-  techStacks: {
-    data: Item<TechStackFields>[] | null;
-  };
-}
 
 export type PortfolioResponse = GeneralResponse<
   PortfolioFields & PortfolioRelations
->;
-
-export type PortfolioQuery = FetcherQuery<
-  PortfolioFields,
-  PortfolioRelations
 >;
 
 export type PortfolioFeed = Pick<
@@ -38,6 +21,20 @@ export type PortfolioFeed = Pick<
 > & {
   icon: SimpleMediaItem;
   mediaList: SimpleMediaItem[];
+};
+
+export type PortfolioDetail = Pick<
+  PortfolioFields,
+  | 'description'
+  | 'initialDate'
+  | 'repository'
+  | 'slug'
+  | 'title'
+  | 'url'
+> & {
+  icon: SimpleMediaItem;
+  mediaList: SimpleMediaItem[];
+  techStacks: TechStackItem[];
 };
 
 export type PortfolioHighlight = Pick<

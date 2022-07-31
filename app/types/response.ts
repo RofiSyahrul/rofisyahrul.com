@@ -1,4 +1,4 @@
-import type { MediaResourceType } from './general';
+import type { MediaResourceType, SimpleMediaItem } from './general';
 
 export interface Pagination {
   page: number;
@@ -25,6 +25,7 @@ export interface MediaAttributes {
   name: string;
   alternativeText: string;
   height: number;
+  mime: string;
   provider_metadata: {
     public_id: string;
     resource_type: MediaResourceType;
@@ -50,6 +51,18 @@ export interface TechStackFields {
   url: string | null;
 }
 
+export interface TechStackRelations {
+  logo: SingleMediaResource;
+}
+
+export interface TechStackItem extends TechStackFields {
+  logo: SimpleMediaItem | null;
+}
+
+export type TechStackResponse = GeneralResponse<
+  TechStackFields & TechStackRelations
+>;
+
 export interface PortfolioFields {
   description: string;
   highlightDescription: string | null;
@@ -58,4 +71,13 @@ export interface PortfolioFields {
   slug: string;
   title: string;
   url: string | null;
+}
+
+export interface PortfolioRelations {
+  highlightMedia: MultipleMediaResource;
+  icon: SingleMediaResource;
+  media: MultipleMediaResource<true>;
+  techStacks: {
+    data: Item<TechStackFields>[] | null;
+  };
 }
