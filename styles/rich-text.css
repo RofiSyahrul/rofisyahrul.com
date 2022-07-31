@@ -1,0 +1,7 @@
+.rich-text a {
+  @apply text-primary-dim dark:text-primary-bright;
+}
+
+.rich-text a:hover {
+  @apply underline;
+}
