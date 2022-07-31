@@ -30,6 +30,7 @@
     "typescript",
     "typescriptreact"
   ],
+  "eslint.packageManager": "yarn",
   "extensions.ignoreRecommendations": false,
   "files.autoSave": "off",
   "files.encoding": "utf8",
