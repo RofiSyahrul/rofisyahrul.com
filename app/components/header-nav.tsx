@@ -1,7 +1,6 @@
-import { useCallback } from 'react';
-
 import clsx from 'clsx';
-import { useNavigate } from 'remix';
+
+import { useBack } from '~/hooks/use-back';
 
 import Header from './header';
 import VisuallyHidden from './visually-hidden';
@@ -12,11 +11,7 @@ interface HeaderNavProps {
 }
 
 function BackButton() {
-  const navigate = useNavigate();
-
-  const handleClick = useCallback(() => {
-    navigate(-1);
-  }, [navigate]);
+  const back = useBack();
 
   return (
     <button
@@ -25,7 +20,7 @@ function BackButton() {
         'hover:shadow-sm hover:text-neutral-dim0 dark:hover:text-neutral-bright0',
         'hover:border-neutral-bright1 dark:hover:border-neutral-dim1',
       )}
-      onClick={handleClick}
+      onClick={back}
     >
       <svg
         aria-label='Go Back'
