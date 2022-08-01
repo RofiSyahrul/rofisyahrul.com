@@ -1,28 +1,27 @@
+import GithubIcon from '~/icons/github';
+import InstagramIcon from '~/icons/instagram';
+import LinkedinIcon from '~/icons/linkedin';
+import TwitterIcon from '~/icons/twitter';
 import type { Item } from '~/types/general';
-
-import GithubIconPath from './icons/github';
-import InstagramIconPath from './icons/instagram';
-import LinkedinIconPath from './icons/linkedin';
-import TwitterIconPath from './icons/twitter';
 
 export const socials: Item[] = [
   {
-    iconPath: <GithubIconPath />,
+    iconPath: <GithubIcon />,
     name: 'GitHub: RofiSyahrul',
     url: 'https://github.com/RofiSyahrul',
   },
   {
-    iconPath: <LinkedinIconPath />,
+    iconPath: <LinkedinIcon />,
     name: 'LinkedIn: Syahrul Rofi',
     url: 'https://www.linkedin.com/in/syahrul-rofi/',
   },
   {
-    iconPath: <TwitterIconPath />,
+    iconPath: <TwitterIcon />,
     name: 'Twitter: @RofiSyahrul',
     url: 'https://twitter.com/RofiSyahrul',
   },
   {
-    iconPath: <InstagramIconPath />,
+    iconPath: <InstagramIcon />,
     name: 'Instagram: rofisyahrul',
     url: 'https://www.instagram.com/rofisyahrul/',
   },
