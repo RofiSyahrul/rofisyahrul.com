@@ -86,7 +86,7 @@ module.exports = {
                 filter: 'none',
                 textDecoration: 'underline',
               },
-              '.btn-primary': {
+              '&.btn-primary': {
                 color: colors.primary.dim,
               },
             },
@@ -105,7 +105,7 @@ module.exports = {
               },
             },
             '&.btn-text': {
-              '.btn-primary': {
+              '&.btn-primary': {
                 color: colors.primary.bright,
               },
             },
