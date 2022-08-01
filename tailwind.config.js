@@ -1,5 +1,35 @@
 const plugin = require('tailwindcss/plugin');
 
+const colors = {
+  current: 'currentColor',
+  inherit: 'inherit',
+  danger: {
+    bright: 'var(--color-danger-bright)',
+    bright1: 'var(--color-danger-bright1)',
+    dim: 'var(--color-danger-dim)',
+    dim1: 'var(--color-danger-dim1)',
+  },
+  neutral: {
+    bright: 'var(--color-neutral-bright)',
+    bright0: 'var(--color-neutral-bright0)',
+    bright1: 'var(--color-neutral-bright1)',
+    bright2: 'var(--color-neutral-bright2)',
+    dim: 'var(--color-neutral-dim)',
+    dim0: 'var(--color-neutral-dim0)',
+    dim1: 'var(--color-neutral-dim1)',
+    dim2: 'var(--color-neutral-dim2)',
+  },
+  primary: {
+    bright: 'var(--color-primary-bright)',
+    dim: 'var(--color-primary-dim)',
+  },
+  secondary: {
+    bright: 'var(--color-secondary-bright)',
+    dim: 'var(--color-secondary-dim)',
+  },
+  transparent: 'transparent',
+};
+
 /** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
   content: ['./app/**/*.{ts,tsx}'],
@@ -8,7 +38,80 @@ module.exports = {
     require('@tailwindcss/line-clamp'),
     require('tailwind-scrollbar'),
     plugin(
-      ({ addVariant, addUtilities, e, matchUtilities, theme }) => {
+      ({
+        addComponents,
+        addVariant,
+        addUtilities,
+        e,
+        matchUtilities,
+      }) => {
+        addComponents({
+          '.btn': {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 0.375rem',
+            fontWeight: 600,
+            fontSize: '1rem',
+            lineHeight: '1.5rem',
+            border: 'none',
+            outline: 'none',
+            borderRadius: '0.25rem',
+            cursor: 'pointer',
+            '&:disabled': {
+              cursor: 'not-allowed',
+              opacity: '30%',
+            },
+            '&:hover:not(:disabled)': {
+              filter: 'brightness(80%)',
+            },
+            '&.btn-solid': {
+              color: colors.neutral.bright,
+              '&:disabled': {
+                opacity: '50%',
+              },
+              '&.btn-primary': {
+                backgroundColor: colors.primary.dim,
+              },
+              '&.btn-secondary': {
+                backgroundColor: colors.secondary.dim,
+              },
+              '&.btn-danger': {
+                backgroundColor: colors.danger.dim,
+              },
+            },
+            '&.btn-text': {
+              backgroundColor: colors.transparent,
+              '&:hover:not(:disabled)': {
+                filter: 'none',
+                textDecoration: 'underline',
+              },
+              '.btn-primary': {
+                color: colors.primary.dim,
+              },
+            },
+          },
+          '.dark .btn': {
+            '&.btn-solid': {
+              color: colors.neutral.dim,
+              '&.btn-primary': {
+                backgroundColor: colors.primary.bright,
+              },
+              '&.btn-secondary': {
+                backgroundColor: colors.secondary.bright,
+              },
+              '&.btn-danger': {
+                backgroundColor: colors.danger.bright,
+              },
+            },
+            '&.btn-text': {
+              '.btn-primary': {
+                color: colors.primary.bright,
+              },
+            },
+          },
+        });
+
         addVariant(
           'aria-selected',
           ({ modifySelectors, separator }) => {
@@ -57,35 +160,7 @@ module.exports = {
     ),
   ],
   theme: {
-    colors: {
-      current: 'currentColor',
-      inherit: 'inherit',
-      danger: {
-        bright: 'var(--color-danger-bright)',
-        bright1: 'var(--color-danger-bright1)',
-        dim: 'var(--color-danger-dim)',
-        dim1: 'var(--color-danger-dim1)',
-      },
-      neutral: {
-        bright: 'var(--color-neutral-bright)',
-        bright0: 'var(--color-neutral-bright0)',
-        bright1: 'var(--color-neutral-bright1)',
-        bright2: 'var(--color-neutral-bright2)',
-        dim: 'var(--color-neutral-dim)',
-        dim0: 'var(--color-neutral-dim0)',
-        dim1: 'var(--color-neutral-dim1)',
-        dim2: 'var(--color-neutral-dim2)',
-      },
-      primary: {
-        bright: 'var(--color-primary-bright)',
-        dim: 'var(--color-primary-dim)',
-      },
-      secondary: {
-        bright: 'var(--color-secondary-bright)',
-        dim: 'var(--color-secondary-dim)',
-      },
-      transparent: 'transparent',
-    },
+    colors,
     fill: theme => theme('colors'),
     stroke: theme => theme('colors'),
   },

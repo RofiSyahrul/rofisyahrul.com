@@ -2,12 +2,12 @@ import { useOutletContext } from '@remix-run/react';
 import clsx from 'clsx';
 
 import VisuallyHidden from '~/components/visually-hidden';
+import VerifiedIcon from '~/icons/verified';
 
 import Bio from '../bio';
 import Counts from '../counts';
 import type { HomeData } from '../types';
 import { socials } from './config';
-import VerifiedIcon from './icons/verified';
 
 const imageSize = 176;
 
@@ -32,27 +32,19 @@ export default function TopFold() {
           <h2 className='font-bold text-2xl sm:text-3xl'>
             {profile.fullName}
           </h2>
-          <VerifiedIcon />
+          <VerifiedIcon className='text-primary-dim dark:text-primary-bright' />
         </div>
         <ul className='social-links-list'>
           {socials.map(social => (
             <li key={social.name}>
               <a
-                className='w-8 h-8 rounded bg-primary-dim dark:bg-primary-bright flex justify-center items-center hover:[filter:brightness(0.8)]'
+                className='btn btn-solid btn-primary h-8'
                 href={social.url}
                 target='_blank'
                 rel='noreferrer noopener'
                 title={social.name}
               >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 24 24'
-                  width='20'
-                  height='20'
-                  className='text-primary-bright dark:text-primary-dim'
-                >
-                  {social.iconPath}
-                </svg>
+                {social.iconPath}
                 <VisuallyHidden>{social.name}</VisuallyHidden>
               </a>
             </li>
