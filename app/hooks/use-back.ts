@@ -15,7 +15,7 @@ export function useBack() {
     if (isInternalRouting) {
       navigate(-1);
     } else {
-      navigate('/');
+      window.location.pathname = '/';
     }
   }, [navigate]);
 

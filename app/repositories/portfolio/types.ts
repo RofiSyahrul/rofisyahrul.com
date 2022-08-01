@@ -12,12 +12,7 @@ export type PortfolioResponse = GeneralResponse<
 
 export type PortfolioFeed = Pick<
   PortfolioFields,
-  | 'description'
-  | 'initialDate'
-  | 'repository'
-  | 'slug'
-  | 'title'
-  | 'url'
+  'initialDate' | 'repository' | 'slug' | 'title' | 'url'
 > & {
   icon: SimpleMediaItem;
   mediaList: SimpleMediaItem[];

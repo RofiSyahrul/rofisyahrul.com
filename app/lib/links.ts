@@ -1,9 +1,7 @@
 import type { HtmlLinkDescriptor } from '@remix-run/react';
-import type { LinkDescriptor, PageLinkDescriptor } from 'remix';
+import type { LinkDescriptor } from 'remix';
 
-type StylesheetDescriptor =
-  | string
-  | Omit<HtmlLinkDescriptor | PageLinkDescriptor, 'rel'>;
+type StylesheetDescriptor = string | Omit<HtmlLinkDescriptor, 'rel'>;
 
 export function buildLinks(
   styles: StylesheetDescriptor[] = [],

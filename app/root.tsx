@@ -13,6 +13,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import NProgress from 'nprogress';
 import type {
   LinkDescriptor,
@@ -40,6 +42,8 @@ import nProgressStyleURL from './styles/nprogress.css';
 import tailwindStyleURL from './styles/tailwind.css';
 import type { UserAgent } from './types/general';
 import parseURL from './utils/parse-url.server';
+
+dayjs.extend(advancedFormat);
 
 const faviconSizes = ['16', '32'];
 
@@ -231,10 +235,6 @@ function Document({
         sessionStorage.setItem(storageKeys.isInternalRouting, 'true');
       }
     }
-
-    return () => {
-      sessionStorage.removeItem(storageKeys.isInternalRouting);
-    };
   }, [transition.state]);
 
   return (

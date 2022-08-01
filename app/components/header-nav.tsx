@@ -1,11 +1,10 @@
-import clsx from 'clsx';
-
 import { useBack } from '~/hooks/use-back';
 
 import Header from './header';
 import VisuallyHidden from './visually-hidden';
 
 interface HeaderNavProps {
+  className?: string;
   shouldHideColorModeToggle?: boolean;
   title?: string;
 }
@@ -14,14 +13,7 @@ function BackButton() {
   const back = useBack();
 
   return (
-    <button
-      className={clsx(
-        'bg-transparent border-solid border border-transparent p-2 rounded',
-        'hover:shadow-sm hover:text-neutral-dim0 dark:hover:text-neutral-bright0',
-        'hover:border-neutral-bright1 dark:hover:border-neutral-dim1',
-      )}
-      onClick={back}
-    >
+    <button className='btn btn-text py-2 px-0' onClick={back}>
       <svg
         aria-label='Go Back'
         width='24'

@@ -22,7 +22,6 @@ import type {
 } from './types';
 
 const path = '/api/portfolios';
-const iconSize = 32;
 
 function sanitizeDescription(desc: string) {
   return DOMPurify.sanitize(marked(desc));
@@ -30,12 +29,20 @@ function sanitizeDescription(desc: string) {
 
 function getPortfolioIconAndMediaList(params: {
   icon: SingleMediaResource;
+  iconSize?: number;
   media: MultipleMediaResource<any>;
   mediaHeight: number;
   mediaWidth: number;
   title: string;
 }): Pick<PortfolioFeed, 'icon' | 'mediaList'> {
-  const { icon, media, mediaHeight, mediaWidth, title } = params;
+  const {
+    icon,
+    iconSize = 32,
+    media,
+    mediaHeight,
+    mediaWidth,
+    title,
+  } = params;
 
   return {
     icon: parseMediaResource({
@@ -65,14 +72,7 @@ export async function fetchPortfolioFeeds(
   >({
     path,
     query: {
-      fields: [
-        'description',
-        'initialDate',
-        'repository',
-        'slug',
-        'title',
-        'url',
-      ],
+      fields: ['initialDate', 'repository', 'slug', 'title', 'url'],
       pagination: {
         page,
         pageSize: 10,
@@ -88,7 +88,6 @@ export async function fetchPortfolioFeeds(
       const { icon, media, title } = attributes;
 
       return {
-        description: sanitizeDescription(attributes.description),
         initialDate: attributes.initialDate,
         repository: attributes.repository,
         slug: attributes.slug,
@@ -134,10 +133,10 @@ async function fetchTechStacks(
 
   return res.data.map(({ attributes }) => ({
     logo: parseMediaResource({
-      height: 32,
+      height: 24,
       media: attributes.logo.data,
       title: attributes.name,
-      width: 32,
+      width: 24,
     }),
     name: attributes.name,
     url: attributes.url,
@@ -194,9 +193,10 @@ export async function fetchPortfolioDetail(
     url: attributes.url,
     ...getPortfolioIconAndMediaList({
       icon: attributes.icon,
+      iconSize: 80,
       media: attributes.media,
-      mediaHeight: 500,
-      mediaWidth: 500,
+      mediaHeight: 590,
+      mediaWidth: 590,
       title: attributes.title,
     }),
   };

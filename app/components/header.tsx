@@ -1,11 +1,14 @@
 import type { ReactNode } from 'react';
 
+import clsx from 'clsx';
+
 import { useToggleColorMode } from '~/store/color-mode';
 
 import VisuallyHidden from './visually-hidden';
 
 interface HeaderProps {
   children?: ReactNode;
+  className?: string;
   shouldHideColorModeToggle?: boolean;
   title?: string;
 }
@@ -68,13 +71,25 @@ function ToggleColorModeButton() {
 
 export default function Header({
   children,
+  className = 'h-12 md:16',
   shouldHideColorModeToggle,
   title = 'rofisyahrul.com',
 }: HeaderProps) {
   return (
-    <header className='relative z-10 h-12 md:h-16'>
-      <div className='w-full fixed shadow-lg dark:shadow-sm dark:shadow-neutral-dim2 top-0 px-3 bg-neutral-bright dark:bg-neutral-dim'>
-        <div className='flex justify-between items-center w-full max-w-5xl mx-auto h-12 md:h-16'>
+    <header className={clsx('relative z-10', className)}>
+      <div
+        className={clsx(
+          'w-full fixed shadow-lg dark:shadow-sm dark:shadow-neutral-dim2',
+          'top-0 px-2 sm:px-3 bg-neutral-bright dark:bg-neutral-dim',
+        )}
+      >
+        <div
+          className={clsx(
+            'flex justify-between items-center gap-1',
+            'w-full max-w-5xl mx-auto',
+            className,
+          )}
+        >
           {children}
           <h1 className='font-bold text-lg'>{title}</h1>
           {shouldHideColorModeToggle ? (
