@@ -78,7 +78,7 @@
     "lint:fix": "yarn eslint:fix && yarn stylelint:fix",
     "postinstall": "remix setup node",
     "prebuild": "yarn generate-manifest",
-    "predev": "yarn generate-manifest",
+    "predev": "yarn clean && yarn generate-manifest",
     "start:local": "PORT=9706 node -r dotenv/config node_modules/.bin/remix-serve build",
     "stylelint": "stylelint styles/**/*.css --color",
     "stylelint:fix": "yarn stylelint --fix"
