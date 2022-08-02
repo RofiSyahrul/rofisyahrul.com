@@ -110,6 +110,18 @@ module.exports = {
               },
             },
           },
+          '.spinner': {
+            boxSizing: 'border-box',
+            border: '2px solid transparent',
+            borderTopColor: colors.primary.dim,
+            borderLeftColor: colors.primary.dim,
+            borderRadius: '50%',
+            animation: 'nprogress-spinner 0.4s linear infinite',
+          },
+          '.dark .spinner': {
+            borderTopColor: colors.primary.bright,
+            borderLeftColor: colors.primary.bright,
+          },
         });
 
         addVariant(
