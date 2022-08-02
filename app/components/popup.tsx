@@ -32,21 +32,16 @@ export default function Popup({
   const isShownRef = useRef(false);
 
   const [isShown, setIsShown] = useState(false);
-  const [animationType, setAnimationType] =
-    useState<PopupAnimationType>('leave');
+  const [animationType, setAnimationType] = useState<
+    PopupAnimationType | undefined
+  >();
 
   useScrollLock(isShown);
 
   const handleAnimationEnd = useCallback(() => {
     if (animationType !== 'leave') return;
     setIsShown(false);
-    isShownRef.current = false;
-    if (typeof onClose === 'function') onClose();
-  }, [animationType, onClose]);
-
-  const handleClose = useCallback(() => {
-    setAnimationType('leave');
-  }, []);
+  }, [animationType]);
 
   useEffect(() => {
     if (isOpen === isShownRef.current) return;
@@ -69,14 +64,17 @@ export default function Popup({
   const popupNode = (
     <div
       aria-hidden={!isShown}
-      className={clsx('popup', `popup_${animationType}`)}
+      className={clsx(
+        'popup',
+        animationType && `popup_${animationType}`,
+      )}
       onAnimationEnd={handleAnimationEnd}
     >
-      <div className='popup__mask' onClick={handleClose} />
+      <div className='popup__mask' onClick={onClose} />
       {isCloseButtonShown && (
         <button
           className='popup__close-button'
-          onClick={handleClose}
+          onClick={onClose}
           title='Close'
         >
           <CloseIcon />
