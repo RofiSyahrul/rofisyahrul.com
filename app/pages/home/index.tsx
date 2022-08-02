@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+
+import { useOutletContext } from '@remix-run/react';
+
 import Header from '~/components/header';
 
 import Bio from './bio';
@@ -8,6 +12,21 @@ import Tablist from './tablist';
 import TopFold from './top-fold';
 
 export default function HomePage() {
+  const outleteContext = useOutletContext();
+  const isOutleteContextAvailable = !!outleteContext;
+
+  useEffect(() => {
+    if (!isOutleteContextAvailable) window.location.reload();
+  }, [isOutleteContextAvailable]);
+
+  if (!isOutleteContextAvailable) {
+    return (
+      <main className='centered-page'>
+        <div className='w-20 h-20 spinner' />
+      </main>
+    );
+  }
+
   return (
     <>
       <Header />
