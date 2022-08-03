@@ -10,7 +10,7 @@ export default function PortfolioGrid() {
   return (
     <ul
       className={clsx(
-        'grid grid-cols-2 gap-1 border-top-mobile',
+        'grid grid-cols-2 px-0.5 gap-1 border-top-mobile',
         'sm:grid-cols-3 sm:px-3 sm:gap-3 md:gap-6 lg:gap-8',
       )}
     >
@@ -18,7 +18,7 @@ export default function PortfolioGrid() {
         if (!item.mediaList.length) return null;
         return (
           <PortfolioItem
-            icon={item.icon}
+            isMultiple={item.mediaList.length > 1}
             key={item.slug}
             repository={item.repository}
             slug={item.slug}

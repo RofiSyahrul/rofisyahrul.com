@@ -34,7 +34,7 @@ function getPortfolioIconAndMediaList(params: {
   mediaHeight: number;
   mediaWidth: number;
   title: string;
-}): Pick<PortfolioFeed, 'icon' | 'mediaList'> {
+}): Pick<PortfolioDetail, 'icon' | 'mediaList'> {
   const {
     icon,
     iconSize = 32,
@@ -72,12 +72,12 @@ export async function fetchPortfolioFeeds(
   >({
     path,
     query: {
-      fields: ['initialDate', 'repository', 'slug', 'title', 'url'],
+      fields: ['repository', 'slug', 'title', 'url'],
       pagination: {
         page,
         pageSize: 10,
       },
-      populate: ['icon', 'media'],
+      populate: ['media'],
       sort: ['initialDate:desc'],
     },
   });
@@ -85,21 +85,21 @@ export async function fetchPortfolioFeeds(
   return {
     total: res?.meta?.pagination?.total ?? 0,
     feeds: (res?.data ?? []).map<PortfolioFeed>(({ attributes }) => {
-      const { icon, media, title } = attributes;
+      const { media, title } = attributes;
 
       return {
-        initialDate: attributes.initialDate,
         repository: attributes.repository,
         slug: attributes.slug,
         title,
         url: attributes.url,
-        ...getPortfolioIconAndMediaList({
-          icon,
-          media,
-          mediaHeight: 300,
-          mediaWidth: 300,
-          title,
-        }),
+        mediaList: media.data.map(item =>
+          parseMediaResource({
+            height: 300,
+            media: item,
+            title,
+            width: 300,
+          }),
+        ),
       };
     }),
   };

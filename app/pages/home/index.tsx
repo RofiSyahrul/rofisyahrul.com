@@ -7,7 +7,7 @@ import Header from '~/components/header';
 import Bio from './bio';
 import Counts from './counts';
 import Highlights from './highlights';
-import PortfolioGrid from './portfolio-grid';
+import PortfolioGrid from './portfolios/grid';
 import Tablist from './tablist';
 import TopFold from './top-fold';
 

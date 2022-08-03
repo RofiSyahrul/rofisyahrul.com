@@ -12,9 +12,8 @@ export type PortfolioResponse = GeneralResponse<
 
 export type PortfolioFeed = Pick<
   PortfolioFields,
-  'initialDate' | 'repository' | 'slug' | 'title' | 'url'
+  'repository' | 'slug' | 'title' | 'url'
 > & {
-  icon: SimpleMediaItem;
   mediaList: SimpleMediaItem[];
 };
 
