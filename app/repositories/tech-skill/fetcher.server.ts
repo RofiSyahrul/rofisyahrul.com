@@ -19,3 +19,17 @@ export async function countTechSkills(): Promise<number> {
     return 0;
   }
 }
+
+export async function fetchTechSkills(): Promise<TechSkillFields[]> {
+  try {
+    const res = await fetcher<TechSkillResponse, TechSkillFields>({
+      path,
+      query: {
+        sort: ['priority:desc', 'name'],
+      },
+    });
+    return (res.data || []).map(({ attributes }) => attributes);
+  } catch {
+    return [];
+  }
+}
