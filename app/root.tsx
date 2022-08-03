@@ -36,6 +36,7 @@ import CatchPage from './pages/error/catch';
 import type { HomeData } from './pages/home/types';
 import { fetchPortfolioFeeds } from './repositories/portfolio/fetcher.server';
 import { fetchProfile } from './repositories/profile/fetcher.server';
+import { countTechSkills } from './repositories/tech-skill/fetcher.server';
 import { useInitColorMode } from './store/color-mode';
 import appStyleURL from './styles/app.css';
 import nProgressStyleURL from './styles/nprogress.css';
@@ -165,18 +166,22 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { pathname } = parseURL(request);
   const shouldFetchHomeData =
     pathname === '/' ||
-    (!userAgent.isMobile && pathname.startsWith('/p/'));
+    (!userAgent.isMobile &&
+      (pathname.startsWith('/p/') ||
+        pathname === '/technical-skills'));
 
   let generalData: HomeData | null = null;
   if (shouldFetchHomeData) {
-    const [profile, portfolio] = await Promise.all([
+    const [profile, portfolio, totalTechSkills] = await Promise.all([
       fetchProfile(),
       fetchPortfolioFeeds(),
+      countTechSkills(),
     ]);
 
     generalData = {
       profile,
       portfolio,
+      totalTechSkills,
     };
   }
 

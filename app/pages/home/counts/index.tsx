@@ -16,23 +16,29 @@ interface CountsProps {
 }
 
 export default function Counts({ className }: CountsProps) {
-  const { portfolio } = useOutletContext<HomeData>();
+  const { portfolio, totalTechSkills } = useOutletContext<HomeData>();
   const totalPortfolio = portfolio.total;
 
   const countData = useMemo<CountItem[]>(() => {
-    return [
+    const data: CountItem[] = [
       {
-        title: 'Portfolios',
+        title: `Portfolio${totalPortfolio > 1 ? 's' : ''}`,
         url: '/#portfolios',
         value: totalPortfolio,
       },
+    ];
+
+    if (totalTechSkills === 0) return data;
+
+    return [
+      ...data,
       {
-        title: 'Technical Skills',
+        title: `Technical Skill${totalTechSkills > 1 ? 's' : ''}`,
         url: '/technical-skills',
-        value: 10,
+        value: totalTechSkills,
       },
     ];
-  }, [totalPortfolio]);
+  }, [totalPortfolio, totalTechSkills]);
 
   return (
     <ul
