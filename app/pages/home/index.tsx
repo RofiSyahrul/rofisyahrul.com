@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 
 import { useLocation, useOutletContext } from '@remix-run/react';
 
@@ -10,13 +10,14 @@ import Counts from './counts';
 import Highlights from './highlights';
 import PortfolioGrid from './portfolios/grid';
 import PortfolioList from './portfolios/list';
-import Tablist from './tablist';
 import {
   portfolioGridID,
   portfolioListID,
 } from './tablist/constants';
 import type { TabName } from './tablist/types';
 import TopFold from './top-fold';
+
+const Tablist = lazy(() => import('./tablist'));
 
 export default function HomePage() {
   const outleteContext = useOutletContext();
@@ -59,7 +60,11 @@ export default function HomePage() {
         <section className='sm:hidden'>
           <Counts className='flex' />
         </section>
-        <Tablist selectedTab={selectedTab} />
+        {isMobile && (
+          <Suspense>
+            <Tablist selectedTab={selectedTab} />
+          </Suspense>
+        )}
         <section
           aria-hidden={selectedTab !== 'grid'}
           aria-labelledby={`tab-${portfolioGridID}`}
