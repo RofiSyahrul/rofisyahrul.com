@@ -94,10 +94,10 @@ export async function fetchPortfolioFeeds(
         url: attributes.url,
         mediaList: media.data.map(item =>
           parseMediaResource({
-            height: 300,
+            height: 800,
             media: item,
             title,
-            width: 300,
+            width: 800,
           }),
         ),
       };
@@ -195,8 +195,8 @@ export async function fetchPortfolioDetail(
       icon: attributes.icon,
       iconSize: 80,
       media: attributes.media,
-      mediaHeight: 590,
-      mediaWidth: 590,
+      mediaHeight: 900,
+      mediaWidth: 900,
       title: attributes.title,
     }),
   };

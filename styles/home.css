@@ -34,16 +34,20 @@
 .portfolio-item {
   @apply w-full aspect-square rounded border mt-2;
   @apply border-solid border-neutral-bright1 dark:border-neutral-dim1;
-  @apply shadow-sm cursor-pointer relative;
+  @apply shadow-sm relative;
 }
 
 .portfolio-item__link {
-  @apply relative w-full h-full;
+  @apply relative w-full h-full cursor-pointer;
 }
 
 .portfolio-item__link:hover,
 .portfolio-item:hover .portfolio-item__link {
   opacity: 50%;
+}
+
+.portfolio-item_in-list img {
+  @apply my-2;
 }
 
 .portfolio-item__link .portfolio-item__title {
@@ -58,8 +62,19 @@
   transform: translate(-50%, -50%);
 }
 
+.portfolio-item_in-list .portfolio-item__url-repo {
+  @apply flex gap-2 transform-none bottom-14 left-2;
+  top: unset;
+}
+
+section[role='tabpanel'][aria-hidden='true'] {
+  @apply w-0 h-0 overflow-hidden;
+}
+
 @media (min-width: 640px) {
-  .portfolio-item:hover .portfolio-item__link .portfolio-item__title {
+  .portfolio-item:hover
+    .portfolio-item__link
+    > .portfolio-item__title {
     @apply bg-neutral-dim0 dark:bg-neutral-bright0;
     width: calc(100% - 1rem);
     height: initial;

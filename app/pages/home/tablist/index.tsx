@@ -1,58 +1,60 @@
-import { Link, useLocation } from '@remix-run/react';
+import { Link } from '@remix-run/react';
+import clsx from 'clsx';
 
 import VisuallyHidden from '~/components/visually-hidden';
-import type { Item } from '~/types/general';
 
+import { portfolioGridID, portfolioListID } from './constants';
 import GridIcon from './icons/grid';
 import ListIcon from './icons/list';
-
-type TabName = 'grid' | 'list';
-
-interface TabItem extends Omit<Item, 'name'> {
-  name: TabName;
-  title: string;
-}
+import type { TabItem, TabListProps } from './types';
 
 const tabs: TabItem[] = [
   {
+    control: portfolioGridID,
     iconPath: <GridIcon />,
     name: 'grid',
     title: 'Portfolio Grid',
-    url: '/#portfolios',
+    url: `/#${portfolioGridID}`,
   },
   {
+    control: portfolioListID,
     iconPath: <ListIcon />,
     name: 'list',
     title: 'Portfolio List',
-    url: '/#portfolio-list',
-    // url: '/portfolio-list#portfolios',
+    url: `/#${portfolioListID}`,
   },
 ];
 
-export default function Tablist() {
-  const { hash } = useLocation();
-  const selectedTab: TabName =
-    hash === '#portfolio-list' ? 'list' : 'grid';
-
+export default function Tablist({ selectedTab }: TabListProps) {
   return (
     <section
       className='flex w-full items-center mb-[-0.75rem] border-top-mobile sm:hidden'
       role='tablist'
     >
-      {tabs.map(tab => (
-        <Link
-          aria-selected={tab.name === selectedTab}
-          className='flex items-center justify-center flex-auto h-11 text-neutral-bright2 dark:text-neutral-dim2 aria-selected:text-primary-dim dark:aria-selected:text-primary-bright'
-          key={tab.name}
-          to={tab.url}
-          role='tab'
-          suppressHydrationWarning
-          tabIndex={0}
-        >
-          {tab.iconPath}
-          <VisuallyHidden>{tab.title}</VisuallyHidden>
-        </Link>
-      ))}
+      {tabs.map(tab => {
+        const isSelected = tab.name === selectedTab;
+        return (
+          <Link
+            aria-controls={tab.control}
+            aria-selected={isSelected}
+            className={clsx(
+              'flex items-center justify-center flex-auto h-11',
+              'text-neutral-bright2 dark:text-neutral-dim2',
+              'aria-selected:text-primary-dim',
+              'dark:aria-selected:text-primary-bright',
+            )}
+            id={`tab-${tab.control}`}
+            key={tab.name}
+            to={tab.url}
+            role='tab'
+            suppressHydrationWarning
+            tabIndex={isSelected ? undefined : -1}
+          >
+            {tab.iconPath}
+            <VisuallyHidden>{tab.title}</VisuallyHidden>
+          </Link>
+        );
+      })}
     </section>
   );
 }
