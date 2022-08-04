@@ -1,5 +1,6 @@
 import { useLoaderData } from '@remix-run/react';
 
+import LazyImage from '~/components/lazy-image';
 import type { PortfolioDetail } from '~/repositories/portfolio/types';
 
 export default function TechStacks() {
@@ -15,7 +16,7 @@ export default function TechStacks() {
           const techStackNode = (
             <>
               {techStack.logo?.resourceType === 'image' && (
-                <img
+                <LazyImage
                   alt={techStack.logo.alt}
                   height={techStack.logo.height}
                   src={techStack.logo.url}

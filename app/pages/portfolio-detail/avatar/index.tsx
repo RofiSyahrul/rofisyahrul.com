@@ -1,6 +1,7 @@
 import { useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 
+import LazyImage from '~/components/lazy-image';
 import type { PortfolioDetail } from '~/repositories/portfolio/types';
 
 interface AvatarProps {
@@ -17,7 +18,7 @@ export default function Avatar({ className }: AvatarProps) {
         className,
       )}
     >
-      <img
+      <LazyImage
         alt={icon.alt}
         className={clsx(
           'rounded-full absolute top-0 left-0 h-full w-full aspect-square',

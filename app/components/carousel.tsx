@@ -1,4 +1,4 @@
-import type { MouseEvent, UIEvent } from 'react';
+import type { MouseEvent, RefObject, UIEvent } from 'react';
 import { useMemo, useCallback, useRef, useState } from 'react';
 
 import clsx from 'clsx';
@@ -6,11 +6,13 @@ import clsx from 'clsx';
 import ArrowIcon from '~/icons/arrow';
 import type { SimpleMediaItem } from '~/types/general';
 
+import LazyImage from './lazy-image';
 import VisuallyHidden from './visually-hidden';
 
 interface CarouselItemProps extends SimpleMediaItem {
   isActive: boolean;
   className: string;
+  scrollerRef: RefObject<HTMLDivElement>;
 }
 
 function CarouselItem({
@@ -20,6 +22,7 @@ function CarouselItem({
   isActive,
   mime,
   resourceType,
+  scrollerRef,
   url,
   width,
 }: CarouselItemProps) {
@@ -30,12 +33,14 @@ function CarouselItem({
     >
       <div className='relative w-full pb-[100%]'>
         {resourceType === 'image' && (
-          <img
+          <LazyImage
             alt={alt}
             className={className}
             height={height}
             src={url}
             title={alt}
+            rootMargin='-8px'
+            rootRef={scrollerRef}
             width={width}
           />
         )}
@@ -146,6 +151,7 @@ export default function Carousel({ mediaList }: CarouselProps) {
               className='absolute top-0 left-0 w-full h-full'
               isActive={activeIndex === index}
               {...mediaItem}
+              scrollerRef={scrollerRef}
             />
           ))}
         </div>

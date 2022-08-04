@@ -1,6 +1,7 @@
 import { Link } from '@remix-run/react';
 import clsx from 'clsx';
 
+import LazyImage from '~/components/lazy-image';
 import VisuallyHidden from '~/components/visually-hidden';
 import CarouselIndicatorIcon from '~/icons/carousel-indicator';
 import ExternalLinkIcon from '~/icons/external-link';
@@ -38,7 +39,7 @@ export default function PortfolioItem({
         title={title}
         to={`/p/${slug}`}
       >
-        <img
+        <LazyImage
           alt={thumbnail.alt}
           className='object-cover w-full aspect-square'
           height={thumbnail.height}
