@@ -7,7 +7,6 @@ import { useUserAgent } from '~/contexts/user-agent';
 
 import Bio from './bio';
 import Counts from './counts';
-import Highlights from './highlights';
 import PortfolioGrid from './portfolios/grid';
 import PortfolioList from './portfolios/list';
 import {
@@ -54,9 +53,9 @@ export default function HomePage() {
       <main className='relative flex flex-col py-3 w-full max-w-5xl mx-auto gap-3'>
         <TopFold />
         <Bio component='section' className='sm:hidden px-3' />
-        <section>
+        {/* <section>
           <Highlights />
-        </section>
+        </section> */}
         <section className='sm:hidden'>
           <Counts className='flex' />
         </section>
