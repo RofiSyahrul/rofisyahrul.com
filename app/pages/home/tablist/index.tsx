@@ -3,7 +3,11 @@ import clsx from 'clsx';
 
 import VisuallyHidden from '~/components/visually-hidden';
 
-import { portfolioGridID, portfolioListID } from './constants';
+import {
+  portfolioGridID,
+  portfolioListID,
+  stateOfChangingTab,
+} from './constants';
 import GridIcon from './icons/grid';
 import ListIcon from './icons/list';
 import type { TabItem, TabListProps } from './types';
@@ -14,21 +18,24 @@ const tabs: TabItem[] = [
     iconPath: <GridIcon />,
     name: 'grid',
     title: 'Portfolio Grid',
-    url: `/#${portfolioGridID}`,
+    url: '/',
   },
   {
     control: portfolioListID,
     iconPath: <ListIcon />,
     name: 'list',
     title: 'Portfolio List',
-    url: `/#${portfolioListID}`,
+    url: '/portfolio-list',
   },
 ];
 
 export default function Tablist({ selectedTab }: TabListProps) {
   return (
     <section
-      className='flex w-full items-center mb-[-0.75rem] border-top-mobile sm:hidden'
+      className={clsx(
+        'flex w-full items-center mb-[-0.75rem] border-top-mobile',
+        'sm:hidden desktop:hidden',
+      )}
       role='tablist'
     >
       {tabs.map(tab => {
@@ -42,12 +49,14 @@ export default function Tablist({ selectedTab }: TabListProps) {
               'text-neutral-bright2 dark:text-neutral-dim2',
               'aria-selected:text-primary-dim',
               'dark:aria-selected:text-primary-bright',
+              'aria-selected:pointer-events-none',
             )}
             id={`tab-${tab.control}`}
             key={tab.name}
             to={tab.url}
             role='tab'
             suppressHydrationWarning
+            state={stateOfChangingTab}
             tabIndex={isSelected ? undefined : -1}
           >
             {tab.iconPath}

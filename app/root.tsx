@@ -166,6 +166,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { pathname } = parseURL(request);
   const shouldFetchHomeData =
     pathname === '/' ||
+    pathname === '/portfolio-list' ||
     (!userAgent.isMobile &&
       (pathname.startsWith('/p/') ||
         pathname === '/technical-skills'));

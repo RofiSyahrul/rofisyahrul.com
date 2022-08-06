@@ -148,6 +148,13 @@ module.exports = {
           },
         );
 
+        addVariant('desktop', ({ modifySelectors, separator }) => {
+          modifySelectors(
+            ({ className }) =>
+              '.desktop .' + e(`desktop${separator}${className}`),
+          );
+        });
+
         addUtilities({
           '.flex-basis': {
             'flex-basis': '100%',

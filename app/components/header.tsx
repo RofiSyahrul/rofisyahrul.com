@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import type { ForwardedRef, ReactNode } from 'react';
+import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
@@ -69,14 +70,17 @@ function ToggleColorModeButton() {
   );
 }
 
-export default function Header({
-  children,
-  className = 'h-12 md:16',
-  shouldHideColorModeToggle,
-  title = 'rofisyahrul.com',
-}: HeaderProps) {
+function InternalHeader(
+  {
+    children,
+    className = 'h-12 md:16',
+    shouldHideColorModeToggle,
+    title = 'rofisyahrul.com',
+  }: HeaderProps,
+  ref: ForwardedRef<HTMLElement>,
+) {
   return (
-    <header className={clsx('relative z-10', className)}>
+    <header className={clsx('relative z-10', className)} ref={ref}>
       <div
         className={clsx(
           'w-full fixed shadow-lg dark:shadow-sm dark:shadow-neutral-dim2',
@@ -102,3 +106,6 @@ export default function Header({
     </header>
   );
 }
+
+const Header = forwardRef(InternalHeader);
+export default Header;

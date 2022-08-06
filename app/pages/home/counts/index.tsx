@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import type { HomeData } from '../types';
 
 interface CountItem {
+  name: 'portfolio' | 'tech-skill';
   title: string;
   url: string;
   value: number;
@@ -22,8 +23,9 @@ export default function Counts({ className }: CountsProps) {
   const countData = useMemo<CountItem[]>(() => {
     const data: CountItem[] = [
       {
+        name: 'portfolio',
         title: `Portfolio${totalPortfolio > 1 ? 's' : ''}`,
-        url: '/#portfolios',
+        url: '/',
         value: totalPortfolio,
       },
     ];
@@ -33,6 +35,7 @@ export default function Counts({ className }: CountsProps) {
     return [
       ...data,
       {
+        name: 'tech-skill',
         title: `Technical Skill${totalTechSkills > 1 ? 's' : ''}`,
         url: '/technical-skills',
         value: totalTechSkills,
@@ -48,9 +51,12 @@ export default function Counts({ className }: CountsProps) {
         className,
       )}
     >
-      {countData.map(({ title, url, value }) => (
+      {countData.map(({ name, title, url, value }) => (
         <li key={title}>
-          <Link to={url}>
+          <Link
+            state={name === 'portfolio' ? 'change-tab' : undefined}
+            to={url}
+          >
             <strong>{value}</strong>
             {` ${title}`}
           </Link>
