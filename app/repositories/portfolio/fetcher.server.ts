@@ -1,30 +1,42 @@
 import DOMPurify from 'isomorphic-dompurify';
 import { marked } from 'marked';
 
-import fetcher from '~/repositories/fetcher.server';
 import type {
   MultipleMediaResource,
-  PortfolioFields,
-  PortfolioRelations,
   SingleMediaResource,
-  TechStackFields,
   TechStackItem,
-  TechStackRelations,
-  TechStackResponse,
 } from '~/types/response';
 import parseMediaResource from '~/utils/parse-media-resource.server';
 
 import type {
   FetchPortfolioFeedsResult,
+  PortfolioData,
   PortfolioDetail,
   PortfolioFeed,
-  PortfolioResponse,
+  TechStackData,
 } from './types';
 
-const path = '/api/portfolios';
+let portfolioData: PortfolioData | undefined;
+let techStackData: TechStackData | undefined;
 
 function sanitizeDescription(desc: string) {
   return DOMPurify.sanitize(marked(desc));
+}
+
+async function importPortfolioData() {
+  if (portfolioData) return portfolioData;
+  portfolioData = (await import(
+    '~/data/portfolios.json'
+  )) as unknown as PortfolioData;
+  return portfolioData;
+}
+
+async function importTechStackData() {
+  if (techStackData) return techStackData;
+  techStackData = (await import(
+    '~/data/tech-stacks.json'
+  )) as unknown as TechStackData;
+  return techStackData;
 }
 
 function getPortfolioIconAndMediaList(params: {
@@ -65,26 +77,11 @@ function getPortfolioIconAndMediaList(params: {
 export async function fetchPortfolioFeeds(
   page = 1,
 ): Promise<FetchPortfolioFeedsResult> {
-  const res = await fetcher<
-    PortfolioResponse,
-    PortfolioFields,
-    PortfolioRelations
-  >({
-    path,
-    query: {
-      fields: ['repository', 'slug', 'title', 'url'],
-      pagination: {
-        page,
-        pageSize: 10,
-      },
-      populate: ['media'],
-      sort: ['initialDate:desc'],
-    },
-  });
+  const data = await importPortfolioData();
 
   return {
-    total: res?.meta?.pagination?.total ?? 0,
-    feeds: (res?.data ?? []).map<PortfolioFeed>(({ attributes }) => {
+    total: data.length,
+    feeds: data.map<PortfolioFeed>(({ attributes }) => {
       const { media, title } = attributes;
 
       return {
@@ -110,28 +107,10 @@ async function fetchTechStacks(
 ): Promise<TechStackItem[]> {
   if (ids.length === 0) return [];
 
-  const res = await fetcher<
-    TechStackResponse,
-    TechStackFields,
-    TechStackRelations
-  >({
-    path: '/api/tech-stacks',
-    query: {
-      fields: ['name', 'url'],
-      populate: ['logo'],
-      filters: {
-        id: {
-          $in: ids,
-        },
-      },
-      pagination: {
-        page: 1,
-        pageSize: 25,
-      },
-    },
-  });
+  const data = await importTechStackData();
+  const techStacks = data.filter(({ id }) => ids.includes(id));
 
-  return res.data.map(({ attributes }) => ({
+  return techStacks.map(({ attributes }) => ({
     logo: parseMediaResource({
       height: 24,
       media: attributes.logo.data,
@@ -148,37 +127,14 @@ export async function fetchPortfolioDetail(
 ): Promise<PortfolioDetail | null> {
   if (!slug) return null;
 
-  const res = await fetcher<
-    PortfolioResponse,
-    PortfolioFields,
-    PortfolioRelations
-  >({
-    path,
-    query: {
-      fields: [
-        'description',
-        'initialDate',
-        'repository',
-        'slug',
-        'title',
-        'url',
-      ],
-      filters: {
-        slug: {
-          $eq: slug,
-        },
-      },
-      pagination: {
-        page: 1,
-        pageSize: 1,
-      },
-      populate: ['icon', 'media', 'techStacks'],
-    },
-  });
+  const data = await importPortfolioData();
+  const potfolioDetail = data.find(
+    item => item.attributes.slug === slug,
+  );
 
-  if (res.data.length === 0) return null;
+  if (!potfolioDetail) return null;
 
-  const { attributes } = res.data[0];
+  const { attributes } = potfolioDetail;
   const techStackIDs = (attributes.techStacks.data ?? []).map(
     item => item.id,
   );

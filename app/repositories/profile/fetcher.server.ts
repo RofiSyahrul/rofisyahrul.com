@@ -3,37 +3,27 @@ import { face } from '@cloudinary/url-gen/qualifiers/focusOn';
 import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 
 import { cld } from '~/lib/cloudinary';
-import fetcher from '~/repositories/fetcher.server';
 
-import type { ProfileContent, ProfileResponse } from './types';
-
-const profileKeys: Array<keyof ProfileContent> = [
-  'description',
-  'fullName',
-  'jobRole',
-  'photoPublicID',
-  'shortName',
-];
-
-const path = '/api/profile-contents';
+import type { ProfileContent } from './types';
 
 export async function fetchProfile() {
-  const profileContent: ProfileContent = {} as any;
-  const res = await fetcher<ProfileResponse>({ path });
+  const profileContent: ProfileContent = {
+    description: `Hi guys! Welcome to my personal web,
+      an instagram-like website. You can call me Rofi,
+      a front-end web development enthusiast who always
+      uses React.js or Svelte to build user interfaces.
+      Currently, I work at a property tech company in Indonesia.
+      You can reach me via my accounts above.`,
+    fullName: 'Syahrul Rofi',
+    jobRole: 'Software Engineer (Web Platform)',
+    photoPublicID: 'rofisyahrul.com/rofi',
+    shortName: 'Rofi',
+  };
 
-  res.data.forEach(({ attributes }) => {
-    const { content, name } = attributes;
-    if (profileKeys.includes(name)) {
-      profileContent[name] = content;
-    }
-  });
-
-  if (profileContent.photoPublicID) {
-    const profileImage = cld.image(profileContent.photoPublicID);
-    profileContent.photoPublicID = profileImage
-      .resize(fill().width(200).height(200).gravity(focusOn(face())))
-      .toURL();
-  }
+  const profileImage = cld.image(profileContent.photoPublicID);
+  profileContent.photoPublicID = profileImage
+    .resize(fill().width(200).height(200).gravity(focusOn(face())))
+    .toURL();
 
   return profileContent;
 }

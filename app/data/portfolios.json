@@ -1,0 +1,474 @@
+[
+  {
+    "id": 4,
+    "attributes": {
+      "slug": "katlaisasi",
+      "title": "Katlaisasi",
+      "description": "A game about guessing a secret word in Bahasa Indonesia. It is Indonesian version of [Wordleoff](https://wordleoff.com?utm_source=rofisyahrul.com&utm_medium=web) game. It is also multiplayer version of [Katla](https://katla.vercel.app?utm_source=rofisyahrul.com&utm_medium=web).",
+      "url": "https://katlaisasi.rofi.link",
+      "repository": "https://github.com/RofiSyahrul/katlaisasi",
+      "initialDate": "2022-09-09",
+      "highlightDescription": null,
+      "highlightMedia": {
+        "data": null
+      },
+      "media": {
+        "data": [
+          {
+            "id": 26,
+            "attributes": {
+              "name": "katlaisasi-homepage.png",
+              "alternativeText": "Katlaisasi Homepage",
+              "width": 2880,
+              "height": 1530,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/katlaisasi_homepage_9f04a2fc4b",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 25,
+            "attributes": {
+              "name": "katlaisasi-game-typing.webm",
+              "alternativeText": "Guess your answer",
+              "width": null,
+              "height": null,
+              "mime": "video/webm",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/katlaisasi_game_typing_168e98ad0a",
+                "resource_type": "video"
+              }
+            }
+          },
+          {
+            "id": 28,
+            "attributes": {
+              "name": "katlaisasi-game-victory-pov.png",
+              "alternativeText": "Game room from winner POV",
+              "width": 2880,
+              "height": 1530,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/katlaisasi_game_victory_pov_93249ad376",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 27,
+            "attributes": {
+              "name": "katlaisasi-round-finished.png",
+              "alternativeText": "Game room when a round finished",
+              "width": 2880,
+              "height": 1530,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/katlaisasi_round_finished_32cae97deb",
+                "resource_type": "image"
+              }
+            }
+          }
+        ]
+      },
+      "icon": {
+        "data": {
+          "id": 17,
+          "attributes": {
+            "name": "rho-pi.png",
+            "alternativeText": "rho-pi.png",
+            "width": 437,
+            "height": 437,
+            "mime": "image/png",
+            "provider_metadata": {
+              "public_id": "rofisyahrul.com/assets/rho_pi_330146001f",
+              "resource_type": "image"
+            }
+          }
+        }
+      },
+      "techStacks": {
+        "data": [
+          {
+            "id": 4,
+            "attributes": {
+              "name": "TypeScript"
+            }
+          },
+          {
+            "id": 5,
+            "attributes": {
+              "name": "Supabase"
+            }
+          },
+          {
+            "id": 6,
+            "attributes": {
+              "name": "Svelte"
+            }
+          },
+          {
+            "id": 7,
+            "attributes": {
+              "name": "Liveblocks"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 3,
+    "attributes": {
+      "slug": "gif-finder",
+      "title": "GIF Finder",
+      "description": "Let's find any GIFs in this web app. If you have searched GIFs there, you can turn off the internet connection and it still can serve you GIF images. **Awesome!!**",
+      "url": "https://gif.rofisyahrul.com/",
+      "repository": "https://github.com/RofiSyahrul/gif-finder",
+      "initialDate": "2022-05-09",
+      "highlightDescription": "Simple GIF Finder with offline support",
+      "highlightMedia": {
+        "data": [
+          {
+            "id": 24,
+            "attributes": {
+              "name": "gif-finder.mp4",
+              "alternativeText": "gif-finder.mp4",
+              "width": null,
+              "height": null,
+              "mime": "video/mp4",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/gif_finder_184c95ab5e",
+                "resource_type": "video"
+              }
+            }
+          }
+        ]
+      },
+      "media": {
+        "data": [
+          {
+            "id": 20,
+            "attributes": {
+              "name": "gif-finder-home.png",
+              "alternativeText": "Homepage of GIF Finder",
+              "width": 712,
+              "height": 1440,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/gif_finder_home_d2729ba8de",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 21,
+            "attributes": {
+              "name": "gif-finder-search.png",
+              "alternativeText": "Search Page of GIF Finder",
+              "width": 712,
+              "height": 1440,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/gif_finder_search_d680e2fde3",
+                "resource_type": "image"
+              }
+            }
+          }
+        ]
+      },
+      "icon": {
+        "data": {
+          "id": 17,
+          "attributes": {
+            "name": "rho-pi.png",
+            "alternativeText": "rho-pi.png",
+            "width": 437,
+            "height": 437,
+            "mime": "image/png",
+            "provider_metadata": {
+              "public_id": "rofisyahrul.com/assets/rho_pi_330146001f",
+              "resource_type": "image"
+            }
+          }
+        }
+      },
+      "techStacks": {
+        "data": [
+          {
+            "id": 1,
+            "attributes": {
+              "name": "React.js"
+            }
+          },
+          {
+            "id": 2,
+            "attributes": {
+              "name": "Next.js"
+            }
+          },
+          {
+            "id": 4,
+            "attributes": {
+              "name": "TypeScript"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 1,
+    "attributes": {
+      "slug": "rofi-link",
+      "title": "rofi.link: URL shortener",
+      "description": "It's a simple URL shortener that doesn't require users to log in when they want to shorten or prettify a URL.",
+      "url": "https://rofi.link/",
+      "repository": "https://github.com/RofiSyahrul/rofi.link",
+      "initialDate": "2021-11-27",
+      "highlightDescription": null,
+      "highlightMedia": {
+        "data": null
+      },
+      "media": {
+        "data": [
+          {
+            "id": 7,
+            "attributes": {
+              "name": "rofi.link-mobile-dark.png",
+              "alternativeText": "rofi.link UI Mobile view dark theme",
+              "width": 714,
+              "height": 1416,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/rofi_link_mobile_dark_475fdd6112",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 10,
+            "attributes": {
+              "name": "rofi.link-desktop-dark.png",
+              "alternativeText": "rofi.link UI Desktop view dark theme",
+              "width": 1530,
+              "height": 1532,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/rofi_link_desktop_dark_4e119a5cc0",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 9,
+            "attributes": {
+              "name": "rofi.link-mobile-light.png",
+              "alternativeText": "rofi.link UI Mobile view light theme",
+              "width": 714,
+              "height": 1416,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/rofi_link_mobile_light_c0b9e9a7c7",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 8,
+            "attributes": {
+              "name": "rofi.link-desktop-light.png",
+              "alternativeText": "rofi.link UI Desktop view light theme",
+              "width": 1530,
+              "height": 1532,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/rofi_link_desktop_light_24c17011b1",
+                "resource_type": "image"
+              }
+            }
+          }
+        ]
+      },
+      "icon": {
+        "data": {
+          "id": 17,
+          "attributes": {
+            "name": "rho-pi.png",
+            "alternativeText": "rho-pi.png",
+            "width": 437,
+            "height": 437,
+            "mime": "image/png",
+            "provider_metadata": {
+              "public_id": "rofisyahrul.com/assets/rho_pi_330146001f",
+              "resource_type": "image"
+            }
+          }
+        }
+      },
+      "techStacks": {
+        "data": [
+          {
+            "id": 1,
+            "attributes": {
+              "name": "React.js"
+            }
+          },
+          {
+            "id": 2,
+            "attributes": {
+              "name": "Next.js"
+            }
+          },
+          {
+            "id": 3,
+            "attributes": {
+              "name": "Tailwind CSS"
+            }
+          },
+          {
+            "id": 4,
+            "attributes": {
+              "name": "TypeScript"
+            }
+          },
+          {
+            "id": 5,
+            "attributes": {
+              "name": "Supabase"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 2,
+    "attributes": {
+      "slug": "age-calculator",
+      "title": "Caculate your age every second ",
+      "description": "It could be a web application. It also could be a chrome extension. It's just my fun project to learn how to create and publish a chrome extension. At initial stage (March 2020), it uses JavaScript because I haven't learned TypeScript. Now, it uses TypeScript to improve developer experience and catch possible common runtime errors at compile time. It uses Next.js too to make it SEO friendly.\n\nYou can visit <a href=\"https://chrome.google.com/webstore/detail/age-calculator-and-update/olndgnldoobcecnijailjdekbcpfgfeh\" target=\"_blank\">this link</a> to view this extension in chrome web store",
+      "url": "https://age.rofi.link/",
+      "repository": "https://github.com/RofiSyahrul/age-calculator",
+      "initialDate": "2020-03-14",
+      "highlightDescription": null,
+      "highlightMedia": {
+        "data": [
+          {
+            "id": 22,
+            "attributes": {
+              "name": "age-calc.mp4",
+              "alternativeText": "age-calc.mp4",
+              "width": null,
+              "height": null,
+              "mime": "video/mp4",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/age_calc_d81cb0923e",
+                "resource_type": "video"
+              }
+            }
+          },
+          {
+            "id": 23,
+            "attributes": {
+              "name": "age-calc-settings.mp4",
+              "alternativeText": "Age calculator's date of birth and colors could be customized",
+              "width": null,
+              "height": null,
+              "mime": "video/mp4",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/age_calc_settings_56a261a729",
+                "resource_type": "video"
+              }
+            }
+          }
+        ]
+      },
+      "media": {
+        "data": [
+          {
+            "id": 16,
+            "attributes": {
+              "name": "age-calc-desktop.png",
+              "alternativeText": "Age calculator desktop view",
+              "width": 2880,
+              "height": 1528,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/age_calc_desktop_a722b20ec2",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 15,
+            "attributes": {
+              "name": "age-calc-mobile-main.png",
+              "alternativeText": "Age calculator mobile view, sidebar not shown",
+              "width": 714,
+              "height": 1416,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/age_calc_mobile_main_0f2e639dd9",
+                "resource_type": "image"
+              }
+            }
+          },
+          {
+            "id": 14,
+            "attributes": {
+              "name": "age-calc-mobile-sidebar.png",
+              "alternativeText": "Age calculator mobile view shows sidebar",
+              "width": 714,
+              "height": 1416,
+              "mime": "image/png",
+              "provider_metadata": {
+                "public_id": "rofisyahrul.com/assets/age_calc_mobile_sidebar_859a37ca93",
+                "resource_type": "image"
+              }
+            }
+          }
+        ]
+      },
+      "icon": {
+        "data": {
+          "id": 17,
+          "attributes": {
+            "name": "rho-pi.png",
+            "alternativeText": "rho-pi.png",
+            "width": 437,
+            "height": 437,
+            "mime": "image/png",
+            "provider_metadata": {
+              "public_id": "rofisyahrul.com/assets/rho_pi_330146001f",
+              "resource_type": "image"
+            }
+          }
+        }
+      },
+      "techStacks": {
+        "data": [
+          {
+            "id": 1,
+            "attributes": {
+              "name": "React.js"
+            }
+          },
+          {
+            "id": 2,
+            "attributes": {
+              "name": "Next.js"
+            }
+          },
+          {
+            "id": 4,
+            "attributes": {
+              "name": "TypeScript"
+            }
+          }
+        ]
+      }
+    }
+  }
+]
