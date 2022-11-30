@@ -1,4 +1,4 @@
-import { useOutletContext } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 
 import type { HomeData } from '../types';
@@ -12,7 +12,7 @@ export default function Bio({
   component: Component = 'div',
   className,
 }: BioProps) {
-  const { profile } = useOutletContext<HomeData>();
+  const { profile } = useLoaderData<HomeData>();
 
   return (
     <Component className={clsx('w-full', className)}>

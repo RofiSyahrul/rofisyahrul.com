@@ -1,10 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import {
-  useLocation,
-  useNavigationType,
-  useOutletContext,
-} from '@remix-run/react';
+import { useLocation, useNavigationType } from '@remix-run/react';
 
 import Header from '~/components/header';
 import { useUserAgent } from '~/contexts/user-agent';
@@ -27,19 +23,12 @@ export default function HomePage() {
   const portfolioGridRef = useRef<HTMLElement>(null);
   const portfolioListRef = useRef<HTMLElement>(null);
 
-  const outleteContext = useOutletContext();
-  const isOutleteContextAvailable = !!outleteContext;
-
   const { isMobile } = useUserAgent();
   const navigationType = useNavigationType();
 
   const { pathname, state } = useLocation();
   const selectedTab: TabName =
     pathname === '/portfolio-list' && isMobile ? 'list' : 'grid';
-
-  useEffect(() => {
-    if (!isOutleteContextAvailable) window.location.reload();
-  }, [isOutleteContextAvailable]);
 
   useEffect(() => {
     if (state !== stateOfChangingTab || navigationType === 'POP') {
@@ -60,14 +49,6 @@ export default function HomePage() {
       top: tabPanelRect.top - (headerRef.current?.clientHeight ?? 0),
     });
   }, [navigationType, selectedTab, state]);
-
-  if (!isOutleteContextAvailable) {
-    return (
-      <main className='centered-page'>
-        <div className='w-20 h-20 spinner' />
-      </main>
-    );
-  }
 
   return (
     <>

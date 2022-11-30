@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Link, useOutletContext } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 
 import type { HomeData } from '../types';
@@ -17,7 +17,7 @@ interface CountsProps {
 }
 
 export default function Counts({ className }: CountsProps) {
-  const { portfolio, totalTechSkills } = useOutletContext<HomeData>();
+  const { portfolio, totalTechSkills } = useLoaderData<HomeData>();
   const totalPortfolio = portfolio.total;
 
   const countData = useMemo<CountItem[]>(() => {

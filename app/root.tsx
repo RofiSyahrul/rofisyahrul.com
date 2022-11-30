@@ -33,16 +33,11 @@ import { buildLinks } from './lib/links';
 import { buildMeta, defaultTitle } from './lib/meta';
 import { parseUserAgent } from './lib/ua-parser.server';
 import CatchPage from './pages/error/catch';
-import type { HomeData } from './pages/home/types';
-import { fetchPortfolioFeeds } from './repositories/portfolio/fetcher.server';
-import { fetchProfile } from './repositories/profile/fetcher.server';
-import { countTechSkills } from './repositories/tech-skill/fetcher.server';
 import { useInitColorMode } from './store/color-mode';
 import appStyleURL from './styles/app.css';
 import nProgressStyleURL from './styles/nprogress.css';
 import tailwindStyleURL from './styles/tailwind.css';
 import type { UserAgent } from './types/general';
-import parseURL from './utils/parse-url.server';
 
 dayjs.extend(advancedFormat);
 
@@ -156,42 +151,18 @@ export const meta: MetaFunction = () => {
 interface LoaderData {
   colorMode: ColorMode | null;
   ENV: WindowEnv;
-  generalData: HomeData | null;
   userAgent: UserAgent;
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await getColorModeSession(request);
   const userAgent = parseUserAgent(request);
-  const { pathname } = parseURL(request);
-  const shouldFetchHomeData =
-    pathname === '/' ||
-    pathname === '/portfolio-list' ||
-    (!userAgent.isMobile &&
-      (pathname.startsWith('/p/') ||
-        pathname === '/technical-skills'));
-
-  let generalData: HomeData | null = null;
-  if (shouldFetchHomeData) {
-    const [profile, portfolio, totalTechSkills] = await Promise.all([
-      fetchProfile(),
-      fetchPortfolioFeeds(),
-      countTechSkills(),
-    ]);
-
-    generalData = {
-      profile,
-      portfolio,
-      totalTechSkills,
-    };
-  }
 
   const data: LoaderData = {
     colorMode: session.getColorMode(),
     ENV: {
       APP_URL: process.env.APP_URL || 'https://rofisyahrul.com',
     },
-    generalData,
     userAgent,
   };
 
@@ -263,7 +234,6 @@ function Document({
           name='application-name'
           content={config.manifest.name}
         />
-        <meta name='robots' content='noindex' />
         <Meta />
         <Links />
         <title>
@@ -298,7 +268,7 @@ export default function App() {
     >
       <CloudinaryProvider>
         <UserAgentContext.Provider value={data.userAgent}>
-          <Outlet context={data.generalData} />
+          <Outlet />
           <script
             dangerouslySetInnerHTML={{
               __html: `window.ENV = ${JSON.stringify(data.ENV)}`,

@@ -1,10 +1,10 @@
-import { useOutletContext } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 
 import type { HomeData } from '../types';
 import PortfolioItem from './portfolio-item';
 
 export default function PortfolioList() {
-  const { portfolio } = useOutletContext<HomeData>();
+  const { portfolio } = useLoaderData<HomeData>();
 
   return (
     <ul className='flex flex-col gap-2 px-2 border-top-mobile'>

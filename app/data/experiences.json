@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "attributes": {
+      "role": "Software Engineer",
+      "company": "Pomona",
+      "companyURL": null,
+      "startDate": "2019-12-02",
+      "endDate": "2020-12-18",
+      "jobDescription": "I'm focused on front-end web development. My team work on a specific campaign from some FMCG brands. We also work on a back office tool to manage campaigns. At the end of my journey in this company, I contribute to initiate and develop new design system.",
+      "achievements": [
+        "Improve page performance of a certain campaign page",
+        ""
+      ],
+      "companyLogo": {
+        "data": {
+          "id": 12,
+          "attributes": {
+            "name": "pomona.png",
+            "alternativeText": "Pomona Logo",
+            "width": 512,
+            "height": 512,
+            "mime": "image/png",
+            "provider_metadata": {
+              "public_id": "rofisyahrul.com/assets/pomona_786d491b9e",
+              "resource_type": "image"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": 2,
+    "attributes": {
+      "role": "Software Engineer",
+      "company": "Pinhome",
+      "companyURL": "https://www.pinhome.id",
+      "startDate": "2021-01-18",
+      "endDate": null,
+      "jobDescription": "I get my first backend task in this company. However, I'm still focus on front-end web development. Here, I gain trust from my leaders to be a maintainer of some repositories related to web including [Pinhome's consumer web](https://www.pinhome.id/). I contribute to develop Pinhome's web [multi zones](https://nextjs.org/docs/advanced-features/multi-zones) at initial stage. In this company, I also maintain and develop our design system for web. Many lessons learned from my engineering fellows here. Thanks guys",
+      "achievements": null,
+      "companyLogo": {
+        "data": {
+          "id": 13,
+          "attributes": {
+            "name": "pinhome.png",
+            "alternativeText": "Pinhome Logo",
+            "width": 512,
+            "height": 512,
+            "mime": "image/png",
+            "provider_metadata": {
+              "public_id": "rofisyahrul.com/assets/pinhome_7965fcec59",
+              "resource_type": "image"
+            }
+          }
+        }
+      }
+    }
+  }
+]

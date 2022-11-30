@@ -1,11 +1,11 @@
-import { useOutletContext } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 
 import type { HomeData } from '../types';
 import PortfolioItem from './portfolio-item';
 
 export default function PortfolioGrid() {
-  const { portfolio } = useOutletContext<HomeData>();
+  const { portfolio } = useLoaderData<HomeData>();
 
   return (
     <ul

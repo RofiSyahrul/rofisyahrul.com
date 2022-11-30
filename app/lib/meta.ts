@@ -20,6 +20,7 @@ interface BuildMetaParam {
   description?: string;
   image?: string;
   keyword?: string;
+  noIndex?: boolean;
   pathname?: string;
   shouldHideTitle?: boolean;
   title?: string;
@@ -31,6 +32,7 @@ export function buildMeta({
   description = defaultDescription,
   image = defaultLightImageURL,
   keyword = defaultKeyword,
+  noIndex = false,
   pathname = '/',
   shouldHideTitle = false,
   title = defaultTitle,
@@ -59,5 +61,6 @@ export function buildMeta({
     site,
     'og:site': site,
     keywords: keyword,
+    ...(noIndex && { robots: 'noindex' }),
   };
 }

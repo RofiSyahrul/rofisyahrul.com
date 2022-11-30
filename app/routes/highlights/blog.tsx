@@ -4,7 +4,7 @@ import ComingSoonPage from '~/pages/error/coming-soon';
 const title = 'Blog Highlight';
 
 export function meta() {
-  return buildMeta({ title });
+  return buildMeta({ noIndex: true, title });
 }
 
 export default function BlogHighlightPage() {
