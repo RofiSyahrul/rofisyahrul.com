@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import VisuallyHidden from '~/components/visually-hidden';
 import ExternalLinkIcon from '~/icons/external-link';
-import type { TechSkillFields } from '~/repositories/tech-skill/types';
+import type { TechSkillFields } from '~/types/response';
 
 export default function TechSkillList() {
   const data = useLoaderData<TechSkillFields[]>();

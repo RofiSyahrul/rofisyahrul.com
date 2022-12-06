@@ -10,9 +10,9 @@ import { useUserAgent } from '~/contexts/user-agent';
 import { buildLinks } from '~/lib/links';
 import { buildMeta } from '~/lib/meta';
 import type { HomeData } from '~/pages/home/types';
-import { fetchTechSkills } from '~/repositories/tech-skill/fetcher.server';
-import type { TechSkillFields } from '~/repositories/tech-skill/types';
+import { getTechSkills } from '~/repositories/tech-skill/fetcher.server';
 import popupStyleURL from '~/styles/popup.css';
+import type { TechSkillFields } from '~/types/response';
 
 const title = 'Techincal Skills';
 
@@ -25,8 +25,7 @@ const MobileTechnicalSkillsPage = lazy(
 );
 
 export const loader: LoaderFunction = async () => {
-  const data = await fetchTechSkills();
-  return data;
+  return getTechSkills();
 };
 
 export const links: LinksFunction = () => {

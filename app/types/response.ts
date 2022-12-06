@@ -81,3 +81,25 @@ export interface PortfolioRelations {
     data: Item<TechStackFields>[] | null;
   };
 }
+
+export type PortfolioResponse = GeneralResponse<
+  PortfolioFields & PortfolioRelations
+>;
+
+export type PortfolioData = Item<
+  PortfolioFields & PortfolioRelations
+>[];
+
+export type TechStackData = Item<
+  TechStackFields & TechStackRelations
+>[];
+
+export interface TechSkillFields {
+  name: string;
+  priority: number;
+  url: string | null;
+}
+
+export type TechSkillData = Item<TechSkillFields>[];
+
+export type TechSkillResponse = GeneralResponse<TechSkillFields>;

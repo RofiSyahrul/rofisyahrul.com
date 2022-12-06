@@ -1,21 +1,8 @@
 import type { SimpleMediaItem } from '~/types/general';
 import type {
-  GeneralResponse,
-  Item,
   PortfolioFields,
-  PortfolioRelations,
-  TechStackFields,
   TechStackItem,
-  TechStackRelations,
 } from '~/types/response';
-
-export type PortfolioResponse = GeneralResponse<
-  PortfolioFields & PortfolioRelations
->;
-
-export type PortfolioData = Item<
-  PortfolioFields & PortfolioRelations
->[];
 
 export type PortfolioFeed = Pick<
   PortfolioFields,
@@ -55,7 +42,3 @@ export interface FetchPortfolioFeedsResult {
   feeds: PortfolioFeed[];
   total: number;
 }
-
-export type TechStackData = Item<
-  TechStackFields & TechStackRelations
->[];
