@@ -48,6 +48,7 @@ export default function parseMediaResource(params: {
       const video = cld.video(publicID);
       mediaURL = video
         .resize(limitPad().width(mediaWidth).height(mediaHeight))
+        .format('auto')
         .toURL();
       break;
     }
@@ -56,6 +57,7 @@ export default function parseMediaResource(params: {
       const image = cld.image(publicID);
       mediaURL = image
         .resize(limitPad().width(mediaWidth).height(mediaHeight))
+        .format('auto')
         .toURL();
     }
   }
