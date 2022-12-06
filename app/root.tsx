@@ -25,7 +25,6 @@ import type {
 
 import config from './config';
 import { storageKeys } from './constants/storage-keys';
-import { CloudinaryProvider } from './contexts/cloudinary/provider';
 import { UserAgentContext } from './contexts/user-agent/context';
 import type { ColorMode } from './lib/color-mode';
 import { getColorModeSession } from './lib/color-mode.server';
@@ -266,16 +265,14 @@ export default function App() {
       colorMode={data.colorMode}
       isMobile={data.userAgent.isMobile}
     >
-      <CloudinaryProvider>
-        <UserAgentContext.Provider value={data.userAgent}>
-          <Outlet />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-            }}
-          />
-        </UserAgentContext.Provider>
-      </CloudinaryProvider>
+      <UserAgentContext.Provider value={data.userAgent}>
+        <Outlet />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
+      </UserAgentContext.Provider>
     </Document>
   );
 }
