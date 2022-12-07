@@ -73,7 +73,7 @@ function ToggleColorModeButton() {
 function InternalHeader(
   {
     children,
-    className = 'h-12 md:16',
+    className = 'h-12 md:h-16',
     shouldHideColorModeToggle,
     title = 'rofisyahrul.com',
   }: HeaderProps,
