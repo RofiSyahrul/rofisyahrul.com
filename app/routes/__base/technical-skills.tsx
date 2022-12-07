@@ -6,6 +6,7 @@ import type {
   MetaFunction,
 } from 'remix';
 
+import Loading from '~/components/loading';
 import { useUserAgent } from '~/contexts/user-agent';
 import { buildLinks } from '~/lib/links';
 import { buildMeta } from '~/lib/meta';
@@ -49,14 +50,14 @@ export default function TechnicalSkillsPage() {
 
   if (isMobile) {
     return (
-      <Suspense>
+      <Suspense fallback={<Loading variant='whole-page' />}>
         <MobileTechnicalSkillsPage />
       </Suspense>
     );
   }
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loading variant='with-backdrop' />}>
       <DesktopTechnicalSkillsPopup />
     </Suspense>
   );

@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import { Outlet, useLocation } from '@remix-run/react';
 import type { LoaderFunction } from 'remix';
 
+import Loading from '~/components/loading';
 import { useUserAgent } from '~/contexts/user-agent';
 import type { HomeData } from '~/pages/home/types';
 import { fetchPortfolioFeeds } from '~/repositories/portfolio/fetcher.server';
@@ -38,7 +39,7 @@ export default function BaseLayout() {
   if (shouldRenderHomePage) {
     return (
       <>
-        <Suspense>
+        <Suspense fallback={<Loading variant='whole-page' />}>
           <HomePage />
         </Suspense>
         <Outlet />

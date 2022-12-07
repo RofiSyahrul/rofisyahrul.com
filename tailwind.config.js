@@ -182,6 +182,24 @@ module.exports = {
     colors,
     fill: theme => theme('colors'),
     stroke: theme => theme('colors'),
+    extend: {
+      animation: {
+        globe: 'globe 1000ms ease-in-out infinite',
+      },
+      keyframes: {
+        globe: {
+          from: {
+            transform: 'rotate3d(0, 1, 0, 0deg)',
+          },
+          '50%': {
+            transform: 'rotate3d(0, 1, 0, 180deg)',
+          },
+          to: {
+            transform: 'rotate3d(0, 1, 0, 0deg)',
+          },
+        },
+      },
+    },
   },
   variants: {
     extend: {

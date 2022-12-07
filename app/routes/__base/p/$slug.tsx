@@ -7,6 +7,7 @@ import type {
   MetaFunction,
 } from 'remix';
 
+import Loading from '~/components/loading';
 import { useUserAgent } from '~/contexts/user-agent';
 import { useBack } from '~/hooks/use-back';
 import { buildLinks } from '~/lib/links';
@@ -82,13 +83,17 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export default function PortfolioDetailPage() {
   const { isMobile } = useUserAgent();
 
-  return (
-    <Suspense>
-      {isMobile ? (
+  if (isMobile) {
+    return (
+      <Suspense fallback={<Loading variant='whole-page' />}>
         <MobilePortfolioDetailPage />
-      ) : (
-        <DesktopPortfolioDetailPopup />
-      )}
+      </Suspense>
+    );
+  }
+
+  return (
+    <Suspense fallback={<Loading variant='with-backdrop' />}>
+      <DesktopPortfolioDetailPopup />
     </Suspense>
   );
 }
