@@ -24,7 +24,7 @@
 
 .popup,
 .popup__mask {
-  @apply w-full h-full inset-0;
+  @apply w-full h-full top-0 right-0 bottom-0 left-0;
 }
 
 .popup {
