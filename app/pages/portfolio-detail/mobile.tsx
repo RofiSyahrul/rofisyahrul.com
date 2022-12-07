@@ -29,7 +29,7 @@ export default function MobilePortfolioDetailPage() {
   return (
     <div className='min-h-full'>
       <HeaderNav className='h-fit min-h-[3rem]' title={title} />
-      <main className='relative flex flex-col gap-3 pt-3 w-full max-w-5xl mx-auto'>
+      <main className='relative flex flex-col gap-3 pt-3 pb-14 w-full max-w-5xl mx-auto'>
         <Carousel mediaList={mediaList} />
         <div className='flex px-2'>
           <InitialDate />
@@ -52,7 +52,7 @@ export default function MobilePortfolioDetailPage() {
         <Suspense>
           <Links
             className={clsx(
-              'sticky bottom-0 px-2 py-3',
+              'fixed w-full bottom-0 px-2 py-3',
               'bg-neutral-bright dark:bg-neutral-dim',
               'dark:shadow-neutral-dim2 shadow-inner',
             )}
