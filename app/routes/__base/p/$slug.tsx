@@ -106,7 +106,7 @@ export function CatchBoundary() {
 
   if (isMobile) {
     return (
-      <Suspense>
+      <Suspense fallback={<Loading variant='whole-page' />}>
         <CatchPage status={status} statusText={statusText}>
           {text}
         </CatchPage>
@@ -114,10 +114,13 @@ export function CatchBoundary() {
     );
   }
 
-  const fancyStatus = String(status).replace(/0/g, '<span>0</span>');
+  const fancyStatus =
+    statusText === 'You are offline'
+      ? ''
+      : String(status).replace(/0/g, '<span>0</span>');
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loading variant='with-backdrop' />}>
       <Popup
         className='h-[400px] flex flex-col gap-2 items-center justify-center'
         isOpen
@@ -125,10 +128,12 @@ export function CatchBoundary() {
         isForceRender
         onClose={back}
       >
-        <div
-          className='fancy-text'
-          dangerouslySetInnerHTML={{ __html: fancyStatus }}
-        />
+        {fancyStatus && (
+          <div
+            className='fancy-text'
+            dangerouslySetInnerHTML={{ __html: fancyStatus }}
+          />
+        )}
         <h1>{statusText}</h1>
         <p>{text}</p>
       </Popup>

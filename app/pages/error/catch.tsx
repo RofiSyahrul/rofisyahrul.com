@@ -16,18 +16,27 @@ export default function CatchPage({
   statusText,
   title,
 }: CatchPageProps) {
-  const fancyStatus = String(status).replace(/0/g, '<span>0</span>');
+  const isOffline = statusText === 'You are offline';
+  const fancyStatus = isOffline
+    ? ''
+    : String(status).replace(/0/g, '<span>0</span>');
+
   return (
     <>
       <HeaderNav
-        title={title || `${status} ${statusText}`}
+        title={
+          title ||
+          (isOffline ? statusText : `${status} ${statusText}`)
+        }
         shouldHideColorModeToggle
       />
       <main className='centered-page'>
-        <div
-          className='fancy-text'
-          dangerouslySetInnerHTML={{ __html: fancyStatus }}
-        />
+        {fancyStatus && (
+          <div
+            className='fancy-text'
+            dangerouslySetInnerHTML={{ __html: fancyStatus }}
+          />
+        )}
         <h1>{statusText}</h1>
         {children}
       </main>

@@ -12,6 +12,7 @@ node_modules
 /public/build
 /public/browserconfig.xml
 /public/manifest.json
+/public/sw.js
 /api/index.js
 /api/index.js.map
 /app/styles/**/*.css

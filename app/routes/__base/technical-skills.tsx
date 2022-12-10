@@ -34,10 +34,10 @@ export const links: LinksFunction = () => {
 };
 
 export const meta: MetaFunction = ctx => {
-  const data: TechSkillFields[] = ctx.data || [];
+  const data: TechSkillFields[] = ctx.data;
   const homeData: HomeData | null = ctx.parentsData['routes/__base'];
 
-  const keyword = data.map(item => item.name).join(', ');
+  const keyword = data?.map?.(item => item.name).join(', ');
   const description = homeData?.totalTechSkills
     ? `${homeData.totalTechSkills} My technical skills. Here we go!`
     : undefined;
