@@ -7,6 +7,7 @@ import { useUserAgent } from '~/contexts/user-agent';
 
 import Bio from './bio';
 import Counts from './counts';
+import NowPlaying from './now-playing';
 import PortfolioGrid from './portfolios/grid';
 import PortfolioList from './portfolios/list';
 import Tablist from './tablist';
@@ -82,6 +83,7 @@ export default function HomePage() {
         >
           <PortfolioList />
         </section>
+        <NowPlaying />
       </main>
     </>
   );

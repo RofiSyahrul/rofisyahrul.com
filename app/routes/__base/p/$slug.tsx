@@ -5,7 +5,7 @@ import type {
   LinksFunction,
   LoaderFunction,
   MetaFunction,
-} from 'remix';
+} from '@remix-run/server-runtime';
 
 import Loading from '~/components/loading';
 import { useUserAgent } from '~/contexts/user-agent';

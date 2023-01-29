@@ -89,6 +89,9 @@ module.exports = {
               '&.btn-primary': {
                 color: colors.primary.dim,
               },
+              '&.btn-secondary': {
+                color: colors.secondary.dim,
+              },
             },
           },
           '.dark .btn': {
@@ -107,6 +110,9 @@ module.exports = {
             '&.btn-text': {
               '&.btn-primary': {
                 color: colors.primary.bright,
+              },
+              '&.btn-secondary': {
+                color: colors.secondary.bright,
               },
             },
           },

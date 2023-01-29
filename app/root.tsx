@@ -13,15 +13,15 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import NProgress from 'nprogress';
 import type {
   LinkDescriptor,
   LinksFunction,
   LoaderFunction,
   MetaFunction,
-} from 'remix';
+} from '@remix-run/server-runtime';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import NProgress from 'nprogress';
 
 import config from './config';
 import { storageKeys } from './constants/storage-keys';

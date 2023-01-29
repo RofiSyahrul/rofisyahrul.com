@@ -1,4 +1,4 @@
-import type { MetaFunction } from 'remix';
+import type { MetaFunction } from '@remix-run/server-runtime';
 
 import { buildMeta } from '~/lib/meta';
 import CatchPage from '~/pages/error/catch';

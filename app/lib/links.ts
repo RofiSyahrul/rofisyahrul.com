@@ -1,5 +1,5 @@
 import type { HtmlLinkDescriptor } from '@remix-run/react';
-import type { LinkDescriptor } from 'remix';
+import type { LinkDescriptor } from '@remix-run/server-runtime';
 
 type StylesheetDescriptor = string | Omit<HtmlLinkDescriptor, 'rel'>;
 

@@ -1,5 +1,5 @@
-import type { ActionFunction, LoaderFunction } from 'remix';
-import { redirect, json } from 'remix';
+import type { ActionFunction, LoaderFunction } from '@remix-run/node';
+import { redirect, json } from '@remix-run/node';
 
 import { isColorMode } from '~/lib/color-mode';
 import { getColorModeSession } from '~/lib/color-mode.server';

@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from 'remix';
+import { createCookieSessionStorage } from '@remix-run/node';
 
 import type { ColorMode } from './color-mode';
 import { isColorMode } from './color-mode';

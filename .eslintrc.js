@@ -47,6 +47,21 @@ module.exports = {
     ],
     'import/prefer-default-export': 0,
     'no-console': 'warn',
+    'no-restricted-imports': [
+      'error',
+      {
+        paths: [
+          {
+            name: '~/lib/spotify/auth.server',
+            message: `It is used for spotify lib only and couldn't be imported in other modules`,
+          },
+          {
+            name: '~/lib/spotify/fetcher.server',
+            message: `It is used for spotify lib only and couldn't be imported in other modules`,
+          },
+        ],
+      },
+    ],
     'prettier/prettier': ['error'],
   },
 };

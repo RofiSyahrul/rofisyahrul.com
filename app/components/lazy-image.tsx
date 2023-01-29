@@ -39,6 +39,7 @@ export default function LazyImage({
   return (
     <img
       decoding='async'
+      loading='lazy'
       {...props}
       alt={alt}
       ref={imageRef}
