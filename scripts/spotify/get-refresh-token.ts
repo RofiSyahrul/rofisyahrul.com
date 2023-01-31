@@ -10,6 +10,10 @@ const clientID = process.env.SPOTIFY_CLIENT_ID ?? '';
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET ?? '';
 const redirectURI = 'https://rofisyahrul.com/callback';
 
+const authScopes =
+  process.env.SPOTIFY_AUTH_SCOPES ||
+  'user-read-private user-read-currently-playing';
+
 const exec = promisify(childProcess.exec);
 
 async function authorize() {
@@ -17,7 +21,7 @@ async function authorize() {
     client_id: clientID,
     response_type: 'code',
     redirect_uri: redirectURI,
-    scope: 'user-read-private user-read-currently-playing',
+    scope: authScopes,
   });
 
   const endpoint = 'https://accounts.spotify.com/authorize';

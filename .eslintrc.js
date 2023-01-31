@@ -6,11 +6,9 @@ module.exports = {
   },
   extends: [
     '@remix-run/eslint-config',
-    'plugin:import/errors',
-    'plugin:import/warnings',
     'plugin:prettier/recommended',
   ],
-  plugins: ['prettier', 'import', 'import-alias'],
+  plugins: ['prettier', 'import-alias'],
   rules: {
     '@typescript-eslint/consistent-type-imports': 'error',
     'import-alias/import-alias': [

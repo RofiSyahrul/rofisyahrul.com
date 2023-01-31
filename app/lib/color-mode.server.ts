@@ -1,3 +1,4 @@
+// TODO: move to app/lib/cookies folder
 import { createCookieSessionStorage } from '@remix-run/node';
 
 import type { ColorMode } from './color-mode';

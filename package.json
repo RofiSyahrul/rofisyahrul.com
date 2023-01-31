@@ -20,7 +20,7 @@
     "react-dom": "^18.2.0",
     "remix": "1.11.1",
     "ua-parser-js": "^1.0.33",
-    "zustand": "^3.7.2"
+    "zustand": "4.3.2"
   },
   "description": "",
   "devDependencies": {

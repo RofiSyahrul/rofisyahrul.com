@@ -59,6 +59,7 @@ function NowPlayingDetail() {
           href={spotifyNowPlaying.trackURL}
           target='_blank'
           rel='noreferrer noopener'
+          title='Play in Spotify'
           className={clsx(
             'after:absolute after:top-0 after:left-0',
             'after:bottom-0 after:right-0 font-semibold',

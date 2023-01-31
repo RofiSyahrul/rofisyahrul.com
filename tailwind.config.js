@@ -161,6 +161,8 @@ module.exports = {
           );
         });
 
+        addVariant('child', '& > *');
+
         addUtilities({
           '.flex-basis': {
             'flex-basis': '100%',

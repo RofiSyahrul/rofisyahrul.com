@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 
 import { useFetcher } from '@remix-run/react';
-import create from 'zustand';
+import { create } from 'zustand';
 
 import type { ColorMode } from '~/lib/color-mode';
 

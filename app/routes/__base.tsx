@@ -16,15 +16,22 @@ export { links } from '~/pages/home/links';
 const HomePage = lazy(() => import('~/pages/home'));
 
 export const loader: LoaderFunction = async () => {
-  const [profile, portfolio, totalTechSkills, spotifyNowPlaying] =
-    await Promise.all([
-      fetchProfile(),
-      fetchPortfolioFeeds(),
-      countTechSkills(),
-      spotifyAPI.getNowPlaying(),
-    ]);
+  const [
+    profile,
+    portfolio,
+    totalTechSkills,
+    spotifyNowPlaying,
+    hasRecentlyPlayedTracks,
+  ] = await Promise.all([
+    fetchProfile(),
+    fetchPortfolioFeeds(),
+    countTechSkills(),
+    spotifyAPI.getNowPlaying(),
+    spotifyAPI.hasRecentlyPlayedTracks(),
+  ]);
 
   const data: HomeData = {
+    hasRecentlyPlayedTracks,
     portfolio,
     profile,
     spotifyNowPlaying,
