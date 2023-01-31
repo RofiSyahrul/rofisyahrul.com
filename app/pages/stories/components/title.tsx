@@ -20,6 +20,7 @@ function getTimeDiff(timestamp: string): string {
   const minutesRem =
     diffInMinutes - ONE_HOUR_IN_MINUTES * diffInHours;
 
+  if (diffInHours === 0) return `${minutesRem}m`;
   if (minutesRem === 0) return `${diffInHours}h`;
   return `${diffInHours}h ${minutesRem}m`;
 }
