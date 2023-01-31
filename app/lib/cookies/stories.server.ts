@@ -1,11 +1,12 @@
 import { createCookieSessionStorage } from '@remix-run/node';
 
 import {
-  sessionSecret,
   ONE_DAY_IN_HOURS,
   ONE_HOUR_IN_MINUTES,
   ONE_MINUTE_IN_SECONDS,
-} from './_constants.server';
+} from '~/constants/times';
+
+import { sessionSecret } from './_constants.server';
 
 const SESSION_NAME = 'lastOpenedStory';
 

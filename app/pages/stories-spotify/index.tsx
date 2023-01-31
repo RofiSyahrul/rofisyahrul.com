@@ -32,7 +32,6 @@ export default function StoriesSpotifyPage() {
     activeStoryState.activeStory as any;
 
   const activeSlug = activeStory.slug;
-
   const detail = activeStory.detail;
 
   const back = useBack();
@@ -100,7 +99,7 @@ export default function StoriesSpotifyPage() {
       >
         <source src={detail.previewURL} type='audio/mpeg' />
         <em className='text-xs'>
-          Your browser is not supported to play audio
+          Your browser does not support to play audio
         </em>
       </audio>
       <button
