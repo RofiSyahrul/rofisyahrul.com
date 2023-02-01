@@ -22,16 +22,19 @@ export const loader: LoaderFunction = async () => {
     totalTechSkills,
     spotifyNowPlaying,
     hasRecentlyPlayedTracks,
+    hasTopTracks,
   ] = await Promise.all([
     fetchProfile(),
     fetchPortfolioFeeds(),
     countTechSkills(),
     spotifyAPI.getNowPlaying(),
     spotifyAPI.hasRecentlyPlayedTracks(),
+    spotifyAPI.hasTopTracks(),
   ]);
 
   const data: HomeData = {
     hasRecentlyPlayedTracks,
+    hasTopTracks,
     portfolio,
     profile,
     spotifyNowPlaying,

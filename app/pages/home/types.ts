@@ -4,6 +4,7 @@ import type { SpotifyNowPlayingData } from '~/types/spotify';
 
 export interface HomeData {
   hasRecentlyPlayedTracks: boolean;
+  hasTopTracks: boolean;
   profile: ProfileContent;
   portfolio: FetchPortfolioFeedsResult;
   spotifyNowPlaying: SpotifyNowPlayingData | null;

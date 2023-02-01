@@ -9,6 +9,13 @@ export interface FetcherParams {
 export class SpotifyFetcher {
   private baseURL = 'https://api.spotify.com';
 
+  protected log(...args: any[]) {
+    if (process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.log(...args);
+    }
+  }
+
   private getURL(path: string, query?: Record<string, any>) {
     const url = new URL(path, this.baseURL);
 
@@ -41,7 +48,9 @@ export class SpotifyFetcher {
     response: Response,
   ): Promise<string> {
     const text = await response.clone().text();
-    return `Status: ${response.status}. ${text}`;
+    const message = `Status: ${response.status}. ${text}`;
+    this.log('Error.', message, '\n');
+    return message;
   }
 
   protected async fetcher<T>({
@@ -51,8 +60,24 @@ export class SpotifyFetcher {
     path,
     query,
   }: FetcherParams): Promise<T> {
-    const response = await fetch(this.getURL(path, query), {
-      body: this.getRequestBody(body),
+    const url = this.getURL(path, query);
+    const reqBody = this.getRequestBody(body);
+
+    this.log(
+      ...[
+        '\n',
+        method,
+        url,
+        reqBody ? `\nBody: ${reqBody.toString()}` : undefined,
+        headers
+          ? `\nHeaders: ${JSON.stringify(headers, null, 2)}`
+          : undefined,
+        '\n',
+      ].filter(Boolean),
+    );
+
+    const response = await fetch(url, {
+      body: reqBody,
       headers,
       method,
     });

@@ -6,6 +6,9 @@ import type {
   SpotifyRecentlyPlayedItem,
   SpotifyRecentlyPlayedResponse,
   SpotifyRecentlyPlayedTrack,
+  SpotifyTopTrackItem,
+  SpotifyTopTracksResponse,
+  SpotifyTrack,
 } from '~/types/spotify';
 
 import { SpotifyAuth } from './auth.server';
@@ -13,9 +16,15 @@ import type { FetcherParams } from './fetcher.server';
 import { SpotifyFetcher } from './fetcher.server';
 
 function isTrackHasPreview(
+  track: SpotifyTrack,
+): track is SpotifyTrack<string> {
+  return !!track.preview_url;
+}
+
+function isItemHasPreview(
   item: SpotifyRecentlyPlayedItem,
 ): item is SpotifyRecentlyPlayedItem<string> {
-  return !!item.track.preview_url;
+  return isTrackHasPreview(item.track);
 }
 
 class SpotifyAPI extends SpotifyFetcher {
@@ -80,7 +89,7 @@ class SpotifyAPI extends SpotifyFetcher {
         if (items.length >= maxItems) return true;
 
         if (
-          isTrackHasPreview(item) &&
+          isItemHasPreview(item) &&
           !trackIds.includes(item.track.id)
         ) {
           items.push(item);
@@ -128,6 +137,56 @@ class SpotifyAPI extends SpotifyFetcher {
       );
       return [];
     }
+  }
+
+  private async getTopTracksRawData(): Promise<
+    SpotifyTrack<string>[]
+  > {
+    try {
+      const res = await this.fetcher<SpotifyTopTracksResponse>({
+        path: `/v1/me/top/tracks`,
+        query: {
+          limit: 50,
+          time_range: 'short_term',
+        },
+      });
+
+      const topTracks: SpotifyTrack<string>[] = [];
+      const maxTracks = 10;
+
+      for (const track of res.items) {
+        if (topTracks.length >= maxTracks) break;
+        if (isTrackHasPreview(track)) {
+          topTracks.push(track);
+        }
+      }
+
+      return topTracks;
+    } catch (error) {
+      this.log(
+        `Failed to get my spotify top tracks. ${error?.message}`,
+      );
+      return [];
+    }
+  }
+
+  async hasTopTracks(): Promise<boolean> {
+    const topTracks = await this.getTopTracksRawData();
+    return topTracks.length > 0;
+  }
+
+  async getTopTracks(): Promise<SpotifyTopTrackItem[]> {
+    const rawTopTracks = await this.getTopTracksRawData();
+    return rawTopTracks.map((track, index) => ({
+      albumName: track.album.name,
+      artists: track.artists.map(artist => artist.name),
+      id: track.id,
+      image: track.album.images[0] ?? null,
+      previewURL: track.preview_url,
+      rank: index + 1,
+      title: track.name,
+      trackURL: track.external_urls.spotify,
+    }));
   }
 }
 

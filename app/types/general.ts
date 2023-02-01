@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 
-export interface Item {
+export interface Item<TName extends string = string> {
   iconPath: ReactNode;
-  name: string;
+  name: TName;
   url: string;
 }
 

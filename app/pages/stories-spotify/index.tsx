@@ -1,18 +1,16 @@
-import type { SyntheticEvent } from 'react';
 import { useEffect } from 'react';
-import { useRef } from 'react';
-import { useCallback } from 'react';
 
 import { useParams } from '@remix-run/react';
 import clsx from 'clsx';
 
 import LazyImage from '~/components/lazy-image';
 import VisuallyHidden from '~/components/visually-hidden';
+import { useAudio } from '~/hooks/use-audio';
 import { useBack } from '~/hooks/use-back';
 import {
   goToNextStory,
+  handleTimeUpdate,
   setActiveStory,
-  setStoryProgress,
   useActiveStory,
   useStoryIsMuted,
 } from '~/store/stories';
@@ -26,42 +24,19 @@ export default function StoriesSpotifyPage() {
   const slug = params.slug ?? '';
 
   const isMuted = useStoryIsMuted();
-  const activeStoryState = useActiveStory();
-  const { canNext } = activeStoryState;
-  const activeStory: NowPlayingStoryItem | RecentPlayedStoryItem =
-    activeStoryState.activeStory as any;
+  const { activeStory, canNext } = useActiveStory<
+    NowPlayingStoryItem | RecentPlayedStoryItem
+  >();
 
-  const activeSlug = activeStory.slug;
   const detail = activeStory.detail;
 
   const back = useBack();
-  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     setActiveStory(slug);
   }, [slug]);
 
-  const handleAudioTimeUpdate = useCallback(
-    (event: SyntheticEvent<HTMLAudioElement>) => {
-      const { currentTime, duration } = event.currentTarget;
-      setStoryProgress(activeSlug, (currentTime * 100) / duration);
-    },
-    [activeSlug],
-  );
-
-  const toggleAudioPlaying = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (audio.paused) audio.play();
-    else audio.pause();
-  }, []);
-
-  useEffect(() => {
-    if (audioRef.current?.paused) {
-      audioRef.current.play();
-    }
-  }, []);
+  const { audioRef, toggleAudioPlaying } = useAudio();
 
   return (
     <>
@@ -94,7 +69,7 @@ export default function StoriesSpotifyPage() {
         key={detail.previewURL}
         ref={audioRef}
         muted={isMuted}
-        onTimeUpdate={handleAudioTimeUpdate}
+        onTimeUpdate={handleTimeUpdate}
         onEnded={canNext ? goToNextStory : back}
       >
         <source src={detail.previewURL} type='audio/mpeg' />

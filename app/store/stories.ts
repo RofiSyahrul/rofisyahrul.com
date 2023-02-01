@@ -1,16 +1,26 @@
+import type { SyntheticEvent } from 'react';
 import { useEffect, useRef } from 'react';
 
-import { useFetcher } from '@remix-run/react';
 import { createStore, useStore } from 'zustand';
 
 import type { GenericStoryItem } from '~/types/stories';
 
+export type StoriesCloseHandler = (
+  params: Pick<StoriesStore, 'isNextStoryAvailable' | 'activeStory'>,
+) => void;
+
 export interface UseInitStoriesStoreParams {
   initialActiveIndex?: number;
+  onClose: StoriesCloseHandler;
   onNext?: (newActiveStory: GenericStoryItem) => void;
   onPrev?: (newActiveStory: GenericStoryItem) => void;
   stories: GenericStoryItem[];
 }
+
+type CreateStoriesStoreParams = Omit<
+  UseInitStoriesStoreParams,
+  'onClose'
+>;
 
 interface StoriesStore {
   activeIndex: number;
@@ -22,7 +32,7 @@ interface StoriesStore {
   isPrevStoryAvailable: boolean;
   progress: Record<string, number>;
   setActiveStory(slug: string): void;
-  setProgress(slug: string, value: number): void;
+  setActiveStoryProgress(value: number): void;
   toggleAudio(): void;
 }
 
@@ -35,11 +45,15 @@ export let goToPrevStory: StoriesStore['goToPrevStory'] = throwError;
 export let setActiveStory: StoriesStore['setActiveStory'] =
   throwError;
 
-export let setStoryProgress: StoriesStore['setProgress'] = throwError;
+let setActiveStoryProgress: StoriesStore['setActiveStoryProgress'] =
+  throwError;
+
 export let toggleStoryAudio: StoriesStore['toggleAudio'] = throwError;
 
-export let useActiveStory: () => {
-  activeStory: GenericStoryItem;
+export let useActiveStory: <
+  T extends GenericStoryItem = GenericStoryItem,
+>() => {
+  activeStory: T;
   canNext: boolean;
   canPrev: boolean;
 } = throwError;
@@ -48,12 +62,19 @@ export let useStoryProgress: (slug: string) => number = throwError;
 
 export let useStoryIsMuted: () => boolean = throwError;
 
+export function handleTimeUpdate(
+  event: SyntheticEvent<HTMLAudioElement | HTMLVideoElement>,
+) {
+  const { currentTime, duration } = event.currentTarget;
+  setActiveStoryProgress((currentTime * 100) / duration);
+}
+
 function createStoriesStore({
   initialActiveIndex = 0,
   onNext,
   onPrev,
   stories,
-}: UseInitStoriesStoreParams) {
+}: CreateStoriesStoreParams) {
   const initialProgress = stories.reduce<Record<string, number>>(
     (progressObj, story, index) => {
       progressObj[story.slug] = index < initialActiveIndex ? 100 : 0;
@@ -140,8 +161,9 @@ function createStoriesStore({
         set(getStoryNavState(newActiveIndex));
       },
 
-      setProgress(slug, value) {
-        set({ progress: { ...get().progress, [slug]: value } });
+      setActiveStoryProgress(value) {
+        const { activeStory, progress } = get();
+        set({ progress: { ...progress, [activeStory.slug]: value } });
       },
 
       toggleAudio() {
@@ -154,7 +176,7 @@ function createStoriesStore({
   goToNextStory = state.goToNextStory;
   goToPrevStory = state.goToPrevStory;
   setActiveStory = state.setActiveStory;
-  setStoryProgress = state.setProgress;
+  setActiveStoryProgress = state.setActiveStoryProgress;
   toggleStoryAudio = state.toggleAudio;
 
   return store;
@@ -162,12 +184,12 @@ function createStoriesStore({
 
 export function useInitStoriesStore({
   initialActiveIndex,
+  onClose,
   onNext,
   onPrev,
   stories,
 }: UseInitStoriesStoreParams) {
-  const { submit } = useFetcher();
-  const submitRef = useRef(submit);
+  const onCloseRef = useRef(onClose);
   const storeRef = useRef<ReturnType<typeof createStoriesStore>>();
 
   if (!storeRef.current) {
@@ -181,7 +203,7 @@ export function useInitStoriesStore({
 
   useActiveStory = () => {
     return useStore(storeRef.current!, store => ({
-      activeStory: store.activeStory,
+      activeStory: store.activeStory as any,
       canNext: store.isNextStoryAvailable,
       canPrev: store.isPrevStoryAvailable,
     }));
@@ -201,14 +223,7 @@ export function useInitStoriesStore({
       if (!store) return;
 
       const { activeStory, isNextStoryAvailable } = store.getState();
-      submitRef.current(
-        {
-          lastOpenedStory: isNextStoryAvailable
-            ? activeStory.slug
-            : '',
-        },
-        { action: '/action/set-last-opened-story', method: 'post' },
-      );
+      onCloseRef.current({ activeStory, isNextStoryAvailable });
     }
 
     window.addEventListener('beforeunload', handleCloseOrPop);

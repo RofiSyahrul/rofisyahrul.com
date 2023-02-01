@@ -19,7 +19,7 @@ import Title from './components/title';
 interface StoriesLayoutProps
   extends Pick<
     UseInitStoriesStoreParams,
-    'initialActiveIndex' | 'stories'
+    'initialActiveIndex' | 'onClose' | 'stories'
   > {
   buildStoryPathname(storySlug: string): string;
   children: ReactNode;
@@ -29,6 +29,7 @@ export default function StoriesLayout({
   buildStoryPathname,
   children,
   initialActiveIndex,
+  onClose,
   stories,
 }: StoriesLayoutProps) {
   const back = useBack();
@@ -45,6 +46,7 @@ export default function StoriesLayout({
   useInitStoriesStore({
     initialActiveIndex,
     stories,
+    onClose,
     onNext: handleNextAndPrev,
     onPrev: handleNextAndPrev,
   });

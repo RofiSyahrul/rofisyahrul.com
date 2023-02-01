@@ -22,7 +22,7 @@ export interface SpotifyArtist {
   name: string;
 }
 
-interface SpotifyTrack<TPreview = string | null> {
+export interface SpotifyTrack<TPreview = string | null> {
   album: SpotifyAlbum;
   artists: SpotifyArtist[];
   duration_ms: number;
@@ -65,4 +65,13 @@ export interface SpotifyRecentlyPlayedTrack {
   previewURL: string;
   title: string;
   trackURL: string;
+}
+
+export interface SpotifyTopTracksResponse {
+  items: SpotifyTrack[];
+}
+
+export interface SpotifyTopTrackItem
+  extends Omit<SpotifyRecentlyPlayedTrack, 'playedAt'> {
+  rank: number;
 }
