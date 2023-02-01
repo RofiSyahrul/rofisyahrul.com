@@ -1,2 +1,3 @@
 User-agent: *
-Disallow: /highlights/*
+Disallow: /highlights/
+Allow: /highlights/top-tracks/
