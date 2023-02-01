@@ -1,15 +1,15 @@
-// TODO: move to app/lib/cookies folder
 import { createCookieSessionStorage } from '@remix-run/node';
 
-import type { ColorMode } from './color-mode';
-import { isColorMode } from './color-mode';
+import {
+  ONE_YEAR_IN_DAYS,
+  ONE_DAY_IN_HOURS,
+  ONE_HOUR_IN_MINUTES,
+  ONE_MINUTE_IN_SECONDS,
+} from '~/constants/times';
 
-const sessionSecret = process.env.SESSION_SECRET ?? 'DEFAULT_SECRET';
-
-const ONE_MINUTE_IN_SECONDS = 60;
-const ONE_HOUR_IN_MINUTES = 60;
-const ONE_DAY_IN_HOURS = 24;
-const ONE_YEAR_IN_DAYS = 365;
+import { sessionSecret } from './_constants.server';
+import type { ColorMode } from '../color-mode';
+import { isColorMode } from '../color-mode';
 
 const colorModeStorage = createCookieSessionStorage({
   cookie: {

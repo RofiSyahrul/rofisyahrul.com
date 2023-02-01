@@ -2,7 +2,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { redirect, json } from '@remix-run/node';
 
 import { isColorMode } from '~/lib/color-mode';
-import { getColorModeSession } from '~/lib/color-mode.server';
+import { getColorModeSession } from '~/lib/cookies/color-mode.server';
 
 export const action: ActionFunction = async ({ request }) => {
   const colorModeSession = await getColorModeSession(request);

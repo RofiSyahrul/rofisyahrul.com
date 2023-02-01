@@ -27,7 +27,7 @@ import config from './config';
 import { storageKeys } from './constants/storage-keys';
 import { UserAgentContext } from './contexts/user-agent/context';
 import type { ColorMode } from './lib/color-mode';
-import { getColorModeSession } from './lib/color-mode.server';
+import { getColorModeSession } from './lib/cookies/color-mode.server';
 import { buildLinks } from './lib/links';
 import { buildMeta, defaultTitle } from './lib/meta';
 import { parseUserAgent } from './lib/ua-parser.server';
