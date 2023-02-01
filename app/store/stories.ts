@@ -5,7 +5,7 @@ import { createStore, useStore } from 'zustand';
 
 import type { GenericStoryItem } from '~/types/stories';
 
-interface UseInitStoriesStoreParams {
+export interface UseInitStoriesStoreParams {
   initialActiveIndex?: number;
   onNext?: (newActiveStory: GenericStoryItem) => void;
   onPrev?: (newActiveStory: GenericStoryItem) => void;
