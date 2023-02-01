@@ -13,7 +13,10 @@ function BackButton() {
   const back = useBack();
 
   return (
-    <button className='btn btn-text py-2 px-0' onClick={back}>
+    <button
+      className='btn btn-text py-2 px-0 umami--click--header__go-back'
+      onClick={back}
+    >
       <svg
         aria-label='Go Back'
         width='24'

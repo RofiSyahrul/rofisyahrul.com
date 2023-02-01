@@ -59,7 +59,7 @@ function ToggleColorModeButton() {
 
   return (
     <button
-      className='btn btn-solid btn-primary h-8'
+      className='btn btn-solid btn-primary h-8 umami--click--header__toggle-color-mode'
       onClick={toggleColorMode}
       title={toggleColorModeDesc}
     >

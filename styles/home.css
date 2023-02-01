@@ -67,6 +67,11 @@
   top: unset;
 }
 
+.portfolio-tab-panel {
+  @apply pb-2 border-b border-solid border-b-neutral-bright1 dark:border-b-neutral-dim1;
+  @apply lg:border-none lg:pb-0;
+}
+
 .portfolio-tab-panel[aria-hidden='true'] {
   @apply hidden;
 }

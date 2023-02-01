@@ -1,34 +1,24 @@
-import type { ReactNode } from 'react';
 import { useCallback } from 'react';
 
 import { useNavigate } from '@remix-run/react';
 import clsx from 'clsx';
 
-import VisuallyHidden from '~/components/visually-hidden';
 import { useBack } from '~/hooks/use-back';
-import CloseIcon from '~/icons/close';
-import type { UseInitStoriesStoreParams } from '~/store/stories';
 import { useInitStoriesStore } from '~/store/stories';
 import type { GenericStoryItem } from '~/types/stories';
 
 import AudioToggleButton from './components/audio-toggle-button';
-import InvisibleNavButtonss from './components/invisible-nav-buttons';
+import CloseButton from './components/close-button';
+import InvisibleNavButtons from './components/invisible-nav-buttons';
 import Progress from './components/progress';
 import Title from './components/title';
-
-interface StoriesLayoutProps
-  extends Pick<
-    UseInitStoriesStoreParams,
-    'initialActiveIndex' | 'onClose' | 'stories'
-  > {
-  buildStoryPathname(storySlug: string): string;
-  children: ReactNode;
-}
+import type { StoriesLayoutProps } from './types';
 
 export default function StoriesLayout({
   buildStoryPathname,
   children,
   initialActiveIndex,
+  name,
   onClose,
   stories,
 }: StoriesLayoutProps) {
@@ -82,19 +72,8 @@ export default function StoriesLayout({
           <div className='flex w-full flex-nowrap items-center justify-between px-2'>
             <Title />
             <div className='flex gap-2 items-center'>
-              <AudioToggleButton />
-              <button
-                className='btn btn-text text-inherit'
-                onClick={back}
-                title='Close'
-              >
-                <CloseIcon
-                  aria-label='Close'
-                  width={20}
-                  height={20}
-                />
-                <VisuallyHidden>Close</VisuallyHidden>
-              </button>
+              <AudioToggleButton name={name} />
+              <CloseButton name={name} />
             </div>
           </div>
         </header>
@@ -105,7 +84,7 @@ export default function StoriesLayout({
           )}
         >
           {children}
-          <InvisibleNavButtonss />
+          <InvisibleNavButtons name={name} />
         </main>
       </div>
     </div>

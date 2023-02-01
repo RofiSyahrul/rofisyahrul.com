@@ -33,7 +33,7 @@ interface StoriesStore {
   progress: Record<string, number>;
   setActiveStory(slug: string): void;
   setActiveStoryProgress(value: number): void;
-  toggleAudio(): void;
+  toggleAudio(): 'on' | 'off';
 }
 
 function throwError(): never {
@@ -53,6 +53,7 @@ export let toggleStoryAudio: StoriesStore['toggleAudio'] = throwError;
 export let useActiveStory: <
   T extends GenericStoryItem = GenericStoryItem,
 >() => {
+  activeIndex: number;
   activeStory: T;
   canNext: boolean;
   canPrev: boolean;
@@ -167,7 +168,9 @@ function createStoriesStore({
       },
 
       toggleAudio() {
-        set({ isMuted: !get().isMuted });
+        const isMuted = !get().isMuted;
+        set({ isMuted });
+        return isMuted ? 'off' : 'on';
       },
     };
   });
@@ -203,6 +206,7 @@ export function useInitStoriesStore({
 
   useActiveStory = () => {
     return useStore(storeRef.current!, store => ({
+      activeIndex: store.activeIndex,
       activeStory: store.activeStory as any,
       canNext: store.isNextStoryAvailable,
       canPrev: store.isPrevStoryAvailable,

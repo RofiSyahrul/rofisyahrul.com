@@ -1,12 +1,19 @@
 import { Link } from '@remix-run/react';
 
 import VisuallyHidden from '~/components/visually-hidden';
+import { trackSeeHighlight } from '~/lib/analytics';
 import type { HighlightName } from '~/types/highlights';
 
 import { highlightMapping } from './config';
 
 interface HighlightsProps {
   highlightNames: HighlightName[];
+}
+
+function createLinkClickHandler(name: HighlightName) {
+  return () => {
+    trackSeeHighlight(name);
+  };
 }
 
 export default function Highlights({
@@ -27,6 +34,7 @@ export default function Highlights({
                 className='w-full h-full rounded-full flex justify-center items-center bg-primary-dim dark:bg-primary-bright hover:[filter:brightness(0.8)]'
                 to={url}
                 title={label}
+                onClick={createLinkClickHandler(name)}
               >
                 {iconPath}
                 <VisuallyHidden>{label}</VisuallyHidden>

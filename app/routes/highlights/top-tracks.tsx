@@ -97,6 +97,7 @@ export default function TopTracksPage() {
   return (
     <StoriesLayout
       buildStoryPathname={buildStoryPathname}
+      name={HIGHLIGHT_TOP_TRACKS}
       onClose={handleClose}
       stories={topTrackStories}
       initialActiveIndex={initialActiveIndex}

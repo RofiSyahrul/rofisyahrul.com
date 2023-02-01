@@ -4,6 +4,7 @@ import { Link, useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 
 import VisuallyHidden from '~/components/visually-hidden';
+import { trackSeeMyStories } from '~/lib/analytics';
 import type { HomeData } from '~/pages/home/types';
 
 const imageSize = 176;
@@ -32,6 +33,7 @@ function Wrapper({ children, className, hasStories }: WrapperProps) {
         className,
       )}
       title='See my stories'
+      onClick={trackSeeMyStories}
     >
       {children}
       <VisuallyHidden>See my stories</VisuallyHidden>

@@ -57,6 +57,10 @@ module.exports = {
             name: '~/lib/spotify/fetcher.server',
             message: `It is used for spotify lib only and couldn't be imported in other modules`,
           },
+          {
+            name: '~/lib/analytics/*',
+            message: `Let's only import from '~/lib/analytics'.`,
+          },
         ],
       },
     ],

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { useParams } from '@remix-run/react';
 import type { MetaFunction } from '@remix-run/server-runtime';
@@ -8,6 +8,12 @@ import LazyImage from '~/components/lazy-image';
 import VisuallyHidden from '~/components/visually-hidden';
 import { useAudio } from '~/hooks/use-audio';
 import { useBack } from '~/hooks/use-back';
+import {
+  trackHighlightFinished,
+  trackPauseHighlightClick,
+  trackPlayHighlightClick,
+  trackURLClickInHighlight,
+} from '~/lib/analytics';
 import { buildMeta } from '~/lib/meta';
 import {
   goToNextStory,
@@ -16,6 +22,7 @@ import {
   useActiveStory,
   useStoryIsMuted,
 } from '~/store/stories';
+import { HIGHLIGHT_TOP_TRACKS } from '~/types/highlights';
 import type { TopTrackStoryItem } from '~/types/stories';
 
 import type { TopTracksLoader } from '../top-tracks';
@@ -51,14 +58,54 @@ export default function TopTrackDetailPage() {
   const back = useBack();
   const isMuted = useStoryIsMuted();
   const {
-    activeStory: { detail },
+    activeIndex,
+    activeStory: { detail, title: highlightTitle },
     canNext,
   } = useActiveStory<TopTrackStoryItem>();
 
   const { artists, image, previewURL, rank, title, trackURL } =
     detail;
 
-  const { audioRef, toggleAudioPlaying } = useAudio();
+  const handlePause = useCallback(() => {
+    trackPauseHighlightClick({
+      highlightIndex: activeIndex,
+      highlightName: HIGHLIGHT_TOP_TRACKS,
+      highlightTitle,
+    });
+  }, [activeIndex, highlightTitle]);
+
+  const handlePlay = useCallback(() => {
+    trackPlayHighlightClick({
+      highlightName: HIGHLIGHT_TOP_TRACKS,
+      highlightIndex: activeIndex,
+      highlightTitle,
+    });
+  }, [activeIndex, highlightTitle]);
+
+  const handleClickTrackTitle = useCallback(() => {
+    trackURLClickInHighlight({
+      highlightIndex: activeIndex,
+      highlightName: HIGHLIGHT_TOP_TRACKS,
+      highlightTitle,
+      targetURL: detail.trackURL,
+    });
+  }, [activeIndex, detail.trackURL, highlightTitle]);
+
+  const handleAudioEnded = useCallback(() => {
+    trackHighlightFinished({
+      highlightIndex: activeIndex,
+      highlightName: HIGHLIGHT_TOP_TRACKS,
+      highlightTitle,
+    });
+
+    if (canNext) goToNextStory();
+    else back();
+  }, [activeIndex, back, canNext, highlightTitle]);
+
+  const { audioRef, toggleAudioPlaying } = useAudio({
+    onPause: handlePause,
+    onPlay: handlePlay,
+  });
 
   const imageNode = useMemo(() => {
     if (!image?.url) return null;
@@ -97,6 +144,7 @@ export default function TopTrackDetailPage() {
           'text-4xl text-center font-bold z-10',
           'text-secondary-bright dark:text-secondary-bright',
         )}
+        onClick={handleClickTrackTitle}
       >
         {title}
       </a>
@@ -111,7 +159,7 @@ export default function TopTrackDetailPage() {
         ref={audioRef}
         muted={isMuted}
         onTimeUpdate={handleTimeUpdate}
-        onEnded={canNext ? goToNextStory : back}
+        onEnded={handleAudioEnded}
       >
         <source src={previewURL} type='audio/mpeg' />
         <em className='text-xs'>

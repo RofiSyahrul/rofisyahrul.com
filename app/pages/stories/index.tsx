@@ -35,6 +35,7 @@ export default function StoriesPage() {
     <StoriesLayout
       buildStoryPathname={buildStoryPathname}
       initialActiveIndex={initialActiveIndex}
+      name='stories'
       onClose={handleStoriesClose}
       stories={stories}
     >

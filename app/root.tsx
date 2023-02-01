@@ -19,6 +19,7 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from '@remix-run/server-runtime';
+import clsx from 'clsx';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import NProgress from 'nprogress';
@@ -37,6 +38,7 @@ import appStyleURL from './styles/app.css';
 import nProgressStyleURL from './styles/nprogress.css';
 import tailwindStyleURL from './styles/tailwind.css';
 import type { UserAgent } from './types/general';
+import { repository } from '../package.json';
 
 dayjs.extend(advancedFormat);
 
@@ -161,6 +163,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     colorMode: session.getColorMode(),
     ENV: {
       APP_URL: process.env.APP_URL || 'https://rofisyahrul.com',
+      PUBLIC_ANALYTICS_SCRIPT_URL:
+        process.env.PUBLIC_ANALYTICS_SCRIPT_URL ?? '',
+      PUBLIC_ANALYTICS_VIEW_URL:
+        process.env.PUBLIC_ANALYTICS_VIEW_URL ?? '',
+      PUBLIC_ANALYTICS_WEB_ID:
+        process.env.PUBLIC_ANALYTICS_WEB_ID ?? '',
+      REPOSITORY_URL: repository.url,
     },
     userAgent,
   };
@@ -187,9 +196,48 @@ function setColorMode() {
   root.classList.add(preferedColorMode);
 }
 
+function FooterNav({ env }: Pick<DocumentProps, 'env'>) {
+  if (!env?.PUBLIC_ANALYTICS_VIEW_URL && !env?.REPOSITORY_URL) {
+    return null;
+  }
+
+  return (
+    <nav>
+      <ul className='flex gap-2'>
+        {env.PUBLIC_ANALYTICS_VIEW_URL && (
+          <li>
+            <a
+              href={env.PUBLIC_ANALYTICS_VIEW_URL}
+              target='_blank'
+              rel='noreferrer noopener'
+              className='btn btn-text btn-primary umami--click--footer/see-analytics'
+            >
+              Analytics
+            </a>
+          </li>
+        )}
+
+        {env.REPOSITORY_URL && (
+          <li>
+            <a
+              href={env.REPOSITORY_URL}
+              target='_blank'
+              rel='noreferrer noopener'
+              className='btn btn-text btn-primary umami--click--footer/see-repository'
+            >
+              GitHub
+            </a>
+          </li>
+        )}
+      </ul>
+    </nav>
+  );
+}
+
 interface DocumentProps {
   children: ReactNode;
   colorMode?: ColorMode | null;
+  env?: WindowEnv;
   isMobile?: boolean;
   title?: string;
 }
@@ -197,6 +245,7 @@ interface DocumentProps {
 function Document({
   children,
   colorMode: colorModeProp = null,
+  env,
   isMobile,
   title = defaultTitle,
 }: DocumentProps) {
@@ -240,6 +289,16 @@ function Document({
             ? `${title} | ${defaultTitle}`
             : title}
         </title>
+        {process.env.NODE_ENV === 'production' &&
+          env?.PUBLIC_ANALYTICS_SCRIPT_URL &&
+          env?.PUBLIC_ANALYTICS_WEB_ID && (
+            <script
+              async
+              defer
+              data-website-id={env.PUBLIC_ANALYTICS_WEB_ID}
+              src={env.PUBLIC_ANALYTICS_SCRIPT_URL}
+            />
+          )}
       </head>
       <body>
         {!colorModeProp && (
@@ -250,6 +309,26 @@ function Document({
           />
         )}
         {children}
+
+        <footer
+          className={clsx(
+            'w-full max-w-5xl mx-auto border-t border-solid',
+            'border-t-neutral-bright1 dark:border-t-neutral-dim1 p-3',
+            'flex flex-col gap-2 items-center',
+          )}
+        >
+          <FooterNav env={env} />
+          <p className='text-sm'>{`© ${new Date().getFullYear()} Syahrul Rofi`}</p>
+        </footer>
+
+        {env && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.ENV = ${JSON.stringify(env)}`,
+            }}
+          />
+        )}
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
@@ -263,15 +342,11 @@ export default function App() {
   return (
     <Document
       colorMode={data.colorMode}
+      env={data.ENV}
       isMobile={data.userAgent.isMobile}
     >
       <UserAgentContext.Provider value={data.userAgent}>
         <Outlet />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        />
       </UserAgentContext.Provider>
     </Document>
   );

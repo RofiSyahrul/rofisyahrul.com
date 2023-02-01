@@ -69,6 +69,10 @@
   "license": "ISC",
   "name": "rofisyahrul.com",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RofiSyahrul/rofisyahrul.com.git"
+  },
   "scripts": {
     "build": "yarn build:css:prod && yarn build:remix",
     "build:local": "yarn clean && yarn generate-manifest && yarn build:css:prod && BUILD_ENV=local yarn build:remix",

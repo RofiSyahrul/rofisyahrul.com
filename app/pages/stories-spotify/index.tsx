@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useParams } from '@remix-run/react';
 import clsx from 'clsx';
@@ -7,6 +7,12 @@ import LazyImage from '~/components/lazy-image';
 import VisuallyHidden from '~/components/visually-hidden';
 import { useAudio } from '~/hooks/use-audio';
 import { useBack } from '~/hooks/use-back';
+import {
+  trackPauseStoryClick,
+  trackPlayStoryClick,
+  trackStoryFinished,
+  trackURLClickInStory,
+} from '~/lib/analytics';
 import {
   goToNextStory,
   handleTimeUpdate,
@@ -24,11 +30,11 @@ export default function StoriesSpotifyPage() {
   const slug = params.slug ?? '';
 
   const isMuted = useStoryIsMuted();
-  const { activeStory, canNext } = useActiveStory<
-    NowPlayingStoryItem | RecentPlayedStoryItem
-  >();
-
-  const detail = activeStory.detail;
+  const {
+    activeIndex,
+    activeStory: { detail, title },
+    canNext,
+  } = useActiveStory<NowPlayingStoryItem | RecentPlayedStoryItem>();
 
   const back = useBack();
 
@@ -36,7 +42,42 @@ export default function StoriesSpotifyPage() {
     setActiveStory(slug);
   }, [slug]);
 
-  const { audioRef, toggleAudioPlaying } = useAudio();
+  const handlePause = useCallback(() => {
+    trackPauseStoryClick({
+      storyIndex: activeIndex,
+      storyTitle: title,
+    });
+  }, [activeIndex, title]);
+
+  const handlePlay = useCallback(() => {
+    trackPlayStoryClick({
+      storyIndex: activeIndex,
+      storyTitle: title,
+    });
+  }, [activeIndex, title]);
+
+  const handleClickTrackTitle = useCallback(() => {
+    trackURLClickInStory({
+      storyIndex: activeIndex,
+      storyTitle: title,
+      targetURL: detail.trackURL,
+    });
+  }, [activeIndex, detail.trackURL, title]);
+
+  const handleAudioEnded = useCallback(() => {
+    trackStoryFinished({
+      storyIndex: activeIndex,
+      storyTitle: title,
+    });
+
+    if (canNext) goToNextStory();
+    else back();
+  }, [activeIndex, back, canNext, title]);
+
+  const { audioRef, toggleAudioPlaying } = useAudio({
+    onPause: handlePause,
+    onPlay: handlePlay,
+  });
 
   return (
     <>
@@ -58,6 +99,7 @@ export default function StoriesSpotifyPage() {
         )}
         rel='noreferrer noopener'
         title='Play in Spotify'
+        onClick={handleClickTrackTitle}
       >
         {detail.title}
       </a>
@@ -70,7 +112,7 @@ export default function StoriesSpotifyPage() {
         ref={audioRef}
         muted={isMuted}
         onTimeUpdate={handleTimeUpdate}
-        onEnded={canNext ? goToNextStory : back}
+        onEnded={handleAudioEnded}
       >
         <source src={detail.previewURL} type='audio/mpeg' />
         <em className='text-xs'>
