@@ -210,7 +210,7 @@ function FooterNav({ env }: Pick<DocumentProps, 'env'>) {
               href={env.PUBLIC_ANALYTICS_VIEW_URL}
               target='_blank'
               rel='noreferrer noopener'
-              className='btn btn-text btn-primary umami--click--footer/see-analytics'
+              className='btn btn-text btn-primary umami--click--footer__see-analytics'
             >
               Analytics
             </a>
@@ -223,7 +223,7 @@ function FooterNav({ env }: Pick<DocumentProps, 'env'>) {
               href={env.REPOSITORY_URL}
               target='_blank'
               rel='noreferrer noopener'
-              className='btn btn-text btn-primary umami--click--footer/see-repository'
+              className='btn btn-text btn-primary umami--click--footer__see-repository'
             >
               GitHub
             </a>
