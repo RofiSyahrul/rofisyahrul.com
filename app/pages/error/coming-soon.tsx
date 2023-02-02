@@ -1,3 +1,4 @@
+import Footer from '~/components/footer';
 import HeaderNav from '~/components/header-nav';
 import VisuallyHidden from '~/components/visually-hidden';
 
@@ -22,6 +23,7 @@ export default function ComingSoonPage({
         />
         <VisuallyHidden>{originalText}</VisuallyHidden>
       </main>
+      <Footer className='absolute bottom-0 left-0 right-0' />
     </>
   );
 }

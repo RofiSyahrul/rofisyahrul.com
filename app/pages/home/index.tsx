@@ -6,6 +6,7 @@ import {
   useNavigationType,
 } from '@remix-run/react';
 
+import Footer from '~/components/footer';
 import Header from '~/components/header';
 import { useUserAgent } from '~/contexts/user-agent';
 
@@ -96,6 +97,7 @@ export default function HomePage() {
         </section>
         <NowPlaying />
       </main>
+      <Footer />
     </>
   );
 }

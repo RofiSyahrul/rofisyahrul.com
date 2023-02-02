@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { ThrownResponse } from '@remix-run/react';
 
+import Footer from '~/components/footer';
 import HeaderNav from '~/components/header-nav';
 
 interface CatchPageProps
@@ -40,6 +41,7 @@ export default function CatchPage({
         <h1>{statusText}</h1>
         {children}
       </main>
+      <Footer className='absolute bottom-0 left-0 right-0' />
     </>
   );
 }

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import type { HtmlMetaDescriptor } from '@remix-run/react';
 import {
@@ -19,7 +19,6 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from '@remix-run/server-runtime';
-import clsx from 'clsx';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import NProgress from 'nprogress';
@@ -34,6 +33,7 @@ import { buildMeta, defaultTitle } from './lib/meta';
 import { parseUserAgent } from './lib/ua-parser.server';
 import CatchPage from './pages/error/catch';
 import { useInitColorMode } from './store/color-mode';
+import { setPublicEnv } from './store/public-env';
 import appStyleURL from './styles/app.css';
 import nProgressStyleURL from './styles/nprogress.css';
 import tailwindStyleURL from './styles/tailwind.css';
@@ -196,44 +196,6 @@ function setColorMode() {
   root.classList.add(preferedColorMode);
 }
 
-function FooterNav({ env }: Pick<DocumentProps, 'env'>) {
-  if (!env?.PUBLIC_ANALYTICS_VIEW_URL && !env?.REPOSITORY_URL) {
-    return null;
-  }
-
-  return (
-    <nav>
-      <ul className='flex gap-2'>
-        {env.PUBLIC_ANALYTICS_VIEW_URL && (
-          <li>
-            <a
-              href={env.PUBLIC_ANALYTICS_VIEW_URL}
-              target='_blank'
-              rel='noreferrer noopener'
-              className='btn btn-text btn-primary umami--click--footer__see-analytics'
-            >
-              Analytics
-            </a>
-          </li>
-        )}
-
-        {env.REPOSITORY_URL && (
-          <li>
-            <a
-              href={env.REPOSITORY_URL}
-              target='_blank'
-              rel='noreferrer noopener'
-              className='btn btn-text btn-primary umami--click--footer__see-repository'
-            >
-              GitHub
-            </a>
-          </li>
-        )}
-      </ul>
-    </nav>
-  );
-}
-
 interface DocumentProps {
   children: ReactNode;
   colorMode?: ColorMode | null;
@@ -251,6 +213,12 @@ function Document({
 }: DocumentProps) {
   const { colorMode } = useInitColorMode(colorModeProp);
   const transition = useTransition();
+
+  const publicEnvStoreRef = useRef<ReturnType<typeof setPublicEnv>>();
+
+  if (!publicEnvStoreRef.current) {
+    publicEnvStoreRef.current = setPublicEnv(env);
+  }
 
   useEffect(() => {
     if (transition.state === 'idle') NProgress.done();
@@ -308,18 +276,8 @@ function Document({
             }}
           />
         )}
-        {children}
 
-        <footer
-          className={clsx(
-            'w-full max-w-5xl mx-auto border-t border-solid',
-            'border-t-neutral-bright1 dark:border-t-neutral-dim1 p-3',
-            'flex flex-col gap-2 items-center',
-          )}
-        >
-          <FooterNav env={env} />
-          <p className='text-sm'>{`© ${new Date().getFullYear()} Syahrul Rofi`}</p>
-        </footer>
+        {children}
 
         {env && (
           <script
