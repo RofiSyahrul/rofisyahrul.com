@@ -1,0 +1,19 @@
+---
+import BaseHeader from '@/shared/components/header/base-header.astro';
+
+import Bio from './components/bio.astro';
+import Counts from './components/counts.astro';
+import TopFold from './components/top-fold/top-fold.astro';
+---
+
+<BaseHeader />
+
+<main
+  class='relative flex flex-col py-3 w-full max-w-5xl mx-auto gap-3'
+>
+  <TopFold />
+  <Bio section='main' />
+  <section class='sm:hidden'>
+    <Counts />
+  </section>
+</main>

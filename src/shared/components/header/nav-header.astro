@@ -1,0 +1,13 @@
+---
+import type { BaseHeaderProps } from './base-header.astro';
+import BaseHeader from './base-header.astro';
+import BackButton from './components/back-button.svelte';
+
+type Props = BaseHeaderProps;
+
+const props = Astro.props;
+---
+
+<BaseHeader {...props}>
+  <BackButton client:load />
+</BaseHeader>

@@ -1,0 +1,248 @@
+---
+import appConfig from '@/shared/app.config';
+import type { LiteralUnion } from '@/shared/types/general';
+
+interface LinkDescriptor {
+  /**
+   * Address of the hyperlink
+   */
+  href?: string;
+
+  /**
+   * Relationship between the document containing the hyperlink and the destination resource
+   */
+  rel: LiteralUnion<
+    | 'alternate'
+    | 'dns-prefetch'
+    | 'icon'
+    | 'manifest'
+    | 'modulepreload'
+    | 'next'
+    | 'pingback'
+    | 'preconnect'
+    | 'prefetch'
+    | 'preload'
+    | 'prerender'
+    | 'search'
+    | 'stylesheet',
+    string
+  >;
+
+  /**
+   * Sizes of the icons (for rel="icon")
+   */
+  sizes?: string;
+
+  /**
+   * Hint for the type of the referenced resource
+   */
+  type?: string;
+
+  /**
+   * Color to use when customizing a site's icon (for rel="mask-icon")
+   */
+  color?: string;
+}
+
+interface Props {
+  description?: string;
+  imageURL?: string;
+  keyword?: string;
+  noIndex?: boolean;
+  title?: string;
+}
+
+const DEFAULT_TITLE = 'Syahrul Rofi';
+
+const {
+  description = `A Software Engineer and frontend web development enthusiast`,
+  imageURL = `https://res.cloudinary.com/rofi/image/upload/c_fit,q_auto:eco,r_8,w_720/v1654973302/rofisyahrul.com/social-image-dark.png`,
+  keyword = `Rofi, Syahrul Rofi, Frontend Developer, Personal Web, Frontend Engineer, Front-End Engineer`,
+  noIndex = false,
+  title: titleProp = DEFAULT_TITLE,
+} = Astro.props;
+
+const site = appConfig.manifest.name;
+const canonicalURL = Astro.url.origin + Astro.url.pathname;
+
+const title =
+  titleProp === DEFAULT_TITLE || !titleProp
+    ? DEFAULT_TITLE
+    : `${titleProp} | ${DEFAULT_TITLE}`;
+
+const { colorMode, userAgent } = Astro.locals;
+const { isMobile } = userAgent;
+
+const faviconSizes = ['16', '32'];
+
+const appleIconSizes = [
+  '180',
+  '152',
+  '144',
+  '120',
+  '114',
+  '76',
+  '72',
+  '60',
+  '57',
+];
+
+const links = appConfig.manifest.iconSizes
+  .map<LinkDescriptor>(iconSize => ({
+    rel: 'icon',
+    type: 'image/png',
+    href: `/icons/android-chrome-${iconSize}x${iconSize}.png`,
+  }))
+  .concat(
+    faviconSizes.map(iconSize => {
+      const sizes = `${iconSize}x${iconSize}`;
+      return {
+        rel: 'icon',
+        type: 'image/png',
+        href: `/icons/favicon-${sizes}.png`,
+        sizes,
+      };
+    }),
+    appleIconSizes.map(iconSize => {
+      const sizes = `${iconSize}x${iconSize}`;
+      return {
+        rel: 'apple-touch-icon',
+        type: 'image/png',
+        href: `/icons/apple-touch-icon-${sizes}.png`,
+        sizes,
+      };
+    }),
+    [
+      {
+        rel: 'mask-icon',
+        href: '/icons/safari-pinned-tab.svg',
+        color: appConfig.manifest.themeColor,
+      },
+      {
+        rel: 'manifest',
+        href: '/manifest.json',
+      },
+      {
+        rel: 'icon',
+        href: '/favicon.ico',
+      },
+      {
+        rel: 'shortcut icon',
+        href: '/favicon.ico',
+      },
+    ],
+  );
+---
+
+<!doctype html>
+<html
+  class={`${colorMode} ${isMobile ? 'mobile' : 'desktop'}`}
+  lang='en'
+>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='generator' content={Astro.generator} />
+    <meta
+      name='viewport'
+      content='width=device-width, initial-scale=1.0'
+    />
+    <meta
+      name='theme-color'
+      content={appConfig.manifest.themeColor}
+    />
+    <meta name='application-name' content={appConfig.manifest.name} />
+
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta
+      name='apple-mobile-web-app-title'
+      content={appConfig.manifest.name}
+    />
+    <meta
+      name='apple-mobile-web-app-status-bar-style'
+      content='default'
+    />
+    <meta
+      name='msapplication-navbutton-color'
+      content={appConfig.manifest.themeColor}
+    />
+    <meta
+      name='msapplication-TileColor'
+      content={appConfig.manifest.backgroundColor}
+    />
+    <meta name='msapplication-starturl' content='/' />
+    <meta name='msapplication-tap-highlight' content='no' />
+
+    {
+      Object.entries(appConfig.manifest.msTileIcon).map(
+        ([size, iconName]) => {
+          const name = `msapplication-${iconName}${size}`;
+          const content = `/icons/mstile-${size}.png`;
+          return <meta name={name} content={content} />;
+        },
+      )
+    }
+
+    <title>{title}</title>
+    <meta property='og:title' content={title} />
+    <meta name='twitter:title' content={title} />
+
+    <meta property='og:url' content={canonicalURL} />
+    <link rel='canonical' href={canonicalURL} />
+
+    <meta name='description' content={description} />
+    <meta property='og:description' content={description} />
+    <meta name='twitter:description' content={description} />
+
+    <meta property='og:image' content={imageURL} />
+    <meta name='twitter:image' content={imageURL} />
+
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:creator' content='@RofiSyahrul' />
+    <meta name='twitter:site' content={site} />
+    <meta name='site' content={site} />
+    <meta property='og:site' content={site} />
+
+    <meta name='keywords' content={keyword} />
+
+    {noIndex && <meta name='robots' content='noindex' />}
+
+    {
+      links.map(link => (
+        <link
+          rel={link.rel}
+          href={link.href}
+          sizes={link.sizes}
+          type={link.type}
+          color={link.color}
+        />
+      ))
+    }
+
+    <slot name='head' />
+
+    {
+      import.meta.env.PROD &&
+        import.meta.env.PUBLIC_ANALYTICS_SCRIPT_URL &&
+        import.meta.env.PUBLIC_ANALYTICS_WEB_ID && (
+          <script
+            async
+            defer
+            data-website-id={import.meta.env.PUBLIC_ANALYTICS_WEB_ID}
+            src={import.meta.env.PUBLIC_ANALYTICS_SCRIPT_URL}
+          />
+        )
+    }
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>
+
+<script>
+  import dayjs from 'dayjs';
+  import advancedFormat from 'dayjs/plugin/advancedFormat';
+
+  dayjs.extend(advancedFormat);
+</script>
