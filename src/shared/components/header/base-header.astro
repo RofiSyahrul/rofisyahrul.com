@@ -1,5 +1,6 @@
 ---
 import clsx from 'clsx';
+
 import ToggleColorMode from './components/toggle-color-mode.svelte';
 
 export interface BaseHeaderProps {
@@ -17,7 +18,6 @@ const {
 } = Astro.props;
 
 const className = isFitHeight ? 'h-fit min-h-[3rem]' : 'h-12 md:h-16';
-const currentColorMode = Astro.locals.colorMode;
 ---
 
 <header class={clsx('relative z-10', className)}>
@@ -38,7 +38,7 @@ const currentColorMode = Astro.locals.colorMode;
         shouldHideColorModeToggle ? (
           <div style='height: 42px; width: 42px;' />
         ) : (
-          <ToggleColorMode {currentColorMode} client:load />
+          <ToggleColorMode client:load />
         )
       }
     </div>

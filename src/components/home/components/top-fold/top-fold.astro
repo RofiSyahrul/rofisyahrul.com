@@ -11,6 +11,12 @@ import Bio from '../bio.astro';
 import AvatarWrapper from './components/avatar-wrapper.svelte';
 import Socials from './components/socials.svelte';
 
+interface Props {
+  hasStories: boolean;
+}
+
+const { hasStories } = Astro.props;
+
 const fullName = 'Syahrul Rofi';
 
 const imageSize = 176;
@@ -23,7 +29,7 @@ const profileImageURL = profileImage
 <section class='flex gap-4 w-full px-3 items-center sm:items-start'>
   <AvatarWrapper
     class='w-20 h-20 rounded-full sm:w-32 sm:h-32 md:w-44 md:h-44 border-2'
-    hasStories={false}
+    hasStories={hasStories}
   >
     <img
       alt={fullName}

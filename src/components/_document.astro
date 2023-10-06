@@ -1,5 +1,6 @@
 ---
 import appConfig from '@/shared/app.config';
+import { colorMode as colorModeStore } from '@/shared/stores/color-mode';
 import type { LiteralUnion } from '@/shared/types/general';
 
 interface LinkDescriptor {
@@ -132,11 +133,14 @@ const links = appConfig.manifest.iconSizes
       },
     ],
   );
+
+colorModeStore.set(colorMode);
 ---
 
 <!doctype html>
 <html
   class={`${colorMode} ${isMobile ? 'mobile' : 'desktop'}`}
+  data-color-mode={colorMode}
   lang='en'
 >
   <head>
@@ -241,8 +245,5 @@ const links = appConfig.manifest.iconSizes
 </html>
 
 <script>
-  import dayjs from 'dayjs';
-  import advancedFormat from 'dayjs/plugin/advancedFormat';
-
-  dayjs.extend(advancedFormat);
+  import './_script';
 </script>

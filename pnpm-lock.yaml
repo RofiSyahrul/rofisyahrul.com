@@ -172,6 +172,9 @@ devDependencies:
   eslint-plugin-import-alias:
     specifier: ^1.2.0
     version: 1.2.0
+  eslint-plugin-lube:
+    specifier: ^0.2.5
+    version: 0.2.5
   eslint-plugin-prettier:
     specifier: ^5.0.0
     version: 5.0.0(eslint-config-prettier@9.0.0)(eslint@8.9.0)(prettier@3.0.3)
@@ -6894,6 +6897,10 @@ packages:
       object.entries: 1.1.6
       object.fromentries: 2.0.6
       semver: 6.3.0
+    dev: true
+
+  /eslint-plugin-lube@0.2.5:
+    resolution: {integrity: sha512-XzJGvcsS875pVOBKeJDpLtgwXDXIKsn64W6XDhN7JBmaz2cnjK1WulBm2Ro14+IWhtA7CookeQL50XOjEHpX0g==}
     dev: true
 
   /eslint-plugin-node@11.1.0(eslint@8.9.0):

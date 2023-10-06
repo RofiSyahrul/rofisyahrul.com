@@ -1,0 +1,161 @@
+---
+import clsx from 'clsx';
+
+import Image from '@/shared/components/image.svelte';
+import CarouselIndicator from '@/shared/icons/carousel-indicator.svelte';
+import ExternalLink from '@/shared/icons/external-link.svelte';
+import Github from '@/shared/icons/github.svelte';
+import type { PortfolioFeed } from '@/shared/lib/portfolio/types';
+import type { SimpleMediaItem } from '@/shared/types/general';
+
+import Link from './link.astro';
+
+interface Props
+  extends Omit<
+    PortfolioFeed,
+    'mediaList' | 'description' | 'initialDate'
+  > {
+  isInList?: boolean;
+  isMultiple: boolean;
+  shouldEagerImageLoading?: boolean;
+  thumbnail: SimpleMediaItem;
+}
+
+const {
+  isInList,
+  isMultiple,
+  repository,
+  shouldEagerImageLoading,
+  slug,
+  thumbnail,
+  title,
+  url,
+} = Astro.props;
+---
+
+<li
+  class={clsx('portfolio-item', {
+    ['portfolio-item_in-list']: isInList,
+  })}
+>
+  <a class='portfolio-item__link' title={title} href={`/p/${slug}`}>
+    <Image
+      alt={thumbnail.alt}
+      class='object-cover w-full aspect-square'
+      loading={shouldEagerImageLoading ? 'eager' : 'lazy'}
+      height={thumbnail.height}
+      src={thumbnail.url}
+      width={thumbnail.width}
+      client:idle
+    />
+
+    {!isInList && <span class='portfolio-item__title'>{title}</span>}
+
+    {
+      isMultiple && (
+        <CarouselIndicator
+          class={clsx(
+            'absolute top-2 right-2',
+            'text-neutral-dim0 dark:text-neutral-bright0',
+          )}
+        />
+      )
+    }
+  </a>
+
+  {
+    isInList && (
+      <h4
+        class={clsx(
+          'p-2 line-clamp-1 border-t',
+          'border-t-neutral-bright1 dark:border-t-neutral-dim1',
+        )}
+      >
+        {title}
+      </h4>
+    )
+  }
+
+  {
+    (repository || url) && (
+      <div class='portfolio-item__url-repo'>
+        {repository && (
+          <Link href={repository} title='Repository'>
+            <Github className='h-6 w-6 md:h-8 md:w-32' />
+            <span class='visually-hidden'>Repository</span>
+          </Link>
+        )}
+
+        {url && (
+          <Link href={url} title='Demo'>
+            <ExternalLink className='h-6 w-6 md:h-8 md:w-32' />
+            <span class='visually-hidden'>Demo</span>
+          </Link>
+        )}
+      </div>
+    )
+  }
+</li>
+
+<style>
+  .portfolio-item {
+    @apply w-full aspect-square rounded border mt-2;
+    @apply border-solid border-neutral-bright1 dark:border-neutral-dim1;
+    @apply shadow-sm relative;
+  }
+
+  .portfolio-item__link {
+    @apply relative w-full h-full cursor-pointer;
+  }
+
+  .portfolio-item__link:hover,
+  .portfolio-item:hover .portfolio-item__link {
+    opacity: 50%;
+  }
+
+  .portfolio-item_in-list img {
+    @apply my-2;
+  }
+
+  .portfolio-item__link .portfolio-item__title {
+    @apply line-clamp-2 w-0 h-0 text-center font-semibold p-1;
+    @apply absolute top-1/2 left-1/2 sm:-mt-12 md:-mt-16 mx-auto rounded;
+    @apply text-neutral-bright dark:text-neutral-dim;
+    transform: translate(-50%, -50%);
+  }
+
+  .portfolio-item__url-repo {
+    @apply hidden gap-4 absolute top-1/2 left-1/2;
+    transform: translate(-50%, -50%);
+  }
+
+  .portfolio-item_in-list .portfolio-item__url-repo {
+    @apply flex gap-2 transform-none bottom-14 left-2;
+    top: unset;
+  }
+
+  .portfolio-item__url-repo .portfolio-item__link {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .portfolio-item:hover
+      .portfolio-item__link
+      .portfolio-item__title {
+      @apply bg-neutral-dim0;
+      width: calc(100% - 1rem);
+      height: initial;
+    }
+
+    :global(.dark)
+      .portfolio-item:hover
+      .portfolio-item__link
+      .portfolio-item__title {
+      @apply bg-neutral-bright0;
+    }
+
+    .portfolio-item:hover .portfolio-item__url-repo {
+      @apply flex;
+    }
+  }
+</style>
