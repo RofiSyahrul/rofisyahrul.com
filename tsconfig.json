@@ -10,8 +10,7 @@
     "noEmit": true,
     "paths": {
       "~/*": ["./app/*"],
-      "@/*": ["./src/*"],
-      "app-styles.css": ["./styles/app.css"]
+      "@/*": ["./src/*"]
     },
     "resolveJsonModule": true,
     "strict": true,

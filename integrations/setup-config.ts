@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import type { AstroConfig, AstroIntegration } from 'astro';
+import type { ViteUserConfig } from 'astro/config';
 
 import pkg from '../package.json';
 import appConfig from '../src/shared/app.config';
@@ -108,8 +109,25 @@ export default function setupConfig(): AstroIntegration {
   return {
     name: 'setup-config',
     hooks: {
-      'astro:config:setup': async ({ injectScript }) => {
-        injectScript('page-ssr', 'import "app-styles.css";');
+      'astro:config:setup': async ({
+        injectScript,
+        updateConfig,
+      }) => {
+        injectScript('page-ssr', 'import "@/styles.css";');
+        injectScript('page', 'import "@/script";');
+
+        const viteConfig: ViteUserConfig = {
+          define: {
+            'import.meta.env.PUBLIC_REPOSITORY_URL': JSON.stringify(
+              pkg.repository.url,
+            ),
+          },
+        };
+
+        updateConfig({
+          vite: viteConfig,
+        });
+
         await generateManifest();
       },
       'astro:config:done': ({ config }) => {

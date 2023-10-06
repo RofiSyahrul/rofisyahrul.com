@@ -140,7 +140,6 @@ colorModeStore.set(colorMode);
 <!doctype html>
 <html
   class={`${colorMode} ${isMobile ? 'mobile' : 'desktop'}`}
-  data-color-mode={colorMode}
   lang='en'
 >
   <head>
@@ -233,7 +232,9 @@ colorModeStore.set(colorMode);
             async
             defer
             data-website-id={import.meta.env.PUBLIC_ANALYTICS_WEB_ID}
+            id='analytics-script'
             src={import.meta.env.PUBLIC_ANALYTICS_SCRIPT_URL}
+            is:inline
           />
         )
     }
@@ -243,7 +244,3 @@ colorModeStore.set(colorMode);
     <slot />
   </body>
 </html>
-
-<script>
-  import './_script';
-</script>
