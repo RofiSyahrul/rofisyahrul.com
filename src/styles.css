@@ -1,0 +1,172 @@
+:root {
+  --color-neutral-dim0: #0f172a;
+  --color-neutral-bright0: #f1f5f9;
+  --color-neutral-dim: #1e293b;
+  --color-neutral-bright: #e2e8f0;
+  --color-neutral-dim1: #334155;
+  --color-neutral-bright1: #cbd5e1;
+  --color-neutral-dim2: #475569;
+  --color-neutral-bright2: #94a3b8;
+
+  --color-primary-dim: #075985;
+  --color-primary-bright: #bae6fd;
+
+  --color-secondary-dim: #059669;
+  --color-secondary-bright: #6ee7b7;
+
+  --color-danger-dim: #b91c1c;
+  --color-danger-bright: #fecaca;
+  --color-danger-dim1: #dc2626;
+  --color-danger-bright1: #fca5a5;
+
+  --font-body: -apple-system, system-ui, sans-serif, 'Segoe UI',
+    Helvetica Neue, Helvetica, Roboto, Arial, 'Apple Color Emoji',
+    'Segoe UI Emoji';
+
+  height: 100%;
+}
+
+* {
+  @apply m-0 p-0;
+  color: inherit;
+}
+
+body {
+  @apply m-0 w-full h-full p-0 bg-neutral-bright dark:bg-neutral-dim text-neutral-dim dark:text-neutral-bright;
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+span,
+p {
+  margin: 0;
+  color: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+label,
+span,
+p,
+input,
+textarea {
+  @apply text-base font-normal;
+}
+
+h1,
+h2,
+h3 {
+  @apply font-semibold text-neutral-dim0 dark:text-neutral-bright0;
+}
+
+h4,
+h5 {
+  @apply font-medium;
+}
+
+h1 {
+  @apply text-3xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3,
+h4 {
+  @apply text-xl;
+}
+
+h5,
+h6 {
+  @apply text-lg;
+}
+
+input {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: white;
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+  padding: 0;
+  border: none;
+}
+
+input[type='button'i],
+input[type='submit'i],
+input[type='reset'i],
+input[type='file'i]::-webkit-file-upload-button,
+input {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: white;
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+  padding: 0;
+  border: none;
+}
+
+input:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+.centered-page {
+  width: 100%;
+  height: calc(100% - 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.fancy-text,
+.fancy-text > span {
+  @apply text-9xl sm:text-[10rem] font-bold;
+}
+
+.fancy-text_small,
+.fancy-text_small > span {
+  @apply text-7xl;
+}
+
+.fancy-text > span {
+  background-position: bottom 2.25rem right 50%;
+  background-size: 3rem;
+}
+
+.fancy-text_small > span {
+  background-size: 1.5rem;
+  background-position: bottom 1.25rem right 50%;
+}
+
+.fancy-text > span,
+.fancy-text_small > span {
+  background-image: url(https://res.cloudinary.com/rofi/image/upload/c_fit,q_auto:good,w_80/v1640233522/samples/rho-pi.png);
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 640px) {
+  .fancy-text > span {
+    background-position: bottom 2.75rem right 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .centered-page {
+    height: calc(100% - 4rem);
+  }
+}

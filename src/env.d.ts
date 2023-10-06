@@ -15,6 +15,7 @@ declare global {
     readonly PUBLIC_ANALYTICS_SCRIPT_URL: string;
     readonly PUBLIC_ANALYTICS_VIEW_URL: string;
     readonly PUBLIC_ANALYTICS_WEB_ID: string;
+    readonly PUBLIC_REPOSITORY_URL: string;
   }
 
   interface ImportMeta {

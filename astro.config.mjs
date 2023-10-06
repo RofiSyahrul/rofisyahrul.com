@@ -10,7 +10,11 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
-  scopedStyleStrategy: 'class',
+  build: {
+    format: 'file',
+  },
+  compressHTML: true,
   integrations: [svelte(), tailwind(), setupConfig()],
   output: 'server',
+  scopedStyleStrategy: 'class',
 });
