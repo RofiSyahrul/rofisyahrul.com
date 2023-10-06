@@ -1,0 +1,31 @@
+---
+import clsx from 'clsx';
+
+interface Props {
+  section: 'main' | 'top-fold';
+}
+
+const { section } = Astro.props;
+
+const isInMain = section === 'main';
+const Component = isInMain ? 'section' : 'div';
+---
+
+<Component
+  class={clsx(
+    'w-full',
+    isInMain ? 'sm:hidden px-3' : 'hidden sm:block',
+  )}
+>
+  <h3 class='font-semibold text-base'>Rofi</h3>
+  <p class='text-neutral-dim2 dark:text-neutral-bright2'>
+    Software Engineer (Web Platform)
+  </p>
+  <p>
+    Hi guys! Welcome to my personal web, an instagram-like website.
+    You can call me Rofi, a front-end web development enthusiast who
+    always uses React.js or Svelte to build user interfaces.
+    Currently, I work at a property tech company in Indonesia. You can
+    reach me via my accounts above.
+  </p>
+</Component>

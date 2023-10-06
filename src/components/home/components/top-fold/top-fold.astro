@@ -1,0 +1,53 @@
+---
+import { fill } from '@cloudinary/url-gen/actions/resize';
+import { face } from '@cloudinary/url-gen/qualifiers/focusOn';
+import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
+import clsx from 'clsx';
+
+import Verified from '@/shared/icons/verified.svelte';
+import { cld } from '@/shared/lib/cloudinary';
+
+import Bio from '../bio.astro';
+import AvatarWrapper from './components/avatar-wrapper.svelte';
+import Socials from './components/socials.svelte';
+
+const fullName = 'Syahrul Rofi';
+
+const imageSize = 176;
+const profileImage = cld.image('rofisyahrul.com/rofi');
+const profileImageURL = profileImage
+  .resize(fill().width(200).height(200).gravity(focusOn(face())))
+  .toURL();
+---
+
+<section class='flex gap-4 w-full px-3 items-center sm:items-start'>
+  <AvatarWrapper
+    class='w-20 h-20 rounded-full sm:w-32 sm:h-32 md:w-44 md:h-44 border-2'
+    hasStories={false}
+  >
+    <img
+      alt={fullName}
+      class={clsx(
+        'w-full h-full object-contain rounded-full border border-solid',
+        'border-neutral-bright1 dark:border-neutral-dim1',
+      )}
+      height={imageSize}
+      loading='eager'
+      src={profileImageURL}
+      width={imageSize}
+    />
+  </AvatarWrapper>
+
+  <div
+    class='flex flex-col flex-1 gap-2 w-auto sm:flex-wrap sm:flex-row sm:items-center'
+  >
+    <div class='flex gap-1 items-center'>
+      <h2 class='font-bold text-2xl sm:text-3xl'>{fullName}</h2>
+      <Verified class='text-primary-dim dark:text-primary-bright' />
+    </div>
+
+    <Socials />
+
+    <Bio section='top-fold' />
+  </div>
+</section>

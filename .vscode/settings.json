@@ -1,8 +1,23 @@
 {
+  "[astro]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "typescript.preferences.quoteStyle": "single"
+  },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.suggest.insertMode": "replace"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode",
+    "editor.formatOnSave": true
   },
   "codemetrics.nodeconfiguration.ArrowFunction": 0,
   "codemetrics.nodeconfiguration.BreakStatement": 0,
@@ -20,17 +35,16 @@
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.renderWhitespace": "boundary",
-  "editor.rulers": [
-    70
-  ],
+  "editor.rulers": [70],
   "editor.tabSize": 2,
   "eslint.validate": [
+    "astro",
     "javascript",
     "javascriptreact",
+    "svelte",
     "typescript",
     "typescriptreact"
   ],
-  "eslint.packageManager": "yarn",
   "extensions.ignoreRecommendations": false,
   "files.autoSave": "off",
   "files.encoding": "utf8",
