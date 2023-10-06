@@ -1,0 +1,51 @@
+---
+import clsx from 'clsx';
+
+interface Props {
+  isAbsoluteBottom?: boolean;
+}
+
+const { isAbsoluteBottom } = Astro.props;
+
+const analyticsViewURL = import.meta.env.PUBLIC_ANALYTICS_VIEW_URL;
+const repoURL = import.meta.env.PUBLIC_REPOSITORY_URL;
+---
+
+<footer
+  class={clsx(
+    'w-full max-w-5xl mx-auto border-t border-solid',
+    'border-t-neutral-bright1 dark:border-t-neutral-dim1 p-3',
+    'flex flex-col gap-2 items-center',
+    { ['absolute bottom-0 left-0 right-0']: isAbsoluteBottom },
+  )}
+>
+  <nav>
+    <ul class='flex gap-2'>
+      <li>
+        <a
+          href={analyticsViewURL}
+          target='_blank'
+          rel='noreferrer noopener'
+          class='btn btn-text btn-primary umami--click--footer__see-analytics'
+        >
+          Analytics
+        </a>
+      </li>
+
+      <li>
+        <a
+          href={repoURL}
+          target='_blank'
+          rel='noreferrer noopener'
+          class='btn btn-text btn-primary umami--click--footer__see-repository'
+        >
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <p class='text-sm'>
+    {`© ${new Date().getFullYear()} Syahrul Rofi`}
+  </p>
+</footer>

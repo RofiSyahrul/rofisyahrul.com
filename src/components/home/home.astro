@@ -1,4 +1,5 @@
 ---
+import Footer from '@/shared/components/footer.astro';
 import BaseHeader from '@/shared/components/header/base-header.astro';
 
 import Bio from './components/bio.astro';
@@ -32,3 +33,5 @@ const { feeds, total: totalPortfolio } = portfolio;
 
   <PortfolioGrid {feeds} />
 </main>
+
+<Footer />
