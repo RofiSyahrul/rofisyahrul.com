@@ -31,7 +31,7 @@ export default function handleRequest(
           responseHeaders.set('Connection', 'keep-alive');
 
           resolve(
-            new Response(body as any, {
+            new Response(body as unknown as BodyInit, {
               status: didError ? 500 : responseStatusCode,
               headers: responseHeaders,
             }),

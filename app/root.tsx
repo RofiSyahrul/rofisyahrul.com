@@ -23,6 +23,7 @@ import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import NProgress from 'nprogress';
 
+import { repository } from '../package.json';
 import config from './config';
 import { storageKeys } from './constants/storage-keys';
 import { UserAgentContext } from './contexts/user-agent/context';
@@ -38,7 +39,6 @@ import appStyleURL from './styles/app.css';
 import nProgressStyleURL from './styles/nprogress.css';
 import tailwindStyleURL from './styles/tailwind.css';
 import type { UserAgent } from './types/general';
-import { repository } from '../package.json';
 
 dayjs.extend(advancedFormat);
 

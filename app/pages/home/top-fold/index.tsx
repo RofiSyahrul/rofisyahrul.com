@@ -3,11 +3,11 @@ import { useLoaderData } from '@remix-run/react';
 import VisuallyHidden from '~/components/visually-hidden';
 import VerifiedIcon from '~/icons/verified';
 
-import Avatar from './components/avatar';
-import { socials } from './config';
 import Bio from '../bio';
 import Counts from '../counts';
 import type { HomeData } from '../types';
+import Avatar from './components/avatar';
+import { socials } from './config';
 
 export default function TopFold() {
   const { profile } = useLoaderData<HomeData>();

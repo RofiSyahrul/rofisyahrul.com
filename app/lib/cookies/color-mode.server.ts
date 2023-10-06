@@ -7,9 +7,9 @@ import {
   ONE_MINUTE_IN_SECONDS,
 } from '~/constants/times';
 
-import { sessionSecret } from './_constants.server';
 import type { ColorMode } from '../color-mode';
 import { isColorMode } from '../color-mode';
+import { sessionSecret } from './_constants.server';
 
 const colorModeStorage = createCookieSessionStorage({
   cookie: {

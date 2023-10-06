@@ -9,14 +9,29 @@
     "moduleResolution": "node",
     "noEmit": true,
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+      "@/*": ["./src/*"],
+      "app-styles.css": ["./styles/app.css"]
     },
     "resolveJsonModule": true,
     "strict": true,
-    "target": "ES2019",
+    "target": "ESNext",
     "useUnknownInCatchVariables": false,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    ".eslintrc.cjs",
+    ".prettierrc.cjs",
+    "astro.config.mjs",
+    "postcss.config.cjs",
+    "remix.env.d.ts",
+    "svelte.config.js",
+    "tailwind.config.cjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/env.d.ts",
+    "src/**/*.astro",
+    "src/**/*.svelte"
+  ]
 }
