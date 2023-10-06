@@ -5,28 +5,23 @@
   import { ONE_YEAR_IN_DAYS } from '@/shared/constants/times';
   import Moon from '@/shared/icons/moon.svelte';
   import Sun from '@/shared/icons/sun.svelte';
-  import type { ColorMode } from '@/shared/lib/color-mode';
-
-  export let currentColorMode: ColorMode;
+  import { colorMode } from '@/shared/stores/color-mode';
 
   const description = 'Change color mode';
 
-  function getOppositeColorMode(colorMode: ColorMode): ColorMode {
-    return colorMode === 'dark' ? 'light' : 'dark';
-  }
-
   function toggleColorMode() {
-    const prevColorMode = currentColorMode;
-    currentColorMode = getOppositeColorMode(currentColorMode);
+    const prevColorMode = $colorMode;
+    const newColorMode = prevColorMode === 'dark' ? 'light' : 'dark';
 
-    Cookies.set(COLOR_MODE, currentColorMode, {
+    $colorMode = newColorMode;
+    Cookies.set(COLOR_MODE, newColorMode, {
       expires: ONE_YEAR_IN_DAYS,
       path: '/',
       sameSite: 'Lax',
     });
 
     document.documentElement.classList.remove(prevColorMode);
-    document.documentElement.classList.add(currentColorMode);
+    document.documentElement.classList.add(newColorMode);
   }
 </script>
 

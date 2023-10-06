@@ -1,0 +1,40 @@
+---
+import clsx from 'clsx';
+
+import type { PortfolioFeed } from '@/shared/lib/portfolio/types';
+
+import PortfolioItem from './components/portfolio-item.astro';
+
+interface Props {
+  feeds: PortfolioFeed[];
+}
+
+const { feeds } = Astro.props;
+const { isMobile } = Astro.locals.userAgent;
+const maxEagerImageIndex = isMobile ? 1 : 2;
+---
+
+<ul
+  class={clsx(
+    'grid grid-cols-2 px-0.5 gap-1 border-top-mobile',
+    'sm:grid-cols-3 sm:px-3 sm:gap-3 md:gap-6 lg:gap-8',
+  )}
+>
+  {
+    feeds.map((feed, index) => {
+      if (!feed.mediaList.length) return null;
+
+      return (
+        <PortfolioItem
+          isMultiple={feed.mediaList.length > 1}
+          repository={feed.repository}
+          shouldEagerImageLoading={index <= maxEagerImageIndex}
+          slug={feed.slug}
+          thumbnail={feed.mediaList[0]}
+          title={feed.title}
+          url={feed.url}
+        />
+      );
+    })
+  }
+</ul>

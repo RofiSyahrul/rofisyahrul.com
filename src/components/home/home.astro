@@ -3,7 +3,16 @@ import BaseHeader from '@/shared/components/header/base-header.astro';
 
 import Bio from './components/bio.astro';
 import Counts from './components/counts.astro';
+import PortfolioGrid from './components/portfolio/portfolio-grid.astro';
 import TopFold from './components/top-fold/top-fold.astro';
+import type { HomeData } from './types';
+
+type Props = HomeData;
+
+const { portfolio, hasRecentlyPlayedTracks, spotifyNowPlaying } =
+  Astro.props;
+
+const { feeds, total: totalPortfolio } = portfolio;
 ---
 
 <BaseHeader />
@@ -11,9 +20,15 @@ import TopFold from './components/top-fold/top-fold.astro';
 <main
   class='relative flex flex-col py-3 w-full max-w-5xl mx-auto gap-3'
 >
-  <TopFold />
+  <TopFold
+    hasStories={hasRecentlyPlayedTracks && !!spotifyNowPlaying}
+  />
+
   <Bio section='main' />
+
   <section class='sm:hidden'>
     <Counts />
   </section>
+
+  <PortfolioGrid {feeds} />
 </main>
