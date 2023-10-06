@@ -1,6 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import {
+    cancelIdleCallback,
+    requestIdleCallback,
+  } from '@/shared/lib/client/idle-callback';
   import observeIntersection from '@/shared/lib/client/observe-intersection';
   import { colorMode } from '@/shared/stores/color-mode';
   import noop from '@/shared/utils/noop';
@@ -39,10 +43,17 @@
   onMount(() => {
     if (isEager) return noop;
 
-    return observeIntersection(imgElement, handleIntersection, {
-      root: observerRoot,
-      rootMargin: observerRootMargin,
-    });
+    if (typeof IntersectionObserver === 'function') {
+      return observeIntersection(imgElement, handleIntersection, {
+        root: observerRoot,
+        rootMargin: observerRootMargin,
+      });
+    } else {
+      const idleCallback = requestIdleCallback(() => {
+        isVisible = true;
+      });
+      return () => cancelIdleCallback(idleCallback);
+    }
   });
 
   $: if (isVisible || isEager) {
