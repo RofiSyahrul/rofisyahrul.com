@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const plugin = require('tailwindcss/plugin');
 
 const colors = {
@@ -32,7 +33,7 @@ const colors = {
 
 /** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
-  content: ['./app/**/*.{ts,tsx}'],
+  content: ['./app/**/*.{ts,tsx}', './src/**/*.{astro,svelte}'],
   darkMode: 'class',
   plugins: [
     require('@tailwindcss/line-clamp'),
@@ -127,6 +128,12 @@ module.exports = {
           '.dark .spinner': {
             borderTopColor: colors.primary.bright,
             borderLeftColor: colors.primary.bright,
+          },
+          '.visually-hidden': {
+            display: 'block',
+            width: 0,
+            height: 0,
+            overflow: 'hidden',
           },
         });
 
