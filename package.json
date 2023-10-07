@@ -6,6 +6,7 @@
     "@astrojs/node": "^6.0.3",
     "@astrojs/svelte": "^4.0.3",
     "@astrojs/tailwind": "^5.0.1",
+    "@astrojs/vercel": "^5.0.2",
     "@cloudinary/react": "^1.4.1",
     "@cloudinary/url-gen": "^1.8.0",
     "@remix-run/node": "1.11.1",
