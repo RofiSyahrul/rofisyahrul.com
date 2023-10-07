@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 
 import { COLOR_MODE } from './shared/constants/cookie-keys';
 import { requestIdleCallback } from './shared/lib/client/idle-callback';
+import { setInternalRoutingStorage } from './shared/lib/client/storage';
 import { isColorMode, type ColorMode } from './shared/lib/color-mode';
 import { colorMode } from './shared/stores/color-mode';
 
@@ -54,6 +55,7 @@ function initClientSide(win: Window, doc: Document) {
   initColorModeStore(win, doc);
 
   doc.addEventListener('astro:after-swap', () => {
+    setInternalRoutingStorage();
     initColorModeStore(win, doc);
   });
 }

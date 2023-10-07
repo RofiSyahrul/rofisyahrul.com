@@ -1,4 +1,6 @@
 ---
+import ChevronLeft from '@/shared/icons/chevron-left.svelte';
+
 import type { BaseHeaderProps } from './base-header.astro';
 import BaseHeader from './base-header.astro';
 import BackButton from './components/back-button.svelte';
@@ -6,8 +8,12 @@ import BackButton from './components/back-button.svelte';
 type Props = BaseHeaderProps;
 
 const props = Astro.props;
+const backLabel = 'Go Back';
 ---
 
 <BaseHeader {...props}>
-  <BackButton client:load />
+  <BackButton title={backLabel} client:load>
+    <ChevronLeft ariaLabel={backLabel} />
+    <span class='visually-hidden'>{backLabel}</span>
+  </BackButton>
 </BaseHeader>

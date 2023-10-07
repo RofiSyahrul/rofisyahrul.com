@@ -1,0 +1,12 @@
+---
+import Document from '@/components/_document.astro';
+import Error from '@/components/error/error.astro';
+
+export const prerender = true;
+
+const title = 'Not Found';
+---
+
+<Document {title} disabledCanonicalURL>
+  <Error {title} variant='notFound' />
+</Document>
