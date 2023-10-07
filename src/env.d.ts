@@ -6,7 +6,7 @@ import type { UserAgent } from './shared/types/user-agent';
 declare global {
   namespace App {
     interface Locals {
-      colorMode: ColorMode;
+      colorMode: ColorMode | null;
       userAgent: UserAgent;
     }
   }

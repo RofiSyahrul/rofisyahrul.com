@@ -1,4 +1,7 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+import clsx from 'clsx';
+
 import appConfig from '@/shared/app.config';
 import { colorMode as colorModeStore } from '@/shared/stores/color-mode';
 import type { LiteralUnion } from '@/shared/types/general';
@@ -7,7 +10,7 @@ interface LinkDescriptor {
   /**
    * Address of the hyperlink
    */
-  href?: string;
+  href: string;
 
   /**
    * Relationship between the document containing the hyperlink and the destination resource
@@ -134,54 +137,93 @@ const links = appConfig.manifest.iconSizes
     ],
   );
 
-colorModeStore.set(colorMode);
+colorModeStore.set(colorMode ?? 'light');
 ---
 
 <!doctype html>
 <html
-  class={`${colorMode} ${isMobile ? 'mobile' : 'desktop'}`}
+  class={clsx(`${isMobile ? 'mobile' : 'desktop'}`, colorMode)}
+  data-color-mode={colorMode}
   lang='en'
 >
   <head>
-    <meta charset='UTF-8' />
-    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <meta name='generator' content={Astro.generator} />
+    <ViewTransitions fallback='animate' />
+
+    <meta data-astro-transition-persist='charset' charset='UTF-8' />
     <meta
+      data-astro-transition-persist='http-equiv'
+      http-equiv='X-UA-Compatible'
+      content='IE=edge'
+    />
+    <meta
+      data-astro-transition-persist='generator'
+      name='generator'
+      content={Astro.generator}
+    />
+    <meta
+      data-astro-transition-persist='viewport'
       name='viewport'
       content='width=device-width, initial-scale=1.0'
     />
     <meta
+      data-astro-transition-persist='theme-color'
       name='theme-color'
       content={appConfig.manifest.themeColor}
     />
-    <meta name='application-name' content={appConfig.manifest.name} />
-
-    <meta name='apple-mobile-web-app-capable' content='yes' />
     <meta
+      data-astro-transition-persist='app-name'
+      name='application-name'
+      content={appConfig.manifest.name}
+    />
+
+    <meta
+      data-astro-transition-persist='apple-mobile-web-app-capable'
+      name='apple-mobile-web-app-capable'
+      content='yes'
+    />
+    <meta
+      data-astro-transition-persist='apple-mobile-web-app-title'
       name='apple-mobile-web-app-title'
       content={appConfig.manifest.name}
     />
     <meta
+      data-astro-transition-persist='apple-mobile-web-app-status-bar-style'
       name='apple-mobile-web-app-status-bar-style'
       content='default'
     />
     <meta
+      data-astro-transition-persist='msapplication-navbutton-color'
       name='msapplication-navbutton-color'
       content={appConfig.manifest.themeColor}
     />
     <meta
+      data-astro-transition-persist='msapplication-TileColor'
       name='msapplication-TileColor'
       content={appConfig.manifest.backgroundColor}
     />
-    <meta name='msapplication-starturl' content='/' />
-    <meta name='msapplication-tap-highlight' content='no' />
+    <meta
+      data-astro-transition-persist='msapplication-starturl'
+      name='msapplication-starturl'
+      content='/'
+    />
+    <meta
+      data-astro-transition-persist='msapplication-tap-highlight'
+      name='msapplication-tap-highlight'
+      content='no'
+    />
 
     {
       Object.entries(appConfig.manifest.msTileIcon).map(
         ([size, iconName]) => {
           const name = `msapplication-${iconName}${size}`;
           const content = `/icons/mstile-${size}.png`;
-          return <meta name={name} content={content} />;
+          return (
+            <meta
+              data-astro-transition-persist={name}
+              name={name}
+              content={content}
+            />
+          );
         },
       )
     }
@@ -200,11 +242,31 @@ colorModeStore.set(colorMode);
     <meta property='og:image' content={imageURL} />
     <meta name='twitter:image' content={imageURL} />
 
-    <meta name='twitter:card' content='summary_large_image' />
-    <meta name='twitter:creator' content='@RofiSyahrul' />
-    <meta name='twitter:site' content={site} />
-    <meta name='site' content={site} />
-    <meta property='og:site' content={site} />
+    <meta
+      data-astro-transition-persist='twitter:card'
+      name='twitter:card'
+      content='summary_large_image'
+    />
+    <meta
+      data-astro-transition-persist='twitter:creator'
+      name='twitter:creator'
+      content='@RofiSyahrul'
+    />
+    <meta
+      data-astro-transition-persist='twitter:site'
+      name='twitter:site'
+      content={site}
+    />
+    <meta
+      data-astro-transition-persist='site'
+      name='site'
+      content={site}
+    />
+    <meta
+      data-astro-transition-persist='og:site'
+      property='og:site'
+      content={site}
+    />
 
     <meta name='keywords' content={keyword} />
 
@@ -213,6 +275,13 @@ colorModeStore.set(colorMode);
     {
       links.map(link => (
         <link
+          data-astro-transition-persist={
+            link.rel +
+            '-' +
+            (link.type || 'untyped') +
+            '-' +
+            link.href
+          }
           rel={link.rel}
           href={link.href}
           sizes={link.sizes}
@@ -231,10 +300,12 @@ colorModeStore.set(colorMode);
           <script
             async
             defer
+            data-astro-transition-persist={
+              'analytics-' + import.meta.env.PUBLIC_ANALYTICS_WEB_ID
+            }
             data-website-id={import.meta.env.PUBLIC_ANALYTICS_WEB_ID}
             id='analytics-script'
             src={import.meta.env.PUBLIC_ANALYTICS_SCRIPT_URL}
-            is:inline
           />
         )
     }
