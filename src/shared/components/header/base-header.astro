@@ -5,17 +5,12 @@ import ToggleColorMode from './components/toggle-color-mode.svelte';
 
 export interface BaseHeaderProps {
   isFitHeight?: boolean;
-  shouldHideColorModeToggle?: boolean;
   title?: string;
 }
 
 type Props = BaseHeaderProps;
 
-const {
-  isFitHeight,
-  shouldHideColorModeToggle,
-  title = 'rofisyahrul.com',
-} = Astro.props;
+const { isFitHeight, title = 'rofisyahrul.com' } = Astro.props;
 
 const className = isFitHeight ? 'h-fit min-h-[3rem]' : 'h-12 md:h-16';
 ---
@@ -31,16 +26,8 @@ const className = isFitHeight ? 'h-fit min-h-[3rem]' : 'h-12 md:h-16';
       )}
     >
       <slot />
-
       <h1 class='font-bold text-lg'>{title}</h1>
-
-      {
-        shouldHideColorModeToggle ? (
-          <div style='height: 42px; width: 42px;' />
-        ) : (
-          <ToggleColorMode client:load />
-        )
-      }
+      <ToggleColorMode client:load />
     </div>
   </div>
 </header>

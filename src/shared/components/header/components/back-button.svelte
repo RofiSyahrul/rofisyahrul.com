@@ -1,8 +1,13 @@
 <script lang="ts">
-  import ChevronLeft from '@/shared/icons/chevron-left.svelte';
+  import goBack from '@/shared/lib/client/go-back';
+
+  export let title = '';
 </script>
 
-<button class="btn btn-text py-2 px-0 umami--click--header__go-back">
-  <ChevronLeft ariaLabel="Go Back" />
-  <span class="visually-hidden">Go Back</span>
+<button
+  class="btn btn-text py-2 px-0 umami--click--header__go-back"
+  {title}
+  on:click={goBack}
+>
+  <slot />
 </button>

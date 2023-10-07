@@ -1,0 +1,43 @@
+---
+import Footer from '@/shared/components/footer.astro';
+import NavHeader from '@/shared/components/header/nav-header.astro';
+
+interface Props {
+  title?: string;
+  variant: 'notFound' | 'offline' | 'serverError';
+}
+
+interface Config {
+  status?: '404' | '500';
+  statusText: string;
+}
+
+const variantConfigMapping: Record<Props['variant'], Config> = {
+  notFound: {
+    status: '404',
+    statusText: 'Not Found',
+  },
+  offline: {
+    statusText: 'You are offline',
+  },
+  serverError: {
+    status: '500',
+    statusText: 'Internal Server Error',
+  },
+};
+
+const { title, variant } = Astro.props;
+const { status, statusText } = variantConfigMapping[variant];
+
+const headerTitle = title || statusText;
+const fancyStatus = status?.replaceAll(/0/g, '<span>0</span>');
+---
+
+<NavHeader title={headerTitle} />
+
+<main class='centered-page'>
+  {fancyStatus && <div class='fancy-text' set:html={fancyStatus} />}
+  <h1>{statusText}</h1>
+</main>
+
+<Footer isAbsoluteBottom />

@@ -1,0 +1,10 @@
+---
+import Document from '@/components/_document.astro';
+import Error from '@/components/error/error.astro';
+
+export const prerender = true;
+---
+
+<Document title='Error!!' disabledCanonicalURL>
+  <Error title='My Bad..' variant='serverError' />
+</Document>

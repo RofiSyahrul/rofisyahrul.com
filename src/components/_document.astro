@@ -50,6 +50,7 @@ interface LinkDescriptor {
 
 interface Props {
   description?: string;
+  disabledCanonicalURL?: boolean;
   imageURL?: string;
   keyword?: string;
   noIndex?: boolean;
@@ -60,6 +61,7 @@ const DEFAULT_TITLE = 'Syahrul Rofi';
 
 const {
   description = `A Software Engineer and frontend web development enthusiast`,
+  disabledCanonicalURL,
   imageURL = `https://res.cloudinary.com/rofi/image/upload/c_fit,q_auto:eco,r_8,w_720/v1654973302/rofisyahrul.com/social-image-dark.png`,
   keyword = `Rofi, Syahrul Rofi, Frontend Developer, Personal Web, Frontend Engineer, Front-End Engineer`,
   noIndex = false,
@@ -232,8 +234,14 @@ colorModeStore.set(colorMode ?? 'light');
     <meta property='og:title' content={title} />
     <meta name='twitter:title' content={title} />
 
-    <meta property='og:url' content={canonicalURL} />
-    <link rel='canonical' href={canonicalURL} />
+    {
+      !disabledCanonicalURL && (
+        <>
+          <meta property='og:url' content={canonicalURL} />
+          <link rel='canonical' href={canonicalURL} />
+        </>
+      )
+    }
 
     <meta name='description' content={description} />
     <meta property='og:description' content={description} />
