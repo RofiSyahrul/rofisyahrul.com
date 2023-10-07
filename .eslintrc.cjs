@@ -27,6 +27,8 @@ module.exports = {
       rules: {
         '@typescript-eslint/await-thenable': 0,
         '@typescript-eslint/no-base-to-string': 0,
+        '@typescript-eslint/no-redundant-type-constituents': 0,
+        '@typescript-eslint/no-unnecessary-type-assertion': 0,
         '@typescript-eslint/no-unsafe-argument': 0,
         '@typescript-eslint/no-unsafe-member-access': 0,
         '@typescript-eslint/no-unsafe-return': 0,

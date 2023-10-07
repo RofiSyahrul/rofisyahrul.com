@@ -1,0 +1,67 @@
+---
+import clsx from 'clsx';
+
+import ExternalLink from '@/shared/icons/external-link.svelte';
+import Github from '@/shared/icons/github.svelte';
+
+interface Props {
+  class?: string;
+  component?: 'div' | 'footer';
+  demoURL: string | null;
+  repositoryURL: string | null;
+  withText?: boolean;
+}
+
+interface LinkItem {
+  icon: any;
+  title: string;
+  url: string;
+}
+
+const {
+  class: className,
+  component: Component = 'div',
+  demoURL,
+  repositoryURL,
+  withText,
+} = Astro.props;
+
+const TextComponent = withText ? Fragment : 'span';
+
+const links: LinkItem[] = [];
+
+if (repositoryURL) {
+  links.push({
+    icon: Github,
+    title: 'Repository',
+    url: repositoryURL,
+  });
+}
+
+if (demoURL) {
+  links.push({
+    icon: ExternalLink,
+    title: 'Demo',
+    url: demoURL,
+  });
+}
+---
+
+<Component class={clsx('flex gap-2', className)}>
+  {
+    links.map(({ icon: Icon, title, url }) => (
+      <a
+        class={clsx('btn btn-solid btn-secondary h-8 shadow-md', {
+          'gap-1 flex-1': withText,
+        })}
+        href={url}
+        target='_blank'
+        rel='noreferrer noopener'
+        title={title}
+      >
+        <Icon />
+        <TextComponent class='visually-hidden'>{title}</TextComponent>
+      </a>
+    ))
+  }
+</Component>

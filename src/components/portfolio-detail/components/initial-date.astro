@@ -1,0 +1,15 @@
+---
+import dayjs from 'dayjs';
+
+interface Props {
+  initialDate: string;
+}
+
+const { initialDate } = Astro.props;
+const formattedInitialDate =
+  dayjs(initialDate).format('MMMM Do, YYYY');
+---
+
+<small>
+  {`Initial commit: ${formattedInitialDate}`}
+</small>
