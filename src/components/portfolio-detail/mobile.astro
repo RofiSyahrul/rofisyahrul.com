@@ -1,0 +1,67 @@
+---
+import clsx from 'clsx';
+
+import NavHeader from '@/shared/components/header/nav-header.astro';
+import type { PortfolioDetail } from '@/shared/lib/portfolio/types';
+
+import Avatar from './components/avatar.astro';
+import Carousel from './components/carousel/carousel.svelte';
+import InitialDate from './components/initial-date.astro';
+import Links from './components/links.astro';
+import RichText from './components/rich-text.astro';
+import TechStacks from './components/tech-stacks.astro';
+
+type Props = PortfolioDetail;
+
+const {
+  description,
+  icon,
+  initialDate,
+  mediaList,
+  repository,
+  techStacks,
+  title,
+  url,
+} = Astro.props;
+---
+
+<NavHeader isFitHeight {title} />
+
+<main
+  class='relative flex flex-col gap-3 pt-1 pb-14 w-full max-w-5xl mx-auto'
+>
+  <Carousel {mediaList} client:load />
+
+  <div class='flex px-2'>
+    <InitialDate {initialDate} />
+  </div>
+
+  <article class='px-2'>
+    {icon.url && <Avatar class='h-16 float-left mr-2' {icon} />}
+    <RichText class='-mt-2' content={description} />
+  </article>
+
+  {
+    techStacks.length > 0 && (
+      <section class='flex flex-col px-2 pb-3 gap-2 w-full'>
+        <TechStacks {techStacks} />
+      </section>
+    )
+  }
+</main>
+
+{
+  (repository || url) && (
+    <Links
+      class={clsx(
+        'fixed w-full bottom-0 px-2 py-3',
+        'bg-neutral-bright dark:bg-neutral-dim',
+        'dark:shadow-neutral-dim2 shadow-inner',
+      )}
+      component='footer'
+      demoURL={url}
+      repositoryURL={repository}
+      withText
+    />
+  )
+}

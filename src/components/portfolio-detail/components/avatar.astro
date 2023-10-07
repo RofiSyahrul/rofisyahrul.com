@@ -1,0 +1,30 @@
+---
+import clsx from 'clsx';
+
+import Image from '@/shared/components/image.svelte';
+import type { SimpleMediaItem } from '@/shared/types/general';
+
+interface Props {
+  class: string;
+  icon: SimpleMediaItem;
+}
+
+const { class: className, icon } = Astro.props;
+---
+
+<div
+  class={clsx('relative max-h-20 w-auto aspect-square', className)}
+>
+  <Image
+    alt={icon.alt}
+    class={clsx(
+      'rounded-full absolute top-0 left-0 h-full w-full aspect-square',
+      'outline outline-offset-1 outline-neutral-bright1',
+      'dark:outline-neutral-dim1',
+    )}
+    height={icon.height}
+    loading='eager'
+    src={icon.url}
+    width={icon.width}
+  />
+</div>

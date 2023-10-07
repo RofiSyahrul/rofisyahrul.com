@@ -1,0 +1,31 @@
+---
+import clsx from 'clsx';
+
+interface Props {
+  class?: string;
+  component?: 'article' | 'div';
+  content: string;
+}
+
+const {
+  class: className,
+  component: Component = 'div',
+  content,
+} = Astro.props;
+---
+
+<Component class={clsx('rich-text', className)} set:html={content} />
+
+<style>
+  .rich-text :global(a) {
+    @apply text-primary-dim;
+  }
+
+  :global(.dark) .rich-text :global(a) {
+    @apply text-primary-bright;
+  }
+
+  .rich-text :global(a):hover {
+    @apply underline;
+  }
+</style>

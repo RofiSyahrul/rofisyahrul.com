@@ -12,14 +12,14 @@
   export let alt: string;
   export let src: string;
 
-  export let height: string | number | undefined;
+  export let height: string | number | undefined = undefined;
   export let loading: 'lazy' | 'eager' = 'lazy';
-  export let observerRoot: Element | undefined;
-  export let observerRootMargin: string | undefined;
-  export let title: string | undefined;
-  export let width: string | number | undefined;
+  export let observerRoot: Element | undefined = undefined;
+  export let observerRootMargin: string | undefined = undefined;
+  export let title: string | undefined = undefined;
+  export let width: string | number | undefined = undefined;
 
-  let className: string | undefined;
+  let className: string | undefined = undefined;
   export { className as class };
 
   const emptyDataURLDark =

@@ -1,0 +1,43 @@
+---
+import Document from '@/components/_document.astro';
+// import Desktop from '@/components/portfolio-detail/desktop.astro';
+import Mobile from '@/components/portfolio-detail/mobile.astro';
+import { getServerResponse } from '@/components/portfolio-detail/server';
+
+const response = await getServerResponse(Astro);
+if (response instanceof Response) return response;
+
+const { description, icon, mediaList, title } = response.props;
+
+// const {
+//   userAgent: { isMobile },
+// } = Astro.locals;
+
+const firstMedia = mediaList?.[0];
+const firstImageURL =
+  firstMedia?.resourceType === 'image' ? firstMedia.url : undefined;
+
+const preloadedImageURLs: string[] = [];
+
+if (firstImageURL) {
+  preloadedImageURLs.push(firstImageURL);
+}
+
+if (icon.url) {
+  preloadedImageURLs.push(icon.url);
+}
+
+// const PortfolioDetail = isMobile ? Mobile : Desktop;
+---
+
+<Document imageURL={firstImageURL} {description} {title}>
+  <Fragment slot='head'>
+    {
+      preloadedImageURLs.map(url => (
+        <link rel='preload' as='image' href={url} />
+      ))
+    }
+  </Fragment>
+
+  <Mobile {...response.props} />
+</Document>
