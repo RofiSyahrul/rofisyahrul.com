@@ -10,12 +10,12 @@ import type { UserAgent } from './shared/types/user-agent';
 
 dayjs.extend(advancedFormat);
 
-function getColorMode(cookies: AstroCookies): ColorMode {
+function getColorMode(cookies: AstroCookies): ColorMode | null {
   const colorModeCookie = cookies.get(COLOR_MODE);
   if (colorModeCookie && isColorMode(colorModeCookie.value)) {
     return colorModeCookie.value;
   }
-  return 'light';
+  return null;
 }
 
 const mobileDeviceTypes = new Set([
@@ -46,7 +46,6 @@ function parseUserAgent(request: Request): UserAgent {
   };
 }
 
-// `context` and `next` are automatically typed
 export const onRequest = defineMiddleware((context, next) => {
   context.locals.colorMode = getColorMode(context.cookies);
   context.locals.userAgent = parseUserAgent(context.request);
