@@ -3,10 +3,11 @@ import Image from '@/shared/components/image.svelte';
 import type { TechStackItem } from '@/shared/types/response';
 
 interface Props {
+  eagerLoadingImage?: boolean;
   techStacks: TechStackItem[];
 }
 
-const { techStacks } = Astro.props;
+const { eagerLoadingImage, techStacks } = Astro.props;
 ---
 
 <h4 class='text-neutral-dim2 dark:text-neutral-bright2'>
@@ -16,17 +17,26 @@ const { techStacks } = Astro.props;
 <ul class='list-none flex gap-2 flex-wrap w-full'>
   {
     techStacks.map(techStack => {
+      let imageNode = null;
+
+      if (techStack.logo?.resourceType === 'image') {
+        const imageProps = {
+          alt: techStack.logo.alt,
+          height: techStack.logo.height,
+          src: techStack.logo.url,
+          width: techStack.logo.width,
+        };
+
+        if (eagerLoadingImage) {
+          imageNode = <Image {...imageProps} loading='eager' />;
+        } else {
+          imageNode = <Image {...imageProps} client:visible />;
+        }
+      }
+
       const techStackNode = (
         <>
-          {techStack.logo?.resourceType === 'image' && (
-            <Image
-              alt={techStack.logo.alt}
-              height={techStack.logo.height}
-              src={techStack.logo.url}
-              width={techStack.logo.width}
-              client:visible
-            />
-          )}
+          {imageNode}
           <span>{techStack.name}</span>
         </>
       );

@@ -1,6 +1,6 @@
 ---
 import Document from '@/components/_document.astro';
-// import Desktop from '@/components/portfolio-detail/desktop.astro';
+import Desktop from '@/components/portfolio-detail/desktop.astro';
 import Mobile from '@/components/portfolio-detail/mobile.astro';
 import { getServerResponse } from '@/components/portfolio-detail/server';
 
@@ -9,9 +9,9 @@ if (response instanceof Response) return response;
 
 const { description, icon, mediaList, title } = response.props;
 
-// const {
-//   userAgent: { isMobile },
-// } = Astro.locals;
+const {
+  userAgent: { isMobile },
+} = Astro.locals;
 
 const firstMedia = mediaList?.[0];
 const firstImageURL =
@@ -27,7 +27,7 @@ if (icon.url) {
   preloadedImageURLs.push(icon.url);
 }
 
-// const PortfolioDetail = isMobile ? Mobile : Desktop;
+const PortfolioDetail = isMobile ? Mobile : Desktop;
 ---
 
 <Document imageURL={firstImageURL} {description} {title}>
@@ -39,5 +39,5 @@ if (icon.url) {
     }
   </Fragment>
 
-  <Mobile {...response.props} />
+  <PortfolioDetail {...response.props} />
 </Document>

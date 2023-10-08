@@ -1,0 +1,163 @@
+---
+import clsx from 'clsx';
+
+import Home from '@/components/home/home.astro';
+import { getServerDataForHome } from '@/components/home/server';
+import Popup from '@/shared/components/popup/popup.svelte';
+import type { PortfolioDetail } from '@/shared/lib/portfolio/types';
+
+import Avatar from './components/avatar.astro';
+import Carousel from './components/carousel/carousel.svelte';
+import InitialDate from './components/initial-date.astro';
+import Links from './components/links.astro';
+import RichText from './components/rich-text.astro';
+import TechStacks from './components/tech-stacks.astro';
+
+type Props = PortfolioDetail;
+
+const {
+  description,
+  icon,
+  initialDate,
+  mediaList,
+  repository,
+  techStacks,
+  title,
+  url,
+} = Astro.props;
+
+const homeData = await getServerDataForHome(Astro);
+---
+
+<Popup class='portfolio-detail-popup' client:load>
+  <div class='carousel-wrapper'>
+    <Carousel {mediaList} client:load />
+  </div>
+
+  <div
+    class={clsx(
+      'content',
+      'scrollbar-thin scrollbar-thumb-neutral-dim2 scrollbar-track-neutral-bright1',
+      'dark:scrollbar-thumb-neutral-bright2 dark:scrollbar-track-neutral-dim1',
+    )}
+  >
+    <div class='content__header'>
+      {icon.url && <Avatar class='content__avatar' {icon} />}
+      <div class='flex-1'>
+        <h3>{title}</h3>
+        <div class='content__links-and-date'>
+          <Links demoURL={url} repositoryURL={repository} />
+          <InitialDate {initialDate} />
+        </div>
+      </div>
+    </div>
+
+    <RichText class='px-2 py-1' content={description} />
+
+    {
+      techStacks.length > 0 && (
+        <div class='content__footer'>
+          <TechStacks eagerLoadingImage {techStacks} />
+        </div>
+      )
+    }
+  </div>
+</Popup>
+
+<Home {...homeData} />
+
+<style>
+  .portfolio-detail-popup:global(.popup__dialog) {
+    flex-wrap: wrap;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    display: flex;
+    flex: 1 1 100%;
+    min-width: 400px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 2 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .content__header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    padding: 8px;
+    background-color: var(--color-neutral-bright);
+    border-bottom: 1px solid var(--color-neutral-bright2);
+  }
+
+  .content__avatar {
+    display: block;
+    height: 64px;
+  }
+
+  .content__links-and-date {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 8px 0 0;
+  }
+
+  .content__footer {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    background-color: var(--color-neutral-bright);
+    border-top: 1px solid var(--color-neutral-bright2);
+  }
+
+  :global(.dark) .content__header,
+  :global(.dark) .content__footer {
+    background-color: var(--color-neutral-dim);
+    border-color: var(--color-neutral-dim2);
+  }
+
+  @media (min-width: 640px) {
+    .portfolio-detail-popup:global(.popup__dialog) {
+      flex-wrap: nowrap;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .carousel-wrapper {
+      flex-basis: 400px;
+      height: 100%;
+    }
+
+    .content {
+      width: 100%;
+    }
+
+    .content__avatar {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .content__avatar {
+      display: block;
+    }
+  }
+</style>

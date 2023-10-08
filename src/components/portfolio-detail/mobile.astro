@@ -50,18 +50,14 @@ const {
   }
 </main>
 
-{
-  (repository || url) && (
-    <Links
-      class={clsx(
-        'fixed w-full bottom-0 px-2 py-3',
-        'bg-neutral-bright dark:bg-neutral-dim',
-        'dark:shadow-neutral-dim2 shadow-inner',
-      )}
-      component='footer'
-      demoURL={url}
-      repositoryURL={repository}
-      withText
-    />
-  )
-}
+<Links
+  class={clsx(
+    'fixed w-full bottom-0 px-2 py-3',
+    'bg-neutral-bright dark:bg-neutral-dim',
+    'dark:shadow-neutral-dim2 shadow-inner',
+  )}
+  component='footer'
+  demoURL={url}
+  repositoryURL={repository}
+  withText
+/>
