@@ -1,11 +1,13 @@
 :root {
+  --rgb-neutral-dim2: 71, 85, 105;
+
   --color-neutral-dim0: #0f172a;
   --color-neutral-bright0: #f1f5f9;
   --color-neutral-dim: #1e293b;
   --color-neutral-bright: #e2e8f0;
   --color-neutral-dim1: #334155;
   --color-neutral-bright1: #cbd5e1;
-  --color-neutral-dim2: #475569;
+  --color-neutral-dim2: rgb(var(--rgb-neutral-dim2));
   --color-neutral-bright2: #94a3b8;
 
   --color-primary-dim: #075985;
@@ -34,6 +36,7 @@
 body {
   @apply m-0 w-full h-full p-0 bg-neutral-bright dark:bg-neutral-dim text-neutral-dim dark:text-neutral-bright;
   font-family: var(--font-body);
+  overflow: auto;
 }
 
 h1,
