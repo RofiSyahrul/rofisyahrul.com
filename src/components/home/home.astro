@@ -4,6 +4,7 @@ import BaseHeader from '@/shared/components/header/base-header.astro';
 
 import Bio from './components/bio.astro';
 import Counts from './components/counts.astro';
+import NowPlaying from './components/now-playing/now-playing.svelte';
 import PortfolioGrid from './components/portfolio/portfolio-grid.astro';
 import TopFold from './components/top-fold/top-fold.astro';
 import type { HomeData } from './types';
@@ -18,10 +19,7 @@ const { feeds } = portfolio;
 
 <BaseHeader transitionPersist='home-header' />
 
-<main
-  class='relative flex flex-col py-3 w-full max-w-5xl mx-auto gap-3'
-  transition:persist
->
+<main transition:persist>
   <TopFold
     hasStories={hasRecentlyPlayedTracks && !!spotifyNowPlaying}
   />
@@ -33,6 +31,50 @@ const { feeds } = portfolio;
   </section>
 
   <PortfolioGrid {feeds} />
+
+  <section class='now-playing'>
+    <NowPlaying data={spotifyNowPlaying} client:visible />
+  </section>
 </main>
 
 <Footer transitionPersist='home-footer' />
+
+<style>
+  main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 1024px;
+    padding: 12px 0;
+    margin: 0 auto;
+  }
+
+  .now-playing {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: calc(100% - 32px);
+    min-width: 250px;
+    padding: 8px;
+    margin: 0 auto;
+    background-color: var(--color-neutral-bright0);
+    border-radius: 8px;
+  }
+
+  :global(.dark) .now-playing {
+    background-color: var(--color-neutral-dim0);
+  }
+
+  @media (min-width: 1024px) {
+    .now-playing {
+      position: fixed;
+      bottom: 8px;
+      right: 8px;
+      padding: 12px;
+      max-width: 320px;
+    }
+  }
+</style>
