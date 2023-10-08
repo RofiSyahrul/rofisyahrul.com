@@ -1,7 +1,8 @@
+import 'whatwg-fetch';
+
 import childProcess from 'child_process';
 import { promisify } from 'util';
 
-import fetch from '@remix-run/web-fetch';
 import yargsParser from 'yargs-parser';
 
 import logger from 'scripts/logger';
@@ -49,12 +50,14 @@ async function fetchRefreshToken(code: string): Promise<string> {
     },
   });
 
-  const data = await response.json();
+  const data: { refresh_token: string } = await response.json();
   return data.refresh_token;
 }
 
 async function getRefreshToken() {
-  const { code } = yargsParser(process.argv.slice(2));
+  const { code } = yargsParser(process.argv.slice(2)) as {
+    code?: string;
+  };
 
   if (!code) {
     await authorize();
@@ -68,7 +71,8 @@ async function getRefreshToken() {
   try {
     const refreshToken = await fetchRefreshToken(code);
     logger.success(`Refresh Token: ${refreshToken}`);
-  } catch (error) {
+  } catch (error_) {
+    const error = error_ as Error;
     logger.error(
       `Error on fetching Spotify refresh token. Error: ${error?.message}`,
     );
