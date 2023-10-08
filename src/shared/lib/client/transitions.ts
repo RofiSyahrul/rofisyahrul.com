@@ -1,5 +1,7 @@
 import type { Options } from 'astro/dist/transitions/router';
 
+import { isBrowser } from './env';
+
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 type AstroTransitonModule = typeof import('astro:transitions/client');
 
@@ -14,7 +16,7 @@ const DEFAULT_ASTRO_TRANSITION_MODULE: AstroTransitonModule = {
 async function getAstroTransitonModule(): Promise<AstroTransitonModule> {
   if (astroTransitionsModule) return astroTransitionsModule;
 
-  if (typeof window === 'undefined') {
+  if (!isBrowser) {
     return DEFAULT_ASTRO_TRANSITION_MODULE;
   }
 
