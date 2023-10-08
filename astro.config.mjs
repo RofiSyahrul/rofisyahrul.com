@@ -15,6 +15,7 @@ export default defineConfig({
   adapter: isVercel ? vercel() : node({ mode: 'standalone' }),
   build: {
     format: 'file',
+    inlineStylesheets: 'never',
   },
   compressHTML: true,
   integrations: [svelte(), tailwind(), setupConfig()],
