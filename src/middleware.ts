@@ -20,7 +20,6 @@ function getColorMode(cookies: AstroCookies): ColorMode | null {
 
 const mobileDeviceTypes = new Set([
   UAParser.DEVICE.MOBILE,
-  UAParser.DEVICE.TABLET,
   UAParser.DEVICE.WEARABLE,
 ]);
 
