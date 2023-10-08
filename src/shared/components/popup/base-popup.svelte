@@ -61,18 +61,17 @@
     if (isOpen) {
       animationType = 'enter';
       isShown = true;
+      if (isBrowser) {
+        document.documentElement.style.overflow = 'hidden';
+        lastFocusedElement = document.activeElement;
+      }
     } else {
       animationType = 'leave';
     }
   }
 
-  $: if (isBrowser) {
-    if (isShown) {
-      document.documentElement.style.overflow = 'hidden';
-      lastFocusedElement = document.activeElement;
-    } else {
-      document.documentElement.style.overflow = initialOverflowStyle;
-    }
+  $: if (isBrowser && !isShown) {
+    document.documentElement.style.overflow = initialOverflowStyle;
   }
 </script>
 
