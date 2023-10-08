@@ -6,18 +6,30 @@ import ToggleColorMode from './components/toggle-color-mode.svelte';
 export interface BaseHeaderProps {
   isFitHeight?: boolean;
   title?: string;
+  transitionPersist?: string;
 }
 
 type Props = BaseHeaderProps;
 
-const { isFitHeight, title = 'rofisyahrul.com' } = Astro.props;
+const {
+  isFitHeight,
+  title = 'rofisyahrul.com',
+  transitionPersist,
+} = Astro.props;
 
 const className = isFitHeight ? 'h-fit min-h-[3rem]' : 'h-12 md:h-16';
 ---
 
-<header class={clsx('relative z-10', className)}>
+<header
+  class={clsx('relative z-10', className)}
+  transition:persist={transitionPersist}
+>
   <div
-    class='w-full fixed shadow-lg dark:shadow-sm dark:shadow-neutral-dim2 top-0 px-2 sm:px-3 bg-neutral-bright dark:bg-neutral-dim'
+    class={clsx(
+      'w-[100vw] fixed shadow-lg',
+      'dark:shadow-sm dark:shadow-neutral-dim2 top-0 px-2 desktop:px-4',
+      'sm:desktop:px-6 bg-neutral-bright dark:bg-neutral-dim',
+    )}
   >
     <div
       class={clsx(
