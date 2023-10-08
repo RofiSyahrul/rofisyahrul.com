@@ -13,13 +13,14 @@ type Props = HomeData;
 const { portfolio, hasRecentlyPlayedTracks, spotifyNowPlaying } =
   Astro.props;
 
-const { feeds, total: totalPortfolio } = portfolio;
+const { feeds } = portfolio;
 ---
 
-<BaseHeader />
+<BaseHeader transitionPersist='home-header' />
 
 <main
   class='relative flex flex-col py-3 w-full max-w-5xl mx-auto gap-3'
+  transition:persist
 >
   <TopFold
     hasStories={hasRecentlyPlayedTracks && !!spotifyNowPlaying}
@@ -34,4 +35,4 @@ const { feeds, total: totalPortfolio } = portfolio;
   <PortfolioGrid {feeds} />
 </main>
 
-<Footer />
+<Footer transitionPersist='home-footer' />
