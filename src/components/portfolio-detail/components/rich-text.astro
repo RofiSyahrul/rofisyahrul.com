@@ -3,18 +3,13 @@ import clsx from 'clsx';
 
 interface Props {
   class?: string;
-  component?: 'article' | 'div';
   content: string;
 }
 
-const {
-  class: className,
-  component: Component = 'div',
-  content,
-} = Astro.props;
+const { class: className, content } = Astro.props;
 ---
 
-<Component class={clsx('rich-text', className)} set:html={content} />
+<div class={clsx('rich-text', className)} set:html={content} />
 
 <style>
   .rich-text :global(a) {

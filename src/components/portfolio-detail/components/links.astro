@@ -47,21 +47,25 @@ if (demoURL) {
 }
 ---
 
-<Component class={clsx('flex gap-2', className)}>
-  {
-    links.map(({ icon: Icon, title, url }) => (
-      <a
-        class={clsx('btn btn-solid btn-secondary h-8 shadow-md', {
-          'gap-1 flex-1': withText,
-        })}
-        href={url}
-        target='_blank'
-        rel='noreferrer noopener'
-        title={title}
-      >
-        <Icon />
-        <TextComponent class='visually-hidden'>{title}</TextComponent>
-      </a>
-    ))
-  }
-</Component>
+{
+  links.length > 0 && (
+    <Component class={clsx('flex gap-2', className)}>
+      {links.map(({ icon: Icon, title, url }) => (
+        <a
+          class={clsx('btn btn-solid btn-secondary h-8 shadow-md', {
+            'gap-1 flex-1': withText,
+          })}
+          href={url}
+          target='_blank'
+          rel='noreferrer noopener'
+          title={title}
+        >
+          <Icon />
+          <TextComponent class='visually-hidden'>
+            {title}
+          </TextComponent>
+        </a>
+      ))}
+    </Component>
+  )
+}
