@@ -1,0 +1,11 @@
+---
+import Recent from '@/components/stories/recent.astro';
+import { getServerResponse } from '@/components/stories/recent.server';
+
+const response = await getServerResponse(Astro);
+if (response instanceof Response) return response;
+
+const { initialActiveIndex, stories } = response.props;
+---
+
+<Recent {initialActiveIndex} {stories} />

@@ -12,6 +12,7 @@ export class SpotifyAuth extends SpotifyFetcher {
   private clientSecret = import.meta.env.SPOTIFY_CLIENT_SECRET ?? '';
   private refreshToken = import.meta.env.SPOTIFY_REFRESH_TOKEN ?? '';
   private credentials: Credentials | undefined;
+  private credentialsPromise: Promise<Credentials> | undefined;
 
   private get authToken() {
     return Buffer.from(
@@ -48,10 +49,12 @@ export class SpotifyAuth extends SpotifyFetcher {
       this.credentials &&
       dayjs().isBefore(dayjs(this.credentials.expiredAt))
     ) {
+      this.credentialsPromise = undefined;
       return this.credentials;
     }
 
-    this.credentials = await this.fetchCredentials();
+    this.credentialsPromise ??= this.fetchCredentials();
+    this.credentials = await this.credentialsPromise;
     return this.credentials;
   }
 

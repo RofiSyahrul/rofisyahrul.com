@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 
 import { COLOR_MODE } from './shared/constants/cookie-keys';
+import { ONE_YEAR_IN_DAYS } from './shared/constants/times';
 import { requestIdleCallback } from './shared/lib/client/idle-callback';
 import { setInternalRoutingStorage } from './shared/lib/client/storage';
 import { isColorMode, type ColorMode } from './shared/lib/color-mode';
@@ -42,7 +43,11 @@ function initColorModeStore(win: Window, doc: Document) {
 
   const preferredColorMode = getPreferredColorMode(win);
   injectColorModeToDOM(doc, preferredColorMode);
-  Cookies.set(COLOR_MODE, preferredColorMode);
+  Cookies.set(COLOR_MODE, preferredColorMode, {
+    expires: ONE_YEAR_IN_DAYS,
+    path: '/',
+    sameSite: 'Lax',
+  });
 
   if (preferredColorMode === 'dark') {
     requestIdleCallback(() => {
