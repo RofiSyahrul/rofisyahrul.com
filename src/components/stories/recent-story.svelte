@@ -27,6 +27,7 @@
     alt={title}
     src={image.url}
     class="object-contain rounded"
+    loading="eager"
     height={250}
     width={250}
     {title}
