@@ -8,9 +8,10 @@ export interface FetcherParams {
 
 export class SpotifyFetcher {
   private baseURL = 'https://api.spotify.com';
+  private countPathCallMap = new Map<string, number>();
 
   protected log(...args: unknown[]) {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.SPOTIFY_VERBOSE_FETCH) {
       // eslint-disable-next-line no-console
       console.log(...args);
     }
@@ -62,9 +63,16 @@ export class SpotifyFetcher {
   }: FetcherParams): Promise<T> {
     const url = this.getURL(path, query);
     const reqBody = this.getRequestBody(body);
+    let countPathCall = this.countPathCallMap.get(path) ?? 0;
+    countPathCall += 1;
+    this.countPathCallMap.set(path, countPathCall);
 
     this.log(
       ...[
+        '\n',
+        '#' + countPathCall,
+        method,
+        path,
         '\n',
         method,
         url,

@@ -1,0 +1,11 @@
+---
+import Layout from './layout/layout.astro';
+import RecentStory from './recent-story.svelte';
+import type { StoryRecentProps } from './recent.server';
+
+type Props = StoryRecentProps;
+---
+
+<Layout name='recent' {...Astro.props}>
+  <RecentStory client:idle />
+</Layout>

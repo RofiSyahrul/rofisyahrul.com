@@ -15,14 +15,14 @@ const { portfolio, hasRecentlyPlayedTracks, spotifyNowPlaying } =
   Astro.props;
 
 const { feeds } = portfolio;
+const hasStories =
+  hasRecentlyPlayedTracks || !!spotifyNowPlaying?.previewURL;
 ---
 
 <BaseHeader transitionPersist='home-header' />
 
 <main transition:persist>
-  <TopFold
-    hasStories={hasRecentlyPlayedTracks && !!spotifyNowPlaying}
-  />
+  <TopFold {hasStories} />
 
   <Bio section='main' />
 

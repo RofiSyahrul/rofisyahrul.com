@@ -1,8 +1,10 @@
 <script lang="ts">
+  export let ariaLabel = '';
   export let size = 16;
 </script>
 
 <svg
+  aria-label={ariaLabel}
   width={size}
   height={size}
   viewBox="0 0 16 16"

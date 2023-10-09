@@ -1,0 +1,143 @@
+---
+import Document from '@/components/_document.astro';
+import type { InitStoriesStoreParams } from '@/shared/stores/stories';
+
+import Init from './components/_init.svelte';
+import AudioToggleButton from './components/audio-toggle-button.svelte';
+import CloseButton from './components/close-button.svelte';
+import InvisibleNavButtons from './components/invisible-nav-buttons.svelte';
+import Overlay from './components/overlay.svelte';
+import Progress from './components/progress.svelte';
+import Title from './components/title.svelte';
+
+type Props = InitStoriesStoreParams;
+
+const { initialActiveIndex, name, stories } = Astro.props;
+const title = stories[initialActiveIndex]?.title;
+---
+
+<Document {title}>
+  <style is:inline>
+    .dark body,
+    body {
+      position: relative;
+      width: 100%;
+      background-color: var(--color-neutral-dim1);
+    }
+  </style>
+
+  <Init
+    initialData={{ initialActiveIndex, name, stories }}
+    client:load
+    transition:persist
+  />
+
+  <Overlay client:idle transition:persist />
+
+  <div class='stories shadow-lg'>
+    <header transition:persist>
+      <div class='progresses'>
+        {
+          stories.map(story => (
+            <div class='progress-bar'>
+              <div class='progress-track' />
+              <Progress
+                slug={story.slug}
+                client:idle
+                transition:persist
+              />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class='title-and-actions'>
+        <Title client:idle transition:persist />
+        <div class='actions'>
+          <AudioToggleButton client:idle transition:persist />
+          <CloseButton client:idle transition:persist />
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+      <InvisibleNavButtons client:idle transition:persist />
+    </main>
+  </div>
+</Document>
+
+<style>
+  .stories {
+    position: relative;
+    width: 100%;
+    max-width: 576px;
+    height: 100vh;
+    margin: 0 auto;
+    color: var(--color-neutral-bright);
+    background-color: var(--color-neutral-dim);
+  }
+
+  header {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+  }
+
+  .progresses {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar {
+    position: relative;
+    flex-grow: 1;
+    height: 2px;
+  }
+
+  .progress-bar :global(div[class*='progress']) {
+    top: 0;
+    height: 2px;
+    border-radius: 2px;
+  }
+
+  .progress-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    background-color: var(--color-neutral-bright2);
+    vertical-align: baseline;
+  }
+
+  .title-and-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 8px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 48px 16px;
+  }
+</style>
