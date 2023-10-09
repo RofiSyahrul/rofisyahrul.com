@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
 
   import goBack from '@/shared/lib/client/go-back';
-  import tryCatch from '@/shared/lib/client/try-catch';
   import {
     activeStory,
     handleTimeUpdate,
@@ -31,11 +30,6 @@
 
   onMount(() => {
     audio.load();
-    tryCatch(() => {
-      if (audio.paused) {
-        audio.play();
-      }
-    });
   });
 </script>
 
