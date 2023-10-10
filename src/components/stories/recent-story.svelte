@@ -50,10 +50,8 @@
   <p class="text-lg">{artists.join(', ')}</p>
 {/if}
 
-{#if previewURL}
-  <Audio bind:this={audio} src={previewURL} />
-  <ToggleAudioPlayingButton on:click={handleToggleClick} />
-{/if}
+<Audio bind:this={audio} src={previewURL} />
+<ToggleAudioPlayingButton on:click={handleToggleClick} />
 
 <style>
   :global(.dark) .link,
