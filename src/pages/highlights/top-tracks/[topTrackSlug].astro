@@ -1,0 +1,11 @@
+---
+import TopTrack from '@/components/stories/top-track.astro';
+import { getServerResponse } from '@/components/stories/top-track.server';
+
+const response = await getServerResponse(Astro);
+if (response instanceof Response) return response;
+
+const { initialActiveIndex, topTrackStories } = response.props;
+---
+
+<TopTrack {initialActiveIndex} {topTrackStories} />

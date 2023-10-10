@@ -1,0 +1,6 @@
+---
+import { getServerResponse } from '@/components/stories/top-track.server';
+
+const response = await getServerResponse(Astro);
+if (response instanceof Response) return response;
+---
