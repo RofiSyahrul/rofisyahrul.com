@@ -1,0 +1,29 @@
+---
+import Layout from './layout/layout.astro';
+import TopTrackStory from './top-track-story.svelte';
+import type { TopTrackStoryProps } from './top-track.server';
+
+type Props = TopTrackStoryProps;
+
+const { initialActiveIndex, topTrackStories } = Astro.props;
+---
+
+<Layout
+  {initialActiveIndex}
+  name='top-tracks'
+  stories={topTrackStories}
+>
+  <TopTrackStory client:idle>
+    <h2 class='text-xl' slot='title-text'>
+      My top track in last 4 weeks
+    </h2>
+  </TopTrackStory>
+</Layout>
+
+<style>
+  :global(.dark) h2,
+  h2 {
+    flex: 1;
+    color: var(--color-neutral-bright0);
+  }
+</style>
