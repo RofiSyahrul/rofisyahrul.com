@@ -34,16 +34,20 @@
   />
 {/if}
 
-{#if trackURL && title}
-  <a
-    href={trackURL}
-    target="_blank"
-    class="link"
-    rel="noreferrer noopener"
-    title="Play in Spotify"
-  >
-    {title}
-  </a>
+{#if title}
+  {#if trackURL}
+    <a
+      href={trackURL}
+      target="_blank"
+      class="track-title text-4xl"
+      rel="noreferrer noopener"
+      title="Play in Spotify"
+    >
+      {title}
+    </a>
+  {:else}
+    <p class="track-title text-4xl">{title}</p>
+  {/if}
 {/if}
 
 {#if artists?.length}
@@ -54,11 +58,9 @@
 <ToggleAudioPlayingButton on:click={handleToggleClick} />
 
 <style>
-  :global(.dark) .link,
-  .link {
+  :global(.dark) .track-title,
+  .track-title {
     z-index: 10;
-    font-size: 36px;
-    line-height: 40px;
     font-weight: 700;
     color: var(--color-secondary-bright);
     text-align: center;
