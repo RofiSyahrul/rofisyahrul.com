@@ -10,16 +10,13 @@
   import ToggleAudioPlayingButton from './components/toggle-audio-playing-button.svelte';
 
   let audio: Audio;
+  let isAudioPlaying: boolean;
 
   $: story = $activeStory.story as unknown as
     | NowPlayingStoryItem
     | RecentPlayedStoryItem;
 
   $: ({ artists, image, previewURL, title, trackURL } = story.detail);
-
-  function handleToggleClick() {
-    audio.toggleAudioPlaying();
-  }
 </script>
 
 {#if image?.url}
@@ -54,8 +51,13 @@
   <p class="text-lg">{artists.join(', ')}</p>
 {/if}
 
-<Audio bind:this={audio} src={previewURL} />
-<ToggleAudioPlayingButton on:click={handleToggleClick} />
+<Audio
+  bind:this={audio}
+  bind:isPlaying={isAudioPlaying}
+  src={previewURL}
+/>
+
+<ToggleAudioPlayingButton {audio} {isAudioPlaying} />
 
 <style>
   :global(.dark) .track-title,

@@ -10,6 +10,7 @@
   } from '@/shared/stores/stories';
 
   export let src: string;
+  export let isPlaying = false;
 
   let audio: HTMLAudioElement;
 
@@ -18,6 +19,14 @@
   function handleAudioEnded() {
     if (canNext) $storiesAction.next();
     else goBack();
+  }
+
+  function handleAudioPause() {
+    isPlaying = false;
+  }
+
+  function handleAudioPlay() {
+    isPlaying = true;
   }
 
   export function toggleAudioPlaying() {
@@ -39,6 +48,8 @@
     muted={$isStoryMuted}
     bind:this={audio}
     on:ended={handleAudioEnded}
+    on:pause={handleAudioPause}
+    on:play={handleAudioPlay}
     on:timeupdate={handleTimeUpdate}
   >
     <source {src} type="audio/mpeg" />
