@@ -50,6 +50,8 @@ export const getServerResponse: GetServerResponse<
     });
   }
 
+  if (!stories.length) return redirect('/', 307);
+
   const slugToIndexMap = new Map<string, number>(
     stories.map((story, index) => [story.slug, index]),
   );
