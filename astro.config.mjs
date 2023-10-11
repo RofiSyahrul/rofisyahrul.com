@@ -18,6 +18,13 @@ export default defineConfig({
     inlineStylesheets: 'never',
   },
   compressHTML: true,
+  image: {
+    remotePatterns: [
+      {
+        hostname: '*.scdn.co',
+      },
+    ],
+  },
   integrations: [svelte(), tailwind(), setupConfig()],
   output: 'server',
   scopedStyleStrategy: 'class',
