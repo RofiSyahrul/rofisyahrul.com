@@ -1,6 +1,9 @@
 ---
 import clsx from 'clsx';
 
+import Moon from '@/shared/icons/moon.svelte';
+import Sun from '@/shared/icons/sun.svelte';
+
 import ToggleColorMode from './components/toggle-color-mode.svelte';
 
 export interface BaseHeaderProps {
@@ -17,29 +20,86 @@ const {
   transitionPersist,
 } = Astro.props;
 
-const className = isFitHeight ? 'h-fit min-h-[3rem]' : 'h-12 md:h-16';
+const toggleColorModeTitle = 'Change color mode';
 ---
 
 <header
-  class={clsx('relative z-10', className)}
+  class={clsx({ ['fit-height']: isFitHeight })}
   transition:persist={transitionPersist}
 >
-  <div
-    class={clsx(
-      'w-[100vw] fixed shadow-lg',
-      'dark:shadow-sm dark:shadow-neutral-dim2 top-0 px-2 desktop:px-4',
-      'sm:desktop:px-6 bg-neutral-bright dark:bg-neutral-dim',
-    )}
-  >
+  <div class='fixed-wrapper shadow-lg dark:shadow-sm'>
     <div
-      class={clsx(
-        'flex justify-between items-center gap-1 w-full max-w-5xl mx-auto',
-        className,
-      )}
+      class={clsx('inner-wrapper', { ['fit-height']: isFitHeight })}
     >
       <slot />
-      <h1 class='font-bold text-lg'>{title}</h1>
-      <ToggleColorMode client:load />
+      <h1 class='text-lg'>{title}</h1>
+      <ToggleColorMode title={toggleColorModeTitle} client:load>
+        <Sun />
+        <Moon />
+        <span class='visually-hidden'>{toggleColorModeTitle}</span>
+      </ToggleColorMode>
     </div>
   </div>
 </header>
+
+<style>
+  header {
+    position: relative;
+    z-index: 10;
+  }
+
+  .fit-height {
+    height: fit-content;
+    min-height: 48px;
+  }
+
+  .fixed-wrapper {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    padding: 0 8px;
+    background-color: var(--color-neutral-bright);
+  }
+
+  :global(.desktop) .fixed-wrapper {
+    padding: 0 16px;
+  }
+
+  :global(.dark) .fixed-wrapper {
+    --tw-shadow-color: var(--color-neutral-dim2);
+    --tw-shadow: var(--tw-shadow-colored);
+    background-color: var(--color-neutral-dim);
+  }
+
+  .inner-wrapper {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+
+  header:not(.fit-height),
+  .inner-wrapper:not(.fit-height) {
+    height: 48px;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+
+  @media (min-width: 640px) {
+    :global(.desktop) .fixed-wrapper {
+      padding: 0 24px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    header:not(.fit-height),
+    .inner-wrapper:not(.fit-height) {
+      height: 64px;
+    }
+  }
+</style>

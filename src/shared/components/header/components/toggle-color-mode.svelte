@@ -3,11 +3,9 @@
 
   import { COLOR_MODE } from '@/shared/constants/cookie-keys';
   import { ONE_YEAR_IN_DAYS } from '@/shared/constants/times';
-  import Moon from '@/shared/icons/moon.svelte';
-  import Sun from '@/shared/icons/sun.svelte';
   import { colorMode } from '@/shared/stores/color-mode';
 
-  const description = 'Change color mode';
+  export let title: string;
 
   function toggleColorMode() {
     const prevColorMode = $colorMode;
@@ -26,12 +24,16 @@
 </script>
 
 <button
-  class="btn btn-solid btn-primary h-8
+  class="btn btn-solid btn-primary
     umami--click--header__toggle-color-mode"
+  {title}
   on:click={toggleColorMode}
-  title={description}
 >
-  <Sun />
-  <Moon />
-  <span class="visually-hidden">{description}</span>
+  <slot />
 </button>
+
+<style>
+  .btn {
+    height: 32px;
+  }
+</style>
