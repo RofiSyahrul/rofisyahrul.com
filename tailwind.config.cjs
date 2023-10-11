@@ -33,199 +33,119 @@ const colors = {
 
 /** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
-  content: ['./app/**/*.{ts,tsx}', './src/**/*.{astro,svelte}'],
+  content: ['./src/**/*.{astro,svelte}'],
   darkMode: 'class',
   plugins: [
     require('tailwind-scrollbar'),
-    plugin(
-      ({
-        addComponents,
-        addVariant,
-        addUtilities,
-        e,
-        matchUtilities,
-      }) => {
-        addComponents({
-          '.btn': {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '0 0.375rem',
-            fontWeight: 600,
-            fontSize: '1rem',
-            lineHeight: '1.5rem',
-            border: 'none',
-            outline: 'none',
-            borderRadius: '0.25rem',
-            cursor: 'pointer',
+    plugin(({ addComponents }) => {
+      addComponents({
+        '.btn': {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 0.375rem',
+          fontWeight: 600,
+          fontSize: '1rem',
+          lineHeight: '1.5rem',
+          border: 'none',
+          outline: 'none',
+          borderRadius: '0.25rem',
+          cursor: 'pointer',
+          '&:disabled': {
+            cursor: 'not-allowed',
+            opacity: '30%',
+          },
+          '&:hover:not(:disabled)': {
+            filter: 'brightness(80%)',
+          },
+          '&.btn-solid': {
+            color: colors.neutral.bright,
             '&:disabled': {
-              cursor: 'not-allowed',
-              opacity: '30%',
+              opacity: '50%',
             },
+            '&.btn-primary': {
+              backgroundColor: colors.primary.dim,
+            },
+            '&.btn-secondary': {
+              backgroundColor: colors.secondary.dim,
+            },
+            '&.btn-danger': {
+              backgroundColor: colors.danger.dim,
+            },
+          },
+          '&.btn-text': {
+            backgroundColor: colors.transparent,
             '&:hover:not(:disabled)': {
-              filter: 'brightness(80%)',
+              filter: 'none',
+              textDecoration: 'underline',
             },
-            '&.btn-solid': {
-              color: colors.neutral.bright,
-              '&:disabled': {
-                opacity: '50%',
-              },
-              '&.btn-primary': {
-                backgroundColor: colors.primary.dim,
-              },
-              '&.btn-secondary': {
-                backgroundColor: colors.secondary.dim,
-              },
-              '&.btn-danger': {
-                backgroundColor: colors.danger.dim,
-              },
+            '&.btn-primary': {
+              color: colors.primary.dim,
             },
-            '&.btn-text': {
-              backgroundColor: colors.transparent,
-              '&:hover:not(:disabled)': {
-                filter: 'none',
-                textDecoration: 'underline',
-              },
-              '&.btn-primary': {
-                color: colors.primary.dim,
-              },
-              '&.btn-secondary': {
-                color: colors.secondary.dim,
-              },
+            '&.btn-secondary': {
+              color: colors.secondary.dim,
             },
           },
-          '.dark .btn': {
-            '&.btn-solid': {
-              color: colors.neutral.dim,
-              '&.btn-primary': {
-                backgroundColor: colors.primary.bright,
-              },
-              '&.btn-secondary': {
-                backgroundColor: colors.secondary.bright,
-              },
-              '&.btn-danger': {
-                backgroundColor: colors.danger.bright,
-              },
+        },
+        '.dark .btn': {
+          '&.btn-solid': {
+            color: colors.neutral.dim,
+            '&.btn-primary': {
+              backgroundColor: colors.primary.bright,
             },
-            '&.btn-text': {
-              '&.btn-primary': {
-                color: colors.primary.bright,
-              },
-              '&.btn-secondary': {
-                color: colors.secondary.bright,
-              },
+            '&.btn-secondary': {
+              backgroundColor: colors.secondary.bright,
+            },
+            '&.btn-danger': {
+              backgroundColor: colors.danger.bright,
             },
           },
-          '.spinner': {
-            boxSizing: 'border-box',
-            border: '2px solid transparent',
-            borderRadius: '50%',
-            animation: 'spin 0.4s linear infinite',
-            '&.spinner-primary': {
-              borderTopColor: colors.primary.dim,
-              borderLeftColor: colors.primary.dim,
+          '&.btn-text': {
+            '&.btn-primary': {
+              color: colors.primary.bright,
             },
-            '&.spinner-secondary': {
-              borderTopColor: colors.secondary.dim,
-              borderLeftColor: colors.secondary.dim,
+            '&.btn-secondary': {
+              color: colors.secondary.bright,
             },
           },
-          '.dark .spinner': {
-            '&.spinner-primary': {
-              borderTopColor: colors.primary.bright,
-              borderLeftColor: colors.primary.bright,
-            },
-            '&.spinner-secondary': {
-              borderTopColor: colors.secondary.bright,
-              borderLeftColor: colors.secondary.bright,
-            },
+        },
+        '.spinner': {
+          boxSizing: 'border-box',
+          border: '2px solid transparent',
+          borderRadius: '50%',
+          animation: 'spin 0.4s linear infinite',
+          '&.spinner-primary': {
+            borderTopColor: colors.primary.dim,
+            borderLeftColor: colors.primary.dim,
           },
-          '.visually-hidden': {
-            display: 'block',
-            width: 0,
-            height: 0,
-            overflow: 'hidden',
+          '&.spinner-secondary': {
+            borderTopColor: colors.secondary.dim,
+            borderLeftColor: colors.secondary.dim,
           },
-        });
-
-        addVariant(
-          'aria-selected',
-          ({ modifySelectors, separator }) => {
-            modifySelectors(
-              ({ className }) =>
-                '.' +
-                e(`aria-selected${separator}${className}`) +
-                '[aria-selected="true"]',
-            );
+        },
+        '.dark .spinner': {
+          '&.spinner-primary': {
+            borderTopColor: colors.primary.bright,
+            borderLeftColor: colors.primary.bright,
           },
-        );
-
-        addVariant(
-          'aria-current-step',
-          ({ modifySelectors, separator }) => {
-            modifySelectors(
-              ({ className }) =>
-                '.' +
-                e(`aria-current-step${separator}${className}`) +
-                '[aria-current="step"]',
-            );
+          '&.spinner-secondary': {
+            borderTopColor: colors.secondary.bright,
+            borderLeftColor: colors.secondary.bright,
           },
-        );
-
-        addVariant('desktop', ({ modifySelectors, separator }) => {
-          modifySelectors(
-            ({ className }) =>
-              '.desktop .' + e(`desktop${separator}${className}`),
-          );
-        });
-
-        addVariant('child', '& > *');
-
-        addUtilities({
-          '.flex-basis': {
-            'flex-basis': '100%',
-          },
-          '.flex-basis-auto': {
-            'flex-basis': 'auto',
-          },
-          '.scroll-snap-x': {
-            'scroll-snap-type': 'x mandatory',
-          },
-          '.scroll-snap-start': {
-            'scroll-snap-align': 'start',
-          },
-        });
-
-        matchUtilities({
-          'flex-basis': value => ({
-            'flex-basis': value,
-          }),
-        });
-      },
-    ),
+        },
+        '.visually-hidden': {
+          display: 'block',
+          width: 0,
+          height: 0,
+          overflow: 'hidden',
+        },
+      });
+    }),
   ],
   theme: {
     colors,
     fill: theme => theme('colors'),
     stroke: theme => theme('colors'),
-    extend: {
-      animation: {
-        globe: 'globe 1000ms ease-in-out infinite',
-      },
-      keyframes: {
-        globe: {
-          from: {
-            transform: 'rotate3d(0, 1, 0, 0deg)',
-          },
-          '50%': {
-            transform: 'rotate3d(0, 1, 0, 180deg)',
-          },
-          to: {
-            transform: 'rotate3d(0, 1, 0, 0deg)',
-          },
-        },
-      },
-    },
   },
   variants: {
     extend: {
