@@ -10,9 +10,35 @@ const { href, title } = Astro.props;
 <a
   href={href}
   title={title}
-  class='btn btn-solid btn-secondary h-8 w-8 md:h-12 md:w-12 shadow-md'
+  class='btn btn-solid btn-secondary shadow-md'
   target='_blank'
   rel='noreferrer noopener'
 >
   <slot />
 </a>
+
+<style>
+  a {
+    height: var(--size);
+    width: var(--size);
+    padding: 0 4px;
+    --size: 32px;
+    --tw-shadow-color: var(--color-secondary-bright);
+    --tw-shadow: var(--tw-shadow-colored);
+  }
+
+  a:hover,
+  a:focus {
+    box-shadow: none;
+  }
+
+  :global(.dark) a {
+    --tw-shadow-color: var(--color-secondary-dim);
+  }
+
+  @media (min-width: 768px) {
+    a {
+      --size: 48px;
+    }
+  }
+</style>

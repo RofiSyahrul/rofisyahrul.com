@@ -1,6 +1,4 @@
 ---
-import clsx from 'clsx';
-
 import type { PortfolioFeed } from '@/shared/lib/portfolio/types';
 
 import PortfolioItem from './components/portfolio-item.astro';
@@ -14,12 +12,7 @@ const { isMobile } = Astro.locals.userAgent;
 const maxEagerImageIndex = isMobile ? 1 : 2;
 ---
 
-<ul
-  class={clsx(
-    'grid grid-cols-2 px-0.5 gap-1 border-top-mobile',
-    'sm:grid-cols-3 sm:px-3 sm:gap-3 md:gap-6 lg:gap-8',
-  )}
->
+<ul>
   {
     feeds.map((feed, index) => {
       if (!feed.mediaList.length) return null;
@@ -38,3 +31,38 @@ const maxEagerImageIndex = isMobile ? 1 : 2;
     })
   }
 </ul>
+
+<style>
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0 4px;
+    border-top: 1px solid var(--color-neutral-bright1);
+  }
+
+  :global(.dark) ul {
+    border-top-color: var(--color-neutral-dim1);
+  }
+
+  @media (min-width: 640px) {
+    ul {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0 12px;
+      border: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    ul {
+      gap: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    ul {
+      gap: 32px;
+    }
+  }
+</style>
