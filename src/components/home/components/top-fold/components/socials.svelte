@@ -42,18 +42,12 @@
   ];
 </script>
 
-<ul
-  class={clsx(
-    'flex flex-1 flex-wrap w-full gap-2 items-center',
-    'sm:pl-2 sm:h-9 sm:border-solid sm:border-l',
-    'sm:border-l-neutral-bright1 sm:dark:border-l-neutral-dim1',
-  )}
->
+<ul>
   {#each socials as social (social.url)}
     <li>
       <a
         class={clsx(
-          'btn btn-solid btn-primary h-8',
+          'btn btn-solid btn-primary',
           `umami--click--social__${social.name}`,
         )}
         href={social.url}
@@ -67,3 +61,29 @@
     </li>
   {/each}
 </ul>
+
+<style>
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+    align-items: center;
+  }
+
+  a.btn {
+    height: 32px;
+  }
+
+  @media (min-width: 640px) {
+    ul {
+      padding-left: 8px;
+      height: 36px;
+      border-left: 1px solid var(--color-neutral-bright1);
+    }
+
+    :global(.dark) ul {
+      border-left-color: var(--color-neutral-dim1);
+    }
+  }
+</style>
