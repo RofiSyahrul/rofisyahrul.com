@@ -5,9 +5,6 @@
   import Audio from './components/audio.svelte';
   import ToggleAudioPlayingButton from './components/toggle-audio-playing-button.svelte';
 
-  const MAX_IMAGE_SIZE = 300;
-  const SIZE_RATIO_PER_RANK = 10;
-
   let audio: Audio;
   let isAudioPlaying: boolean;
 
@@ -25,12 +22,11 @@
 </div>
 
 {#if image?.url}
-  {@const size = MAX_IMAGE_SIZE - (rank - 1) * SIZE_RATIO_PER_RANK}
   <img
     alt={title}
     src={image.url}
-    height={size}
-    width={size}
+    height={image.height}
+    width={image.width}
     loading="eager"
     {title}
   />
@@ -41,19 +37,19 @@
     <a
       href={trackURL}
       target="_blank"
-      class="track-title text-4xl"
+      class="track-title"
       rel="noreferrer noopener"
       title="Play in Spotify"
     >
       {title}
     </a>
   {:else}
-    <p class="track-title text-4xl">{title}</p>
+    <p class="track-title">{title}</p>
   {/if}
 {/if}
 
 {#if artists?.length}
-  <p class="text-lg">{artists.join(', ')}</p>
+  <p class="artists">{artists.join(', ')}</p>
 {/if}
 
 <Audio
@@ -88,6 +84,14 @@
     z-index: 10;
     font-weight: 700;
     color: var(--color-secondary-bright);
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  .artists {
+    font-size: 18px;
+    line-height: 28px;
     text-align: center;
   }
 </style>
