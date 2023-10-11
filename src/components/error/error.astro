@@ -35,9 +35,53 @@ const fancyStatus = status?.replaceAll(/0/g, '<span>0</span>');
 
 <NavHeader title={headerTitle} />
 
-<main class='centered-page'>
+<main>
   {fancyStatus && <div class='fancy-text' set:html={fancyStatus} />}
   <h1>{statusText}</h1>
 </main>
 
 <Footer isAbsoluteBottom />
+
+<style>
+  main {
+    width: 100%;
+    height: calc(100% - 3rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .fancy-text,
+  .fancy-text > :global(span) {
+    font-size: 8rem;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .fancy-text > :global(span) {
+    background-position: bottom 2.25rem right 50%;
+    background-size: 3rem;
+    background-image: url(https://res.cloudinary.com/rofi/image/upload/c_fit,q_auto:good,w_80/v1640233522/samples/rho-pi.png);
+    background-repeat: no-repeat;
+  }
+
+  @media (min-width: 640px) {
+    .fancy-text,
+    .fancy-text > :global(span) {
+      font-size: 10rem;
+    }
+
+    .fancy-text > :global(span) {
+      background-position: bottom 2.75rem right 50%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    main {
+      height: calc(100% - 4rem);
+    }
+  }
+</style>
