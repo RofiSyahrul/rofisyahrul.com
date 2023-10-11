@@ -34,8 +34,8 @@ const toggleColorModeTitle = 'Change color mode';
       <slot />
       <h1 class='text-lg'>{title}</h1>
       <ToggleColorMode title={toggleColorModeTitle} client:load>
-        <Sun />
-        <Moon />
+        <Sun class='sun-icon' />
+        <Moon class='moon-icon' />
         <span class='visually-hidden'>{toggleColorModeTitle}</span>
       </ToggleColorMode>
     </div>
@@ -88,6 +88,18 @@ const toggleColorModeTitle = 'Change color mode';
 
   h1 {
     font-weight: 700;
+  }
+
+  header :global(.sun-icon) {
+    display: none;
+  }
+
+  :global(.dark) header :global(.sun-icon) {
+    display: block;
+  }
+
+  :global(.dark) header :global(.moon-icon) {
+    display: none;
   }
 
   @media (min-width: 640px) {
