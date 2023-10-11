@@ -1,6 +1,4 @@
 ---
-import clsx from 'clsx';
-
 import NavHeader from '@/shared/components/header/nav-header.astro';
 import type { PortfolioDetail } from '@/shared/lib/portfolio/types';
 
@@ -27,23 +25,21 @@ const {
 
 <NavHeader isFitHeight {title} />
 
-<main
-  class='relative flex flex-col gap-3 pt-1 pb-14 w-full max-w-5xl mx-auto'
->
+<main>
   <Carousel {mediaList} client:load />
 
-  <div class='flex px-2'>
+  <div class='initial-date'>
     <InitialDate {initialDate} />
   </div>
 
-  <article class='px-2'>
-    {icon.url && <Avatar class='h-16 float-left mr-2' {icon} />}
-    <RichText class='-mt-2' content={description} />
+  <article>
+    {icon.url && <Avatar class='avatar' {icon} />}
+    <RichText class='description' content={description} />
   </article>
 
   {
     techStacks.length > 0 && (
-      <section class='flex flex-col px-2 pb-3 gap-2 w-full'>
+      <section class='tech-stacks'>
         <TechStacks {techStacks} />
       </section>
     )
@@ -51,13 +47,64 @@ const {
 </main>
 
 <Links
-  class={clsx(
-    'fixed w-full bottom-0 px-2 py-3',
-    'bg-neutral-bright dark:bg-neutral-dim',
-    'dark:shadow-neutral-dim2 shadow-inner',
-  )}
+  class='external-links shadow-inner'
   component='footer'
   demoURL={url}
   repositoryURL={repository}
   withText
 />
+
+<style>
+  main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 1024px;
+    padding: 4px 0 56px;
+    margin: 0 auto;
+  }
+
+  .initial-date {
+    display: flex;
+    padding: 0 8px;
+  }
+
+  article {
+    padding: 0 8px;
+  }
+
+  .avatar {
+    height: 64px;
+    margin-right: 8px;
+    float: left;
+  }
+
+  .description {
+    margin-top: -8px;
+  }
+
+  .tech-stacks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 0 8px 12px 8px;
+  }
+
+  .external-links {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 12px 8px;
+    background-color: var(--color-neutral-bright);
+    --tw-shadow-color: var(--color-neutral-bright1);
+    --tw-shadow: var(--tw-shadow-colored);
+  }
+
+  :global(.dark) .external-links {
+    --tw-shadow-color: var(--color-neutral-dim2);
+    background-color: var(--color-neutral-dim);
+  }
+</style>

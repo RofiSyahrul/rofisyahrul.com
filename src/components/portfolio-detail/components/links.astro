@@ -49,11 +49,11 @@ if (demoURL) {
 
 {
   links.length > 0 && (
-    <Component class={clsx('flex gap-2', className)}>
+    <Component class={clsx('links', className)}>
       {links.map(({ icon: Icon, title, url }) => (
         <a
-          class={clsx('btn btn-solid btn-secondary h-8 shadow-md', {
-            'gap-1 flex-1': withText,
+          class={clsx('btn btn-solid btn-secondary shadow-md', {
+            'with-text': withText,
           })}
           href={url}
           target='_blank'
@@ -69,3 +69,19 @@ if (demoURL) {
     </Component>
   )
 }
+
+<style>
+  .links {
+    display: flex;
+    gap: 8px;
+  }
+
+  .links a.btn {
+    height: 32px;
+  }
+
+  .links a.btn.with-text {
+    flex: 1;
+    gap: 8px;
+  }
+</style>

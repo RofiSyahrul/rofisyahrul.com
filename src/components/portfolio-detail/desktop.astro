@@ -43,7 +43,7 @@ const homeData = await getServerDataForHome(Astro);
   >
     <div class='content__header'>
       {icon.url && <Avatar class='content__avatar' {icon} />}
-      <div class='flex-1'>
+      <div class='content__header__detail'>
         <h3>{title}</h3>
         <div class='content__links-and-date'>
           <Links demoURL={url} repositoryURL={repository} />
@@ -52,7 +52,7 @@ const homeData = await getServerDataForHome(Astro);
       </div>
     </div>
 
-    <RichText class='px-2 py-1' content={description} />
+    <RichText class='content__description' content={description} />
 
     {
       techStacks.length > 0 && (
@@ -75,7 +75,7 @@ const homeData = await getServerDataForHome(Astro);
     position: relative;
     display: flex;
     flex: 1 1 100%;
-    min-width: 400px;
+    min-width: 300px;
     align-items: center;
     justify-content: center;
   }
@@ -107,12 +107,20 @@ const homeData = await getServerDataForHome(Astro);
     height: 64px;
   }
 
+  .content__header__detail {
+    flex: 1;
+  }
+
   .content__links-and-date {
     display: flex;
     gap: 8px;
     align-items: flex-end;
     justify-content: space-between;
     margin: 8px 0 0;
+  }
+
+  .content__description {
+    padding: 4px 8px;
   }
 
   .content__footer {
@@ -143,6 +151,7 @@ const homeData = await getServerDataForHome(Astro);
 
     .carousel-wrapper {
       flex-basis: 400px;
+      min-width: 400px;
       height: 100%;
     }
 
