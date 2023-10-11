@@ -10,11 +10,11 @@ interface Props {
 const { eagerLoadingImage, techStacks } = Astro.props;
 ---
 
-<h4 class='text-neutral-dim2 dark:text-neutral-bright2'>
+<h4>
   {`Tech Stack${techStacks.length > 1 ? 's' : ''}`}
 </h4>
 
-<ul class='list-none flex gap-2 flex-wrap w-full'>
+<ul>
   {
     techStacks.map(techStack => {
       let imageNode = null;
@@ -43,11 +43,7 @@ const { eagerLoadingImage, techStacks } = Astro.props;
 
       if (!techStack.url) {
         return (
-          <li
-            class='btn btn-text btn-primary h-6 gap-2'
-            style='cursor: default;'
-            title={techStack.name}
-          >
+          <li class='btn btn-text btn-primary' title={techStack.name}>
             {techStackNode}
           </li>
         );
@@ -56,7 +52,7 @@ const { eagerLoadingImage, techStacks } = Astro.props;
       return (
         <li>
           <a
-            class='btn btn-text btn-primary h-6 gap-2'
+            class='btn btn-text btn-primary'
             href={techStack.url ?? ''}
             target='_blank'
             rel='noreferrer noopener'
@@ -69,3 +65,30 @@ const { eagerLoadingImage, techStacks } = Astro.props;
     })
   }
 </ul>
+
+<style>
+  h4 {
+    color: var(--color-neutral-dim2);
+  }
+
+  :global(.dark) h4 {
+    color: var(--color-neutral-bright2);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    list-style: none;
+  }
+
+  .btn {
+    gap: 8px;
+    height: 24px;
+  }
+
+  li.btn {
+    cursor: default;
+  }
+</style>

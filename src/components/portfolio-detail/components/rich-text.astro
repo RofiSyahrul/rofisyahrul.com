@@ -13,14 +13,14 @@ const { class: className, content } = Astro.props;
 
 <style>
   .rich-text :global(a) {
-    @apply text-primary-dim;
+    color: var(--color-primary-dim);
   }
 
   :global(.dark) .rich-text :global(a) {
-    @apply text-primary-bright;
+    color: var(--color-primary-bright);
   }
 
   .rich-text :global(a):hover {
-    @apply underline;
+    text-decoration: underline;
   }
 </style>
