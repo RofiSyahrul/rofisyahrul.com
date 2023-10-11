@@ -1,6 +1,4 @@
 ---
-import clsx from 'clsx';
-
 interface Props {
   section: 'main' | 'top-fold';
 }
@@ -11,16 +9,9 @@ const isInMain = section === 'main';
 const Component = isInMain ? 'section' : 'div';
 ---
 
-<Component
-  class={clsx(
-    'w-full',
-    isInMain ? 'sm:hidden px-3' : 'hidden sm:block',
-  )}
->
-  <h3 class='font-semibold text-base'>Rofi</h3>
-  <p class='text-neutral-dim2 dark:text-neutral-bright2'>
-    Software Engineer (Web Platform)
-  </p>
+<Component class='bio'>
+  <h3 class='text-base'>Rofi</h3>
+  <p class='bio__job-role'>Software Engineer (Web Platform)</p>
   <p>
     Hi guys! Welcome to my personal web, an instagram-like website.
     You can call me Rofi, a front-end web development enthusiast who
@@ -29,3 +20,35 @@ const Component = isInMain ? 'section' : 'div';
     reach me via my accounts above.
   </p>
 </Component>
+
+<style>
+  .bio {
+    width: 100%;
+  }
+
+  section.bio {
+    padding: 0 12px;
+  }
+
+  div.bio {
+    display: none;
+  }
+
+  .bio__job-role {
+    color: var(--color-neutral-dim2);
+  }
+
+  :global(.dark) .bio__job-role {
+    color: var(--color-neutral-bright2);
+  }
+
+  @media (min-width: 640px) {
+    section.bio {
+      display: none;
+    }
+
+    div.bio {
+      display: block;
+    }
+  }
+</style>
