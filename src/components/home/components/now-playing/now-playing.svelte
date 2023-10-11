@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Spotify from '@/shared/icons/spotify.svelte';
   import type { SpotifyNowPlayingData } from '@/shared/types/spotify';
 
   import Detail from './components/detail.svelte';
@@ -7,16 +6,24 @@
 
   export let data: SpotifyNowPlayingData | null;
 
+  let isLoading = false;
+
   async function handleRefresh() {
-    const response = await fetch('/api/now-playing');
-    data = response.ok ? await response.json() : null;
+    try {
+      isLoading = true;
+      const response = await fetch('/api/now-playing');
+      data = response.ok ? await response.json() : null;
+    } catch {
+      // silent
+    } finally {
+      isLoading = false;
+    }
   }
 </script>
 
-<div class="flex gap-1 items-center">
-  <Spotify class="text-secondary-bright" />
-  <h3 class="font-bold text-xl flex-1">Now Playing</h3>
-  <RefreshButton on:click={handleRefresh} />
+<div class="now-playing__header">
+  <slot name="title" />
+  <RefreshButton {isLoading} on:click={handleRefresh} />
 </div>
 
 {#if data}
@@ -24,3 +31,11 @@
 {:else}
   <em>No activity</em>
 {/if}
+
+<style>
+  .now-playing__header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+</style>
