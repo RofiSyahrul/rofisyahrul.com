@@ -10,11 +10,7 @@ import Item from './components/item.astro';
     label='Top Tracks'
     name='top-tracks'
   >
-    <Spotify
-      class='text-secondary-bright dark:text-secondary-dim'
-      size='70%'
-      slot='icon'
-    />
+    <Spotify class='spotify-icon' size='70%' slot='icon' />
   </Item>
 </ul>
 
@@ -25,6 +21,14 @@ import Item from './components/item.astro';
     gap: 12px;
     padding: 8px 12px;
     overflow-x: auto;
+  }
+
+  .spotify-icon {
+    color: var(--color-secondary-bright);
+  }
+
+  :global(.dark) .spotify-icon {
+    color: var(--color-secondary-dim);
   }
 
   @media (min-width: 640px) {
