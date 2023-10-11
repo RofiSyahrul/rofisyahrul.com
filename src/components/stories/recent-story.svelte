@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Image from '@/shared/components/image.svelte';
   import { activeStory } from '@/shared/stores/stories';
   import type {
     NowPlayingStoryItem,
@@ -20,11 +19,10 @@
 </script>
 
 {#if image?.url}
-  <Image
+  <img
     alt={title}
-    src={image.url}
-    class="object-contain rounded"
     loading="eager"
+    src={image.url}
     height={image.height}
     width={image.width}
     {title}
@@ -60,6 +58,11 @@
 <ToggleAudioPlayingButton {audio} {isAudioPlaying} />
 
 <style>
+  img {
+    border-radius: 4px;
+    object-fit: contain;
+  }
+
   :global(.dark) .track-title,
   .track-title {
     z-index: 10;
