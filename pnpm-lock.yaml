@@ -100,9 +100,6 @@ devDependencies:
   '@remix-run/web-fetch':
     specifier: ^4.3.4
     version: 4.3.4
-  '@tailwindcss/line-clamp':
-    specifier: ^0.3.1
-    version: 0.3.1(tailwindcss@3.3.3)
   '@types/js-cookie':
     specifier: ^3.0.4
     version: 3.0.4
@@ -3484,14 +3481,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       defer-to-connect: 2.0.1
-    dev: true
-
-  /@tailwindcss/line-clamp@0.3.1(tailwindcss@3.3.3):
-    resolution: {integrity: sha512-pNr0T8LAc3TUx/gxCfQZRe9NB2dPEo/cedPHzUGIPxqDMhgjwNm6jYxww4W5l0zAsAddxr+XfZcqttGiFDgrGg==}
-    peerDependencies:
-      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
-    dependencies:
-      tailwindcss: 3.3.3
     dev: true
 
   /@testing-library/dom@8.20.1:
