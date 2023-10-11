@@ -1,4 +1,4 @@
-interface UABrowser {
+export interface UABrowser {
   name: string;
   version: string;
 }
@@ -13,4 +13,5 @@ export interface UserAgent {
   browser: UABrowser;
   device: UADevice;
   isMobile: boolean;
+  isSupportAvif: boolean;
 }
