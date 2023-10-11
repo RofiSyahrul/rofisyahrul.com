@@ -5,6 +5,8 @@ import type { GetServerData } from '@/shared/types/general';
 
 import type { HomeData } from './types';
 
+const SPOTIFY_IMAGE_SIZE = 80;
+
 export const getServerDataForHome: GetServerData<HomeData> = async ({
   locals,
 }) => {
@@ -16,12 +18,18 @@ export const getServerDataForHome: GetServerData<HomeData> = async ({
     ]);
 
   if (spotifyNowPlaying?.image?.url) {
-    spotifyNowPlaying.image.url = await optimizeImage({
-      height: 80,
+    const optimizedImage = await optimizeImage({
+      height: SPOTIFY_IMAGE_SIZE,
       isSupportAvif: locals.userAgent.isSupportAvif,
       src: spotifyNowPlaying.image.url,
-      width: 80,
+      width: SPOTIFY_IMAGE_SIZE,
     });
+
+    spotifyNowPlaying.image = {
+      height: optimizedImage.options.height || SPOTIFY_IMAGE_SIZE,
+      url: optimizedImage.src,
+      width: optimizedImage.options.width || SPOTIFY_IMAGE_SIZE,
+    };
   }
 
   return {

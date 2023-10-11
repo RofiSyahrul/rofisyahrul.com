@@ -1,7 +1,7 @@
-import type { ImageOutputFormat } from 'astro';
+import type { GetImageResult, ImageOutputFormat } from 'astro';
 import { getImage } from 'astro:assets';
 
-interface Options {
+interface OptimizeImageOptions {
   format?: ImageOutputFormat;
   height: number;
   isSupportAvif: boolean;
@@ -15,7 +15,7 @@ export async function optimizeImage({
   isSupportAvif,
   src,
   width,
-}: Options): Promise<string> {
+}: OptimizeImageOptions): Promise<GetImageResult> {
   let resolvedFormat = format;
   if (!resolvedFormat) {
     resolvedFormat = isSupportAvif ? 'avif' : 'png';
@@ -28,5 +28,5 @@ export async function optimizeImage({
     width,
   });
 
-  return optimized.src;
+  return optimized;
 }
