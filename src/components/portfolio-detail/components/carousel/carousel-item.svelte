@@ -7,20 +7,13 @@
   export let scrollerElement: HTMLDivElement;
   export let shouldEagerImageLoading: boolean;
 
-  let className: string;
-  export { className as class };
-
   $: ({ alt, height, mime, resourceType, url, width } = media);
 </script>
 
-<div
-  aria-current={isActive}
-  class="scroll-snap-start flex-grow flex-shrink-0 flex-basis items-center justify-center"
->
-  <div class="relative w-full pb-[100%]">
+<div aria-current={isActive} class="carousel-item">
+  <div class="carousel-item__sizer">
     {#if resourceType === 'image'}
       <Image
-        class={className}
         observerRoot={scrollerElement}
         observerRootMargin="-8px"
         src={url}
@@ -31,7 +24,7 @@
         {width}
       />
     {:else if resourceType === 'video' && (mime === 'video/webm' || mime === 'video/mp4')}
-      <video class={className} title={alt} controls {height} {width}>
+      <video title={alt} controls {height} {width}>
         <source src={url} type={mime} />
         <track kind="captions" />
         Sorry, your browser doesn't support embedded videos.
@@ -39,3 +32,25 @@
     {/if}
   </div>
 </div>
+
+<style>
+  .carousel-item {
+    flex: 1 0 100%;
+    scroll-snap-align: start;
+  }
+
+  .carousel-item__sizer {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+  }
+
+  .carousel-item :global(img),
+  .carousel-item video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

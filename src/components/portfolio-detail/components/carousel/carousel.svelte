@@ -1,5 +1,4 @@
 <script lang="ts">
-  import clsx from 'clsx';
   import type {
     MouseEventHandler,
     UIEventHandler,
@@ -28,17 +27,24 @@
     currentActiveIndex: number,
   ): number {
     const startThreshold = 2;
+    const minimumTotalMedia = 5;
 
-    if (currentActiveIndex < startThreshold) return 0;
+    if (
+      currentActiveIndex < startThreshold ||
+      totalMedia < minimumTotalMedia
+    ) {
+      return 0;
+    }
 
-    const endThreshold = totalMedia - 4;
+    const endThreshold = totalMedia - (minimumTotalMedia - 1);
+    const ratio = -12;
     if (currentActiveIndex > endThreshold) {
-      const endCenteringIndex = totalMedia - 5;
-      return endCenteringIndex * 10;
+      const endCenteringIndex = totalMedia - minimumTotalMedia;
+      return endCenteringIndex * ratio;
     }
 
     const startCenteringIndex = currentActiveIndex - startThreshold;
-    return startCenteringIndex * 10;
+    return startCenteringIndex * ratio;
   }
 
   function updateIndex(index: number) {
@@ -84,14 +90,13 @@
   <div
     bind:this={scrollerElement}
     on:scroll={handleScroll}
-    class="scrollbar-none relative w-full overflow-x-scroll scroll-snap-x"
+    class="carousel__scroller scrollbar-none"
   >
-    <div class="flex transition-transform">
-      {#each mediaList as media, index (media.url)}
+    <div class="carousel__media-list">
+      {#each mediaList as media, index (`${media.url}-${index}`)}
         <CarouselItem
           {media}
           {scrollerElement}
-          class="absolute top-0 left-0 w-full h-full"
           isActive={activeIndex === index}
           shouldEagerImageLoading={index === 0}
         />
@@ -100,23 +105,21 @@
   </div>
 
   {#if mediaList.length > 1}
-    <div
-      class={clsx(
-        'my-4 mx-auto max-w-[56px] overflow-x-hidden',
-        'flex transition-all gap-1',
-      )}
-      style:transform={`translate3D(${translateXIndicator}, 0, 0)`}
-    >
-      {#each indicatorIndices as index}
-        <span
-          aria-current={index === activeIndex ? 'step' : 'false'}
-          class="carousel__indicator-item"
-        />
-      {/each}
+    <div class="carousel__indicator-list-wrapper">
+      <div
+        class="carousel__indicator-list"
+        style:transform={`translate3d(${translateXIndicator}px, 0, 0)`}
+      >
+        {#each indicatorIndices as index}
+          <span
+            aria-current={index === activeIndex ? 'step' : 'false'}
+            class="carousel__indicator-item"
+          />
+        {/each}
+      </div>
     </div>
 
     <button
-      aria-hidden={isFirstIndex}
       class="carousel__arrow carousel__arrow_prev"
       disabled={isFirstIndex}
       on:click={handlePrevClick}
@@ -126,7 +129,6 @@
     </button>
 
     <button
-      aria-hidden={isLastIndex}
       class="carousel__arrow carousel__arrow_next"
       disabled={isLastIndex}
       on:click={handleNextClick}
@@ -139,39 +141,78 @@
 
 <style>
   .carousel {
-    @apply relative w-full bg-neutral-bright;
+    position: relative;
+    width: 100%;
+    background-color: var(--color-neutral-bright);
   }
 
   :global(.dark) .carousel {
-    @apply bg-neutral-dim;
+    background-color: var(--color-neutral-dim);
+  }
+
+  .carousel__scroller {
+    position: relative;
+    width: 100%;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+  }
+
+  .carousel__media-list {
+    display: flex;
+  }
+
+  .carousel__indicator-list-wrapper {
+    width: fit-content;
+    max-width: 56px;
+    margin: 16px auto;
+    overflow-x: hidden;
+  }
+
+  .carousel__indicator-list {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    transition: transform 150ms ease-in;
   }
 
   .carousel__indicator-item {
-    @apply flex-grow-0 flex-shrink-0 flex-basis-auto;
-    @apply w-2 h-2 bg-neutral-bright2 rounded-full;
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-neutral-bright2);
+    border-radius: 50%;
   }
 
   .carousel__indicator-item[aria-current='step'] {
-    @apply bg-neutral-dim;
+    background-color: var(--color-neutral-dim);
   }
 
   :global(.dark) .carousel__indicator-item {
-    @apply bg-neutral-dim2;
+    background-color: var(--color-neutral-dim2);
   }
 
   :global(.dark) .carousel__indicator-item[aria-current='step'] {
-    @apply bg-neutral-bright;
+    background-color: var(--color-neutral-bright);
   }
 
   .carousel__arrow {
-    @apply absolute top-1/2 items-center justify-center w-7 h-7;
-    @apply bg-neutral-bright0 text-neutral-dim;
-    @apply rounded-full cursor-pointer border-none outline-none;
-    @apply opacity-0 transition-opacity visible;
+    position: absolute;
+    top: 50%;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: var(--color-neutral-bright0);
+    color: var(--color-neutral-dim);
+    border: none;
+    border-radius: 50%;
+    opacity: 0;
+    @apply outline-none transition-opacity;
   }
 
   :global(.dark) .carousel__arrow {
-    @apply bg-neutral-dim0 text-neutral-bright;
+    background-color: var(--color-neutral-dim0);
+    color: var(--color-neutral-bright);
   }
 
   :global(.desktop) .carousel__arrow {
@@ -182,12 +223,13 @@
     display: none;
   }
 
-  .carousel:hover > .carousel__arrow {
-    @apply shadow-lg opacity-100;
+  .carousel__arrow:disabled {
+    opacity: 0;
   }
 
-  .carousel__arrow[aria-hidden='true'] {
-    visibility: hidden;
+  .carousel:hover > .carousel__arrow:not(:disabled) {
+    opacity: 1;
+    @apply shadow-lg;
   }
 
   .carousel__arrow_next {
