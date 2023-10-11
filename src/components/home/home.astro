@@ -1,6 +1,7 @@
 ---
 import Footer from '@/shared/components/footer.astro';
 import BaseHeader from '@/shared/components/header/base-header.astro';
+import Spotify from '@/shared/icons/spotify.svelte';
 
 import Bio from './components/bio.astro';
 import Counts from './components/counts.astro';
@@ -40,7 +41,12 @@ const hasStories =
   <PortfolioGrid {feeds} />
 
   <section class='now-playing'>
-    <NowPlaying data={spotifyNowPlaying} client:visible />
+    <NowPlaying data={spotifyNowPlaying} client:visible>
+      <Fragment slot='title'>
+        <Spotify class='text-secondary-bright' />
+        <h3>Now Playing</h3>
+      </Fragment>
+    </NowPlaying>
   </section>
 </main>
 
@@ -73,6 +79,11 @@ const hasStories =
 
   :global(.dark) .now-playing {
     background-color: var(--color-neutral-dim0);
+  }
+
+  .now-playing h3 {
+    flex: 1;
+    font-weight: 700;
   }
 
   @media (min-width: 1024px) {

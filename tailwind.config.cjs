@@ -120,14 +120,26 @@ module.exports = {
           '.spinner': {
             boxSizing: 'border-box',
             border: '2px solid transparent',
-            borderTopColor: colors.primary.dim,
-            borderLeftColor: colors.primary.dim,
             borderRadius: '50%',
-            animation: 'nprogress-spinner 0.4s linear infinite',
+            animation: 'spin 0.4s linear infinite',
+            '&.spinner-primary': {
+              borderTopColor: colors.primary.dim,
+              borderLeftColor: colors.primary.dim,
+            },
+            '&.spinner-secondary': {
+              borderTopColor: colors.secondary.dim,
+              borderLeftColor: colors.secondary.dim,
+            },
           },
           '.dark .spinner': {
-            borderTopColor: colors.primary.bright,
-            borderLeftColor: colors.primary.bright,
+            '&.spinner-primary': {
+              borderTopColor: colors.primary.bright,
+              borderLeftColor: colors.primary.bright,
+            },
+            '&.spinner-secondary': {
+              borderTopColor: colors.secondary.bright,
+              borderLeftColor: colors.secondary.bright,
+            },
           },
           '.visually-hidden': {
             display: 'block',
