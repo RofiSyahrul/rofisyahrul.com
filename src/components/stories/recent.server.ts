@@ -1,3 +1,4 @@
+import { optimizeImage } from '@/shared/lib/image';
 import { spotifyAPI } from '@/shared/lib/spotify';
 import { storiesConfigMapping } from '@/shared/lib/stories';
 import type { InitStoriesStoreParams } from '@/shared/stores/stories';
@@ -16,42 +17,100 @@ export type StoryRecentProps = Pick<
   'initialActiveIndex' | 'stories'
 >;
 
+type RecentStoryItem = RecentPlayedStoryItem | NowPlayingStoryItem;
+
+const IMAGE_SIZE = 250;
+
+async function getTrackWithOptimizedImage<
+  T extends RecentStoryItem['detail'],
+>({
+  isSupportAvif,
+  track,
+}: {
+  isSupportAvif: boolean;
+  track: T;
+}): Promise<T> {
+  if (!track.image?.url) {
+    return track;
+  }
+
+  try {
+    const optimizedImage = await optimizeImage({
+      height: IMAGE_SIZE,
+      isSupportAvif,
+      src: track.image.url,
+      width: IMAGE_SIZE,
+    });
+
+    track.image = {
+      height: optimizedImage.options.height || IMAGE_SIZE,
+      url: optimizedImage.src,
+      width: optimizedImage.options.width || IMAGE_SIZE,
+    };
+
+    return track;
+  } catch {
+    return track;
+  }
+}
+
 export const getServerResponse: GetServerResponse<
   StoryRecentProps
-> = async ({ cookies, params, redirect }) => {
+> = async ({ cookies, locals, params, redirect }) => {
   const { storySlug = '' } = params;
+  const { isSupportAvif } = locals.userAgent;
 
   const [spotifyNowPlaying, recentPlayedTracks] = await Promise.all([
     spotifyAPI.getNowPlaying(),
     spotifyAPI.getRecentlyPlayedTracks(),
   ]);
 
-  const stories: (RecentPlayedStoryItem | NowPlayingStoryItem)[] = [];
+  const storyPromises: Promise<RecentStoryItem>[] = [];
 
   if (recentPlayedTracks.length) {
-    stories.push(
-      ...recentPlayedTracks.map<RecentPlayedStoryItem>(track => ({
-        slug: `${STORY_RECENT_PLAYED_PREFIX_SLUG}-${track.id}` as const,
-        title: `Recently Played`,
-        timestamp: track.playedAt,
-        detail: track,
-      })),
+    storyPromises.push(
+      ...recentPlayedTracks.map<Promise<RecentPlayedStoryItem>>(
+        async track => {
+          return {
+            slug: `${STORY_RECENT_PLAYED_PREFIX_SLUG}-${track.id}` as const,
+            title: `Recently Played`,
+            timestamp: track.playedAt,
+            detail: await getTrackWithOptimizedImage({
+              isSupportAvif,
+              track,
+            }),
+          };
+        },
+      ),
     );
   }
 
   if (spotifyNowPlaying?.previewURL) {
-    stories.push({
+    const nowPlayingStory: NowPlayingStoryItem = {
       slug: STORY_NOW_PLAYING_SLUG,
       title: 'Now Playing',
       detail: {
         ...spotifyNowPlaying,
         previewURL: spotifyNowPlaying.previewURL,
       },
-    });
+    };
+
+    storyPromises.push(
+      new Promise<RecentStoryItem>(resolve => {
+        getTrackWithOptimizedImage({
+          isSupportAvif,
+          track: nowPlayingStory.detail,
+        }).then(detail => {
+          nowPlayingStory.detail = detail;
+          resolve(nowPlayingStory);
+        });
+      }),
+    );
   }
 
-  if (!stories.length) return redirect('/', 307);
+  if (!storyPromises.length) return redirect('/', 307);
 
+  const stories = await Promise.all(storyPromises);
   const slugToIndexMap = new Map<string, number>(
     stories.map((story, index) => [story.slug, index]),
   );
