@@ -4,6 +4,7 @@ import BaseHeader from '@/shared/components/header/base-header.astro';
 
 import Bio from './components/bio.astro';
 import Counts from './components/counts.astro';
+import Highlights from './components/highlights/highlights.astro';
 import NowPlaying from './components/now-playing/now-playing.svelte';
 import PortfolioGrid from './components/portfolio/portfolio-grid.astro';
 import TopFold from './components/top-fold/top-fold.astro';
@@ -11,8 +12,12 @@ import type { HomeData } from './types';
 
 type Props = HomeData;
 
-const { portfolio, hasRecentlyPlayedTracks, spotifyNowPlaying } =
-  Astro.props;
+const {
+  portfolio,
+  hasRecentlyPlayedTracks,
+  hasTopTracks,
+  spotifyNowPlaying,
+} = Astro.props;
 
 const { feeds } = portfolio;
 const hasStories =
@@ -25,6 +30,8 @@ const hasStories =
   <TopFold {hasStories} />
 
   <Bio section='main' />
+
+  {hasTopTracks && <Highlights />}
 
   <section class='sm:hidden'>
     <Counts />
