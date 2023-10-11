@@ -125,6 +125,12 @@ button:focus {
   outline: none;
 }
 
+astro-island,
+astro-slot,
+astro-static-slot {
+  display: contents;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
