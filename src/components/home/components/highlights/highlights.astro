@@ -1,0 +1,35 @@
+---
+import Spotify from '@/shared/icons/spotify.svelte';
+
+import Item from './components/item.astro';
+---
+
+<ul>
+  <Item
+    href='/highlights/top-tracks'
+    label='Top Tracks'
+    name='top-tracks'
+  >
+    <Spotify
+      class='text-secondary-bright dark:text-secondary-dim'
+      size='70%'
+      slot='icon'
+    />
+  </Item>
+</ul>
+
+<style>
+  ul {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding: 8px 12px;
+    overflow-x: auto;
+  }
+
+  @media (min-width: 640px) {
+    ul {
+      padding: 0 12px;
+    }
+  }
+</style>

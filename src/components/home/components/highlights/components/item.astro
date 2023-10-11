@@ -1,0 +1,55 @@
+---
+import type { HighlightName } from '@/shared/types/highlights';
+
+import Link from './link.svelte';
+
+interface Props {
+  href: string;
+  label: string;
+  name: HighlightName;
+}
+
+const { href, label, name } = Astro.props;
+---
+
+<li>
+  <div>
+    <Link {href} {label} {name} client:load>
+      <slot slot='icon' name='icon' />
+    </Link>
+  </div>
+  <small>
+    {label}
+  </small>
+</li>
+
+<style>
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  li > div {
+    width: 80px;
+    height: 80px;
+    padding: 2px;
+    border: 2px solid var(--color-secondary-dim);
+    border-radius: 50%;
+  }
+
+  :global(.dark) li > div {
+    border-color: var(--color-secondary-bright);
+  }
+
+  small {
+    font-weight: 600;
+    color: var(--color-primary-dim);
+  }
+
+  :global(.dark) small {
+    color: var(--color-primary-bright);
+  }
+</style>
