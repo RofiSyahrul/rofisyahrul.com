@@ -36,7 +36,6 @@ module.exports = {
   content: ['./app/**/*.{ts,tsx}', './src/**/*.{astro,svelte}'],
   darkMode: 'class',
   plugins: [
-    require('@tailwindcss/line-clamp'),
     require('tailwind-scrollbar'),
     plugin(
       ({
