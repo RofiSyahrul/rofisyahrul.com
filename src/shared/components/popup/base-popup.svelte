@@ -95,7 +95,16 @@
     <span class="visually-hidden">Close</span>
   </button>
 
-  <dialog class={clsx('popup__dialog', className)} open={isShown}>
+  <dialog
+    class={clsx(
+      'popup__dialog',
+      'scrollbar-thin shadow-xl',
+      'scrollbar-thumb-neutral-dim2 scrollbar-track-neutral-bright1',
+      'dark:scrollbar-thumb-neutral-bright2 dark:scrollbar-track-neutral-dim1',
+      className,
+    )}
+    open={isShown}
+  >
     <slot />
   </dialog>
 </div>
@@ -126,8 +135,17 @@
   }
 
   .popup {
-    @apply w-full h-full top-0 right-0 bottom-0 left-0;
-    @apply fixed z-40 flex items-center justify-center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
     animation-duration: 0.2s;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
@@ -151,35 +169,46 @@
   }
 
   .popup__close-btn {
-    @apply absolute top-1 right-1;
-    @apply w-6 h-6 flex items-center justify-center cursor-pointer;
-    @apply text-neutral-bright bg-primary-dim shadow-lg;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--color-neutral-bright);
+    background-color: var(--color-primary-dim);
     border-radius: 50%;
   }
 
   .popup__close-btn:hover {
     filter: brightness(80%);
-    @apply shadow;
   }
 
   :global(.dark) .popup__close-btn {
-    @apply text-neutral-dim bg-primary-bright;
+    color: var(--color-neutral-dim);
+    background-color: var(--color-primary-bright);
   }
 
   .popup__dialog {
-    @apply scrollbar-thin scrollbar-thumb-neutral-dim2 scrollbar-track-neutral-bright1;
-    @apply scrollbar-track-neutral-dim1;
-    @apply relative flex overflow-auto border-none rounded-lg shadow-xl;
-    @apply text-neutral-dim bg-neutral-bright;
+    position: relative;
+    display: flex;
     max-height: var(--popup-max-height);
     max-width: var(--popup-max-width);
     width: 800px;
+    color: var(--color-neutral-dim);
+    background-color: var(--color-neutral-bright);
+    overflow: auto;
+    border: none;
+    border-radius: 8px;
     animation-duration: inherit;
     animation-fill-mode: inherit;
   }
 
   :global(.dark) .popup__dialog {
-    @apply scrollbar-thumb-neutral-bright2 text-neutral-bright bg-neutral-dim;
+    color: var(--color-neutral-bright);
+    background-color: var(--color-neutral-dim);
   }
 
   .popup_enter .popup__dialog {
