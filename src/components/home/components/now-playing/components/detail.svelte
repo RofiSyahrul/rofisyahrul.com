@@ -12,8 +12,8 @@
     <Image
       alt={title}
       src={image.url}
-      height="80px"
-      width="80px"
+      height={image.height}
+      width={image.width}
       class="detail__image"
     />
   {/if}
