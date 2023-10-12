@@ -1,12 +1,16 @@
 import type { ComponentType } from 'svelte';
 
+import {
+  portfolioGridID,
+  portfolioListID,
+} from '@/@home/shared/constants';
+
 import Grid from './icons/grid.svelte';
 import List from './icons/list.svelte';
 
-export const portfolioGridID = 'grid' as const;
-export const portfolioListID = 'list' as const;
+export const TAB_NAMES = [portfolioGridID, portfolioListID] as const;
 
-export type TabName = typeof portfolioGridID | typeof portfolioListID;
+export type TabName = (typeof TAB_NAMES)[number];
 
 interface TabItem {
   icon: ComponentType;

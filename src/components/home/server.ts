@@ -1,6 +1,7 @@
 import { optimizeImage } from '@/shared/lib/image';
 import { getPortfolioFeedsAndTotal } from '@/shared/lib/portfolio';
 import { spotifyAPI } from '@/shared/lib/spotify';
+import { countTechSkills } from '@/shared/lib/tech-skills';
 import type { GetServerData } from '@/shared/types/general';
 
 import type { HomeData } from './types';
@@ -38,6 +39,6 @@ export const getServerDataForHome: GetServerData<HomeData> = async ({
     portfolio: getPortfolioFeedsAndTotal(),
     selectedTab: 'grid',
     spotifyNowPlaying,
-    totalTechSkills: 0,
+    totalTechSkills: countTechSkills(),
   };
 };
