@@ -1,0 +1,23 @@
+---
+import NavHeader from '@/shared/components/header/nav-header.astro';
+
+import List from './components/list.svelte';
+import type { TechSkillsPageProps } from './server';
+
+type Props = TechSkillsPageProps;
+
+const { techSkills } = Astro.props;
+---
+
+<NavHeader title='Technical Skills' />
+
+<main>
+  <List data={techSkills} />
+</main>
+
+<style>
+  main {
+    width: 100%;
+    padding-top: 8px;
+  }
+</style>

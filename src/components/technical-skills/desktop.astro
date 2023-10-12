@@ -1,0 +1,53 @@
+---
+import Home from '@/components/home/home.astro';
+import { getServerDataForHome } from '@/components/home/server';
+import Popup from '@/shared/components/popup/popup.svelte';
+
+import List from './components/list.svelte';
+import type { TechSkillsPageProps } from './server';
+
+type Props = TechSkillsPageProps;
+
+const { techSkills } = Astro.props;
+
+const homeData = await getServerDataForHome(Astro);
+---
+
+<Popup class='tech-skills-popup' client:load>
+  <header class='shadow-lg'>
+    <h4>Technical Skills</h4>
+  </header>
+  <article>
+    <List data={techSkills} />
+  </article>
+</Popup>
+
+<Home {...homeData} />
+
+<style>
+  .tech-skills-popup:global(.popup__dialog) {
+    flex-direction: column;
+    --popup-dialog-width: 500px;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 8px;
+    background-color: inherit;
+    border-radius: 8px 8px 0 0;
+  }
+
+  :global(.dark) header {
+    --tw-shadow-color: var(--color-neutral-dim2);
+    --tw-shadow: var(--tw-shadow-colored);
+  }
+
+  article {
+    width: 100%;
+    padding-top: 8px;
+  }
+</style>
