@@ -1,0 +1,51 @@
+---
+import type { PortfolioFeed } from '@/shared/lib/portfolio/types';
+
+import PortfolioItem from './components/portfolio-item.astro';
+
+interface Props {
+  feeds: PortfolioFeed[];
+}
+
+const { feeds } = Astro.props;
+---
+
+<ul>
+  {
+    feeds.map(feed => {
+      if (!feed.mediaList.length) return null;
+
+      return (
+        <PortfolioItem
+          isInList
+          isMultiple={feed.mediaList.length > 1}
+          repository={feed.repository}
+          slug={feed.slug}
+          thumbnail={feed.mediaList[0]}
+          title={feed.title}
+          url={feed.url}
+        />
+      );
+    })
+  }
+</ul>
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 8px;
+    border-top: 1px solid var(--color-neutral-bright1);
+  }
+
+  :global(.dark) ul {
+    border-top-color: var(--color-neutral-dim1);
+  }
+
+  @media (min-width: 640px) {
+    ul {
+      border: none;
+    }
+  }
+</style>
