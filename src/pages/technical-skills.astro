@@ -1,0 +1,26 @@
+---
+import Document from '@/components/_document.astro';
+import Desktop from '@/components/technical-skills/desktop.astro';
+import Mobile from '@/components/technical-skills/mobile.astro';
+import { getServerData } from '@/components/technical-skills/server';
+
+const { techSkills } = await getServerData(Astro);
+
+const title = 'Technical Skills';
+const keyword = techSkills.map(item => item.name).join(', ');
+
+const description =
+  techSkills.length > 0
+    ? `${techSkills.length} My technical skills. Here we go!`
+    : undefined;
+
+const {
+  userAgent: { isMobile },
+} = Astro.locals;
+
+const TechSkillsPage = isMobile ? Mobile : Desktop;
+---
+
+<Document {description} {keyword} {title}>
+  <TechSkillsPage {techSkills} />
+</Document>

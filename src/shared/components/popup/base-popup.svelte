@@ -196,7 +196,7 @@
     display: flex;
     max-height: var(--popup-max-height);
     max-width: var(--popup-max-width);
-    width: 800px;
+    width: var(--popup-dialog-width, 800px);
     color: var(--color-neutral-dim);
     background-color: var(--color-neutral-bright);
     overflow: auto;
