@@ -116,6 +116,10 @@ const {
     cursor: pointer;
   }
 
+  .portfolio-item_in-list .portfolio-item__link {
+    display: inline;
+  }
+
   .portfolio-item:hover .portfolio-item__link {
     opacity: 50%;
   }
@@ -135,12 +139,12 @@ const {
     color: var(--color-neutral-bright0);
   }
 
-  .portfolio-item > .portfolio-item__title {
+  .portfolio-item_in-list .portfolio-item__title {
     padding: 8px;
     border-top: 1px solid var(--color-neutral-bright1);
   }
 
-  :glbal(.dark) .portfolio-item > .portfolio-item__title {
+  :global(.dark) .portfolio-item_in-list .portfolio-item__title {
     border-top-color: var(--color-neutral-dim1);
   }
 

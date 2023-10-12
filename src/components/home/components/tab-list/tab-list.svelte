@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import type { MouseEventHandler } from 'svelte/elements';
 
+  import { isBrowser } from '@/shared/lib/client/env';
   import { requestIdleCallback } from '@/shared/lib/client/idle-callback';
 
   import type { TabName } from './config';
@@ -11,6 +12,7 @@
 
   const tabNames = tabs.map(tab => tab.name);
   let selectedTab: TabName | undefined = undefined;
+  let shouldScroll = false;
 
   function getHashValue() {
     return window.location.hash.replace(/^#/, '');
@@ -34,14 +36,21 @@
       document.querySelector<HTMLElement>(scrollerSelector);
 
     if (scroller) {
+      const prevScrollY = history.state?.[tabName]?.scrollY;
       window.scrollTo({
-        top: scroller.offsetTop,
+        top: prevScrollY || scroller.offsetTop,
         behavior: 'smooth',
       });
       requestIdleCallback(() => {
+        let scrollerScrollTop = 0;
+        if (prevScrollY) {
+          scrollerScrollTop = prevScrollY - scroller.offsetTop;
+          if (scrollerScrollTop < 0) scrollerScrollTop = 0;
+        }
+
         scroller.scrollTo({
           left: tabPanel.offsetLeft,
-          top: 0,
+          top: scrollerScrollTop,
           behavior: 'smooth',
         });
       });
@@ -64,17 +73,28 @@
     const hashValue = getHashValue();
     if (isValidTabName(hashValue)) {
       selectedTab = hashValue;
-      scrollToTabPanel(hashValue);
+      shouldScroll = true;
     } else {
       selectedTab = 'grid';
+      shouldScroll = false;
     }
   }
 
   const handleTabClick: MouseEventHandler<HTMLAnchorElement> = e => {
+    const currentHashValue = getHashValue();
     if (location.hash === e.currentTarget.hash) return;
+
     e.preventDefault();
-    history.replaceState({ ...history.state, intraPage: true }, '');
-    history.pushState({ scrollX, scrollY }, '', e.currentTarget.href);
+    const state = history.state ?? {};
+    state[currentHashValue] = { scrollX, scrollY };
+
+    history.replaceState({ ...state, intraPage: true }, '');
+    history.pushState(
+      { ...state, scrollX, scrollY },
+      '',
+      e.currentTarget.href,
+    );
+
     updateSelectedTab();
   };
 
@@ -84,6 +104,9 @@
 
   $: if (selectedTab) {
     updateTabPanelsState(selectedTab);
+    if (isBrowser && shouldScroll) {
+      scrollToTabPanel(selectedTab);
+    }
   }
 </script>
 

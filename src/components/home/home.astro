@@ -8,6 +8,7 @@ import Counts from './components/counts.astro';
 import Highlights from './components/highlights/highlights.astro';
 import NowPlaying from './components/now-playing/now-playing.svelte';
 import PortfolioGrid from './components/portfolio/portfolio-grid.astro';
+import PortfolioList from './components/portfolio/portfolio-list.astro';
 import {
   portfolioGridID,
   portfolioListID,
@@ -72,9 +73,7 @@ const hasStories =
             id={portfolioListID}
             role='tabpanel'
           >
-            <div style='width: 100%; height: 100vh;'>
-              Portfolio List
-            </div>
+            <PortfolioList {feeds} />
           </div>
         )
       }
