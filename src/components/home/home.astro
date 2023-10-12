@@ -8,6 +8,11 @@ import Counts from './components/counts.astro';
 import Highlights from './components/highlights/highlights.astro';
 import NowPlaying from './components/now-playing/now-playing.svelte';
 import PortfolioGrid from './components/portfolio/portfolio-grid.astro';
+import {
+  portfolioGridID,
+  portfolioListID,
+} from './components/tab-list/config';
+import TabList from './components/tab-list/tab-list.svelte';
 import TopFold from './components/top-fold/top-fold.astro';
 import type { HomeData } from './types';
 
@@ -19,6 +24,8 @@ const {
   hasTopTracks,
   spotifyNowPlaying,
 } = Astro.props;
+
+const { isMobile } = Astro.locals.userAgent;
 
 const { feeds } = portfolio;
 const hasStories =
@@ -38,7 +45,41 @@ const hasStories =
     <Counts />
   </section>
 
-  <PortfolioGrid {feeds} />
+  {
+    isMobile && (
+      <TabList
+        scrollerSelector='section.feeds-scroller'
+        client:load
+        transition:persist
+      />
+    )
+  }
+
+  <section class='feeds-scroller scrollbar-none'>
+    <div class='feeds'>
+      <div
+        aria-labelledby={'tab-' + portfolioGridID}
+        id={portfolioGridID}
+        role='tabpanel'
+      >
+        <PortfolioGrid {feeds} />
+      </div>
+
+      {
+        isMobile && (
+          <div
+            aria-labelledby={'tab-' + portfolioListID}
+            id={portfolioListID}
+            role='tabpanel'
+          >
+            <div style='width: 100%; height: 100vh;'>
+              Portfolio List
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
 
   <section class='now-playing'>
     <NowPlaying data={spotifyNowPlaying} client:visible>
@@ -64,6 +105,31 @@ const hasStories =
     margin: 0 auto;
   }
 
+  .feeds-scroller {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .feeds {
+    display: flex;
+  }
+
+  .feeds div[role='tabpanel'] {
+    flex: 1 0 100%;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-neutral-bright1);
+    transition: height 250ms ease-in-out;
+  }
+
+  .feeds div[role='tabpanel'][aria-hidden='true'] {
+    height: 0;
+  }
+
+  :global(.dark) .feeds div[role='tabpanel'] {
+    border-bottom-color: var(--color-neutral-dim1);
+  }
+
   .now-playing {
     position: relative;
     display: flex;
@@ -87,6 +153,11 @@ const hasStories =
   }
 
   @media (min-width: 1024px) {
+    .feeds div[role='tabpanel'] {
+      border: none;
+      padding: 0;
+    }
+
     .now-playing {
       position: fixed;
       bottom: 8px;
