@@ -6,11 +6,11 @@
   import { requestIdleCallback } from '@/shared/lib/client/idle-callback';
 
   import type { TabName } from './config';
-  import { tabs } from './config';
+  import { TAB_NAMES, tabs } from './config';
 
   export let scrollerSelector: string | undefined = undefined;
 
-  const tabNames = tabs.map(tab => tab.name);
+  let autoScrollWindow = false;
   let selectedTab: TabName | undefined = undefined;
   let shouldScroll = false;
 
@@ -19,7 +19,7 @@
   }
 
   function isValidTabName(value: string): value is TabName {
-    return tabNames.includes(value);
+    return TAB_NAMES.includes(value as any);
   }
 
   function getTabPanel(tabName: TabName) {
@@ -36,11 +36,18 @@
       document.querySelector<HTMLElement>(scrollerSelector);
 
     if (scroller) {
-      const prevScrollY = history.state?.[tabName]?.scrollY;
-      window.scrollTo({
-        top: prevScrollY || scroller.offsetTop,
-        behavior: 'smooth',
-      });
+      const prevScrollY = autoScrollWindow
+        ? history.state?.[tabName]?.scrollY
+        : 0;
+
+      if (autoScrollWindow) {
+        window.scrollTo({
+          top: prevScrollY || scroller.offsetTop,
+          behavior: 'smooth',
+        });
+        autoScrollWindow = false;
+      }
+
       requestIdleCallback(() => {
         let scrollerScrollTop = 0;
         if (prevScrollY) {
@@ -60,7 +67,7 @@
   }
 
   function updateTabPanelsState(currentTab: TabName) {
-    for (const tabName of tabNames) {
+    for (const tabName of TAB_NAMES) {
       const tabPanel = getTabPanel(tabName);
       tabPanel?.setAttribute(
         'aria-hidden',
@@ -80,6 +87,11 @@
     }
   }
 
+  function handleHashChange() {
+    updateSelectedTab();
+    autoScrollWindow = true;
+  }
+
   const handleTabClick: MouseEventHandler<HTMLAnchorElement> = e => {
     const currentHashValue = getHashValue();
     if (location.hash === e.currentTarget.hash) return;
@@ -96,10 +108,14 @@
     );
 
     updateSelectedTab();
+    autoScrollWindow = true;
   };
 
   onMount(() => {
     updateSelectedTab();
+    return () => {
+      autoScrollWindow = false;
+    };
   });
 
   $: if (selectedTab) {
@@ -110,7 +126,7 @@
   }
 </script>
 
-<svelte:window on:hashchange={updateSelectedTab} />
+<svelte:window on:hashchange={handleHashChange} />
 
 <section role="tablist">
   {#each tabs as tab (tab.name)}

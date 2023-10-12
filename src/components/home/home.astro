@@ -9,12 +9,9 @@ import Highlights from './components/highlights/highlights.astro';
 import NowPlaying from './components/now-playing/now-playing.svelte';
 import PortfolioGrid from './components/portfolio/portfolio-grid.astro';
 import PortfolioList from './components/portfolio/portfolio-list.astro';
-import {
-  portfolioGridID,
-  portfolioListID,
-} from './components/tab-list/config';
 import TabList from './components/tab-list/tab-list.svelte';
 import TopFold from './components/top-fold/top-fold.astro';
+import { portfolioGridID, portfolioListID } from './shared/constants';
 import type { HomeData } from './types';
 
 type Props = HomeData;
@@ -24,11 +21,12 @@ const {
   hasRecentlyPlayedTracks,
   hasTopTracks,
   spotifyNowPlaying,
+  totalTechSkills,
 } = Astro.props;
 
 const { isMobile } = Astro.locals.userAgent;
 
-const { feeds } = portfolio;
+const { feeds, total: totalPortfolio } = portfolio;
 const hasStories =
   hasRecentlyPlayedTracks || !!spotifyNowPlaying?.previewURL;
 ---
@@ -36,15 +34,19 @@ const hasStories =
 <BaseHeader transitionPersist='home-header' />
 
 <main transition:persist>
-  <TopFold {hasStories} />
+  <TopFold {hasStories} {totalPortfolio} {totalTechSkills} />
 
   <Bio section='main' />
 
-  {hasTopTracks && <Highlights />}
+  {
+    hasTopTracks && (
+      <sction>
+        <Highlights />
+      </sction>
+    )
+  }
 
-  <section class='sm:hidden'>
-    <Counts />
-  </section>
+  <Counts section='main' {totalPortfolio} {totalTechSkills} />
 
   {
     isMobile && (
@@ -115,6 +117,9 @@ const hasStories =
   }
 
   .feeds div[role='tabpanel'] {
+    /* --header-height: 48px;
+    position: relative;
+    top: calc(-1 * var(--header-height)); */
     flex: 1 0 100%;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--color-neutral-bright1);

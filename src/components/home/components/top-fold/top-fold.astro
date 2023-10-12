@@ -7,14 +7,17 @@ import Verified from '@/shared/icons/verified.svelte';
 import { cld } from '@/shared/lib/cloudinary';
 
 import Bio from '../bio.astro';
+import Counts from '../counts.astro';
 import AvatarWrapper from './components/avatar-wrapper.svelte';
 import Socials from './components/socials.svelte';
 
 interface Props {
   hasStories: boolean;
+  totalPortfolio: number;
+  totalTechSkills: number;
 }
 
-const { hasStories } = Astro.props;
+const { hasStories, totalPortfolio, totalTechSkills } = Astro.props;
 
 const fullName = 'Syahrul Rofi';
 
@@ -43,6 +46,7 @@ const profileImageURL = profileImage
     </div>
 
     <Socials />
+    <Counts section='top-fold' {totalPortfolio} {totalTechSkills} />
 
     <Bio section='top-fold' />
   </div>

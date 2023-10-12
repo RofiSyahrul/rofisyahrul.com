@@ -1,0 +1,133 @@
+---
+import { portfolioGridID } from '@/@home/shared/constants';
+
+interface Props {
+  section: 'main' | 'top-fold';
+  totalPortfolio: number;
+  totalTechSkills: number;
+}
+
+interface CountItem {
+  href: string;
+  title: string;
+  value: number;
+}
+
+const { section, totalPortfolio, totalTechSkills } = Astro.props;
+
+const countData: CountItem[] = [];
+
+if (totalPortfolio > 0) {
+  countData.push({
+    href: '/#' + portfolioGridID,
+    title: 'Portfolio' + (totalPortfolio > 1 ? 's' : ''),
+    value: totalPortfolio,
+  });
+}
+
+if (totalTechSkills > 0) {
+  countData.push({
+    href: '/technical-skills',
+    title: 'Technical Skill' + (totalTechSkills > 1 ? 's' : ''),
+    value: totalTechSkills,
+  });
+}
+
+const isInTopFold = section === 'top-fold';
+const Container = isInTopFold ? Fragment : 'section';
+---
+
+{
+  countData.length > 0 && (
+    <Container>
+      <ul class:list={{ 'in-top-fold': isInTopFold }}>
+        {countData.map(({ href, title, value }) => (
+          <li>
+            <a data-astro-reload={href.includes('#')} {href}>
+              <strong>{value}</strong>
+              {` ${title}`}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  )
+}
+
+<style>
+  ul {
+    display: flex;
+    border-top: 1px solid var(--color-neutral-bright1);
+    justify-content: space-around;
+    width: 100%;
+    padding: 12px 12px 0;
+  }
+
+  ul.in-top-fold {
+    display: none;
+    gap: 40px;
+    margin-bottom: 12px;
+  }
+
+  :global(.dark) ul {
+    border-top-color: var(--color-neutral-dim1);
+  }
+
+  li {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    column-gap: 4px;
+    align-items: center;
+    color: var(--color-neutral-dim2);
+  }
+
+  :global(.dark) a {
+    color: var(--color-neutral-bright2);
+  }
+
+  strong {
+    color: var(--color-neutral-dim);
+  }
+
+  :global(.dark) strong {
+    color: var(--color-neutral-bright);
+  }
+
+  a:hover strong,
+  a:active strong,
+  a:focus strong {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 640px) {
+    section {
+      display: none;
+    }
+
+    ul {
+      justify-content: flex-start;
+      padding: 0;
+      border: none;
+    }
+
+    ul.in-top-fold {
+      display: flex;
+    }
+
+    li {
+      flex: none;
+      justify-content: start;
+    }
+
+    a {
+      flex-direction: row;
+    }
+  }
+</style>
