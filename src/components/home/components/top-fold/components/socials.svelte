@@ -1,5 +1,4 @@
 <script lang="ts" type="module">
-  import clsx from 'clsx';
   import type { ComponentType } from 'svelte';
 
   import Github from '@/shared/icons/github.svelte';
@@ -46,10 +45,9 @@
   {#each socials as social (social.url)}
     <li>
       <a
-        class={clsx(
-          'btn btn-solid btn-primary',
-          `umami--click--social__${social.name}`,
-        )}
+        class="btn btn-solid btn-primary"
+        data-umami-event="social-link"
+        data-umami-event-name={social.name}
         href={social.url}
         target="_blank"
         rel="noreferrer noopener"

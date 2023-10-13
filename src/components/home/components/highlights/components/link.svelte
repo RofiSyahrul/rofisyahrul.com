@@ -4,17 +4,14 @@
   export let href: string;
   export let label: string;
   export let name: HighlightName;
-
-  function trackSeeHighlight(_name: HighlightName) {
-    // TODO: analytics implementation
-  }
-
-  function handleClick() {
-    trackSeeHighlight(name);
-  }
 </script>
 
-<a {href} title={label} on:click={handleClick}>
+<a
+  {href}
+  data-umami-event="see-highlight"
+  data-umami-event-name={name}
+  title={label}
+>
   <slot name="icon" />
   <span class="visually-hidden">{label}</span>
 </a>

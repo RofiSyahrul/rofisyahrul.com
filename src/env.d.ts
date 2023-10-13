@@ -16,14 +16,21 @@ declare global {
     readonly SPOTIFY_CLIENT_SECRET: string;
     readonly SPOTIFY_REFRESH_TOKEN: string;
     readonly SPOTIFY_VERBOSE_FETCH: boolean;
-    readonly PUBLIC_ANALYTICS_SCRIPT_URL: string;
-    readonly PUBLIC_ANALYTICS_VIEW_URL: string;
-    readonly PUBLIC_ANALYTICS_WEB_ID: string;
+    readonly PUBLIC_ANALYTICS_VIEW_URL: string | undefined;
+    readonly PUBLIC_ANALYTICS_WEB_ID: string | undefined;
     readonly PUBLIC_REPOSITORY_URL: string;
   }
 
   interface ImportMeta {
     readonly env: ImportMetaEnv;
+  }
+
+  interface Umami {
+    track<TData>(eventName: string, eventData?: TData): void;
+  }
+
+  interface Window {
+    umami?: Umami;
   }
 
   interface Array<T> {

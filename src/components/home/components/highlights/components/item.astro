@@ -14,7 +14,7 @@ const { href, label, name } = Astro.props;
 
 <li>
   <div>
-    <Link {href} {label} {name} client:load>
+    <Link {href} {label} {name}>
       <slot slot='icon' name='icon' />
     </Link>
   </div>

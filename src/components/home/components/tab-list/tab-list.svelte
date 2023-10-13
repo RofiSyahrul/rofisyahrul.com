@@ -136,6 +136,8 @@
       aria-label={tab.title}
       aria-selected={isSelected}
       data-astro-reload
+      data-umami-event="feeds-tablist"
+      data-umami-event-name={tab.name}
       id={'tab-' + tab.name}
       role="tab"
       href={tab.href}
