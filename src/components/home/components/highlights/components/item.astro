@@ -1,20 +1,17 @@
 ---
-import type { HighlightName } from '@/shared/types/highlights';
-
 import Link from './link.svelte';
 
 interface Props {
   href: string;
   label: string;
-  name: HighlightName;
 }
 
-const { href, label, name } = Astro.props;
+const { href, label } = Astro.props;
 ---
 
 <li>
   <div>
-    <Link {href} {label} {name}>
+    <Link {href} {label}>
       <slot slot='icon' name='icon' />
     </Link>
   </div>
