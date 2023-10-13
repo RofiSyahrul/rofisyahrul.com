@@ -129,113 +129,113 @@ const portfolioData: PortfolioData = [
       },
     },
   },
-  // {
-  //   id: 3,
-  //   attributes: {
-  //     description:
-  //       "Let's find any GIFs in this web app. If you have searched GIFs there, you can turn off the internet connection and it still can serve you GIF images. **Awesome!!**",
-  //     highlightDescription: 'Simple GIF Finder with offline support',
-  //     initialDate: '2022-05-09',
-  //     repository: 'https://github.com/RofiSyahrul/gif-finder',
-  //     slug: 'gif-finder',
-  //     title: 'GIF Finder',
-  //     url: 'https://gif.rofisyahrul.com/',
-  //     highlightMedia: {
-  //       data: [
-  //         {
-  //           id: 24,
-  //           attributes: {
-  //             alternativeText: 'gif-finder.mp4',
-  //             height: 0,
-  //             mime: 'video/mp4',
-  //             name: 'gif-finder.mp4',
-  //             provider_metadata: {
-  //               public_id:
-  //                 'rofisyahrul.com/assets/gif_finder_184c95ab5e',
-  //               resource_type: 'video',
-  //             },
-  //             width: 0,
-  //           },
-  //         },
-  //       ],
-  //     },
-  //     icon: {
-  //       data: {
-  //         id: 17,
-  //         attributes: {
-  //           alternativeText: 'rho-pi.png',
-  //           height: 437,
-  //           mime: 'image/png',
-  //           name: 'rho-pi.png',
-  //           provider_metadata: {
-  //             public_id: 'rofisyahrul.com/assets/rho_pi_330146001f',
-  //             resource_type: 'image',
-  //           },
-  //           width: 437,
-  //         },
-  //       },
-  //     },
-  //     media: {
-  //       data: [
-  //         {
-  //           id: 20,
-  //           attributes: {
-  //             alternativeText: 'Homepage of GIF Finder',
-  //             height: 1440,
-  //             mime: 'image/png',
-  //             name: 'gif-finder-home.png',
-  //             provider_metadata: {
-  //               public_id:
-  //                 'rofisyahrul.com/assets/gif_finder_home_d2729ba8de',
-  //               resource_type: 'image',
-  //             },
-  //             width: 712,
-  //           },
-  //         },
-  //         {
-  //           id: 21,
-  //           attributes: {
-  //             alternativeText: 'Search Page of GIF Finder',
-  //             height: 1440,
-  //             mime: 'image/png',
-  //             name: 'gif-finder-search.png',
-  //             provider_metadata: {
-  //               public_id:
-  //                 'rofisyahrul.com/assets/gif_finder_search_d680e2fde3',
-  //               resource_type: 'image',
-  //             },
-  //             width: 712,
-  //           },
-  //         },
-  //       ],
-  //     },
-  //     techStacks: {
-  //       data: [
-  //         {
-  //           id: 1,
-  //           attributes: {
-  //             name: 'React.js',
-  //             url: 'https://reactjs.org/',
-  //           },
-  //         },
-  //         {
-  //           id: 2,
-  //           attributes: {
-  //             name: 'Next.js',
-  //             url: 'https://nextjs.org/',
-  //           },
-  //         },
-  //         {
-  //           id: 4,
-  //           attributes: {
-  //             name: 'TypeScript',
-  //             url: 'https://www.typescriptlang.org/',
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   },
-  // },
+  {
+    id: 3,
+    attributes: {
+      description:
+        "Let's find any GIFs in this web app. If you have searched GIFs there, you can turn off the internet connection and it still can serve you GIF images. **Awesome!!**",
+      highlightDescription: 'Simple GIF Finder with offline support',
+      initialDate: '2022-05-09',
+      repository: 'https://github.com/RofiSyahrul/gif-finder',
+      slug: 'gif-finder',
+      title: 'GIF Finder',
+      url: null,
+      highlightMedia: {
+        data: [
+          {
+            id: 24,
+            attributes: {
+              alternativeText: 'gif-finder.mp4',
+              height: 0,
+              mime: 'video/mp4',
+              name: 'gif-finder.mp4',
+              provider_metadata: {
+                public_id:
+                  'rofisyahrul.com/assets/gif_finder_184c95ab5e',
+                resource_type: 'video',
+              },
+              width: 0,
+            },
+          },
+        ],
+      },
+      icon: {
+        data: {
+          id: 17,
+          attributes: {
+            alternativeText: 'rho-pi.png',
+            height: 437,
+            mime: 'image/png',
+            name: 'rho-pi.png',
+            provider_metadata: {
+              public_id: 'rofisyahrul.com/assets/rho_pi_330146001f',
+              resource_type: 'image',
+            },
+            width: 437,
+          },
+        },
+      },
+      media: {
+        data: [
+          {
+            id: 20,
+            attributes: {
+              alternativeText: 'Homepage of GIF Finder',
+              height: 1440,
+              mime: 'image/png',
+              name: 'gif-finder-home.png',
+              provider_metadata: {
+                public_id:
+                  'rofisyahrul.com/assets/gif_finder_home_d2729ba8de',
+                resource_type: 'image',
+              },
+              width: 712,
+            },
+          },
+          {
+            id: 21,
+            attributes: {
+              alternativeText: 'Search Page of GIF Finder',
+              height: 1440,
+              mime: 'image/png',
+              name: 'gif-finder-search.png',
+              provider_metadata: {
+                public_id:
+                  'rofisyahrul.com/assets/gif_finder_search_d680e2fde3',
+                resource_type: 'image',
+              },
+              width: 712,
+            },
+          },
+        ],
+      },
+      techStacks: {
+        data: [
+          {
+            id: 1,
+            attributes: {
+              name: 'React.js',
+              url: 'https://reactjs.org/',
+            },
+          },
+          {
+            id: 2,
+            attributes: {
+              name: 'Next.js',
+              url: 'https://nextjs.org/',
+            },
+          },
+          {
+            id: 4,
+            attributes: {
+              name: 'TypeScript',
+              url: 'https://www.typescriptlang.org/',
+            },
+          },
+        ],
+      },
+    },
+  },
   {
     id: 1,
     attributes: {
