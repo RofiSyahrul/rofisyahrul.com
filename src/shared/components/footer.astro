@@ -18,16 +18,20 @@ const repoURL = import.meta.env.PUBLIC_REPOSITORY_URL;
 >
   <nav>
     <ul class='flex gap-2'>
-      <li>
-        <a
-          href={analyticsViewURL}
-          target='_blank'
-          rel='noreferrer noopener'
-          class='btn btn-text btn-primary umami--click--footer__see-analytics'
-        >
-          Analytics
-        </a>
-      </li>
+      {
+        analyticsViewURL && (
+          <li>
+            <a
+              href={analyticsViewURL}
+              target='_blank'
+              rel='noreferrer noopener'
+              class='btn btn-text btn-primary umami--click--footer__see-analytics'
+            >
+              Analytics
+            </a>
+          </li>
+        )
+      }
 
       <li>
         <a
