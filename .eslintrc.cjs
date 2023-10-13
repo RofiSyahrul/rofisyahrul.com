@@ -128,21 +128,11 @@ module.exports = {
         pathGroups: [
           {
             group: 'external',
-            pattern: '{react,react-dom/**,react-dom}',
-            position: 'before',
-          },
-          {
-            group: 'external',
-            pattern: '{~/**}',
-            position: 'after',
-          },
-          {
-            group: 'external',
             pattern: '{@/**}',
             position: 'after',
           },
         ],
-        pathGroupsExcludedImportTypes: ['react', 'svelte'],
+        pathGroupsExcludedImportTypes: ['svelte'],
       },
     ],
     'import/prefer-default-export': 0,
