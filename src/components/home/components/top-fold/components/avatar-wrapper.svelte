@@ -6,12 +6,7 @@
 </script>
 
 {#if hasStories}
-  <a
-    class={className}
-    data-umami-event="see-my-stories"
-    href="/stories"
-    title="See my stories"
-  >
+  <a class={className} href="/stories" title="See my stories">
     <slot />
     <span class="visually-hidden">See my stories</span>
   </a>

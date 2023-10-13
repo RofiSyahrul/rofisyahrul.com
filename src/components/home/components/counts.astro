@@ -8,7 +8,6 @@ interface Props {
 }
 
 interface CountItem {
-  eventName: 'see-portfolios' | 'see-tech-skills';
   href: string;
   title: string;
   value: number;
@@ -20,7 +19,6 @@ const countData: CountItem[] = [];
 
 if (totalPortfolio > 0) {
   countData.push({
-    eventName: 'see-portfolios',
     href: '/#' + portfolioGridID,
     title: 'Portfolio' + (totalPortfolio > 1 ? 's' : ''),
     value: totalPortfolio,
@@ -29,7 +27,6 @@ if (totalPortfolio > 0) {
 
 if (totalTechSkills > 0) {
   countData.push({
-    eventName: 'see-tech-skills',
     href: '/technical-skills',
     title: 'Technical Skill' + (totalTechSkills > 1 ? 's' : ''),
     value: totalTechSkills,
@@ -44,13 +41,9 @@ const Container = isInTopFold ? Fragment : 'section';
   countData.length > 0 && (
     <Container>
       <ul class:list={{ 'in-top-fold': isInTopFold }}>
-        {countData.map(({ eventName, href, title, value }) => (
+        {countData.map(({ href, title, value }) => (
           <li>
-            <a
-              data-astro-reload={href.includes('#')}
-              data-umami-event={eventName}
-              {href}
-            >
+            <a data-astro-reload={href.includes('#')} {href}>
               <strong>{value}</strong>
               {` ${title}`}
             </a>

@@ -1,17 +1,9 @@
 <script lang="ts">
-  import type { HighlightName } from '@/shared/types/highlights';
-
   export let href: string;
   export let label: string;
-  export let name: HighlightName;
 </script>
 
-<a
-  {href}
-  data-umami-event="see-highlight"
-  data-umami-event-name={name}
-  title={label}
->
+<a {href} title={label}>
   <slot name="icon" />
   <span class="visually-hidden">{label}</span>
 </a>

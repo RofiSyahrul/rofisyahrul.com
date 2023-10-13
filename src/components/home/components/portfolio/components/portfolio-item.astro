@@ -38,13 +38,7 @@ const {
     ['portfolio-item_in-list']: isInList,
   })}
 >
-  <a
-    class='portfolio-item__link'
-    data-umami-event='see-portfolio-detail'
-    data-umami-event-name={title}
-    {title}
-    href={'/p/' + slug}
-  >
+  <a class='portfolio-item__link' {title} href={'/p/' + slug}>
     <Image
       alt={thumbnail.alt}
       loading={shouldEagerImageLoading ? 'eager' : 'lazy'}
