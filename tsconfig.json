@@ -1,36 +1,38 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "allowJs": true,
     "baseUrl": ".",
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "noEmit": true,
     "paths": {
-      "~/*": ["./app/*"],
       "@/@home/*": ["./src/components/home/*"],
       "@/*": ["./src/*"]
     },
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
     "useUnknownInCatchVariables": false,
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true
+    "verbatimModuleSyntax": true
   },
+  "exclude": ["dist", "node_modules"],
   "include": [
     ".eslintrc.cjs",
     ".prettierrc.cjs",
     "astro.config.mjs",
     "postcss.config.cjs",
-    "remix.env.d.ts",
     "svelte.config.js",
     "tailwind.config.cjs",
-    "**/*.ts",
-    "**/*.tsx",
+    "integrations/**/*.ts",
+    "scripts/**/*.ts",
     "src/env.d.ts",
+    "src/**/*.ts",
     "src/**/*.astro",
     "src/**/*.svelte"
   ]
