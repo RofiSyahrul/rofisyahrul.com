@@ -2,10 +2,10 @@
   import {
     ONE_HOUR_IN_MINUTES,
     ONE_SECOND_IN_MS,
+    ONE_MINUTE_IN_SECONDS,
   } from '@/shared/constants/times';
   import Spotify from '@/shared/icons/spotify.svelte';
   import { activeStory } from '@/shared/stores/stories';
-  import { ONE_MINUTE_IN_SECONDS } from '~/constants/times';
 
   function getTimeDiff(timestamp?: string) {
     if (!timestamp) return null;

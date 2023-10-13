@@ -1,9 +1,9 @@
-import type { Options } from 'astro/dist/transitions/router';
-
 import { isBrowser } from './env';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 type AstroTransitonModule = typeof import('astro:transitions/client');
+
+type Options = Parameters<AstroTransitonModule['navigate']>[1];
 
 let astroTransitionsModule: AstroTransitonModule;
 

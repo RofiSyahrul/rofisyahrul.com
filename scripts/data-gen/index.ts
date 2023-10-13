@@ -11,7 +11,8 @@ import { fetchAndGenerateTechStacks } from './_tech-stacks';
       fetchAndGenerateTechStacks(),
       fetchAndGenerateTechSkills(),
     ]);
-  } catch (error) {
+  } catch (error_) {
+    const error = error_ as Error;
     logger.error(`Failed to generate data. Error: ${error.message}`);
   }
 })();

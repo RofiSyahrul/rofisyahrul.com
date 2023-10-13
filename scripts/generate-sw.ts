@@ -14,6 +14,7 @@ async function getCacheVersion(
   try {
     const manifestContent = await fs.readFile(manifestPath, 'utf-8');
     const manifestRaw = manifestContent.match(/\{.*\}/)?.[0] ?? '';
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const version = JSON.parse(manifestRaw)?.version;
     if (version) return `${version}-${timestamp}`;
     return timestamp;
@@ -86,6 +87,7 @@ async function getStaticAssetsAndCacheVersion() {
       outfile: outputFile,
     });
   } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     logger.error(`Failed to generate SW. ERROR: ${error.message}`);
     process.exit(1);
   }
