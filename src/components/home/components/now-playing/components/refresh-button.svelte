@@ -6,6 +6,7 @@
 
 <button
   class="btn btn-text btn-secondary"
+  data-umami-event="refresh-now-playing"
   disabled={isLoading}
   title="Refresh"
   on:click

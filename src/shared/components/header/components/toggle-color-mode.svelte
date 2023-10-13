@@ -24,8 +24,9 @@
 </script>
 
 <button
-  class="btn btn-solid btn-primary
-    umami--click--header__toggle-color-mode"
+  class="btn btn-solid btn-primary"
+  data-umami-event="header"
+  data-umami-event-name="toggle-color-mode"
   {title}
   on:click={toggleColorMode}
 >

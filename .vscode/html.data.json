@@ -1,0 +1,14 @@
+{
+  "version": "1.1",
+  "globalAttributes": [
+    {
+      "name": "data-astro-reload"
+    },
+    {
+      "name": "data-umami-event"
+    },
+    {
+      "name": "data-umami-event-name"
+    }
+  ]
+}

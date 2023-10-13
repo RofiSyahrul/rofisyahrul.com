@@ -51,6 +51,7 @@
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "html.autoClosingTags": true,
+  "html.customData": ["./.vscode/html.data.json"],
   "javascript.updateImportsOnFileMove.enabled": "always",
   "rewrap.autoWrap.enabled": true,
   "rewrap.wrappingColumn": 75,

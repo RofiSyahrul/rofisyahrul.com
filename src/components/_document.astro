@@ -303,7 +303,6 @@ colorModeStore.set(colorMode ?? 'light');
 
     {
       import.meta.env.PROD &&
-        import.meta.env.PUBLIC_ANALYTICS_SCRIPT_URL &&
         import.meta.env.PUBLIC_ANALYTICS_WEB_ID && (
           <script
             async
@@ -313,7 +312,7 @@ colorModeStore.set(colorMode ?? 'light');
             }
             data-website-id={import.meta.env.PUBLIC_ANALYTICS_WEB_ID}
             id='analytics-script'
-            src={import.meta.env.PUBLIC_ANALYTICS_SCRIPT_URL}
+            src='https://analytics.eu.umami.is/script.js'
           />
         )
     }

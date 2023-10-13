@@ -5,7 +5,9 @@
 </script>
 
 <button
-  class="btn btn-text umami--click--header__go-back"
+  class="btn btn-text"
+  data-umami-event="header"
+  data-umami-event-name="go-back"
   {title}
   on:click={goBack}
 >
