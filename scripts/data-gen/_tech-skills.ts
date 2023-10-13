@@ -1,8 +1,7 @@
 import type {
   TechSkillFields,
   TechSkillResponse,
-} from '~/types/response';
-
+} from '@/shared/types/response';
 import logger from 'scripts/logger';
 
 import { dataDirPath, PAGE, PAGE_SIZE, TOP_LINE } from './__config';

@@ -1,11 +1,11 @@
 ---
+import Home from '@/@home/home.astro';
+import { getServerDataForHome } from '@/@home/server';
 import Document from '@/components/_document.astro';
-import HomePage from '@/components/home/home.astro';
-import { getServerDataForHome } from '@/components/home/server';
 
 const data = await getServerDataForHome(Astro);
 ---
 
 <Document>
-  <HomePage {...data} />
+  <Home {...data} />
 </Document>

@@ -1,7 +1,11 @@
-import fetch from '@remix-run/web-fetch';
+import 'whatwg-fetch';
+
 import { stringify } from 'qs';
 
-import type { GeneralResponse, Pagination } from '~/types/response';
+import type {
+  GeneralResponse,
+  Pagination,
+} from '@/shared/types/response';
 
 import { API_URL } from './__config';
 
@@ -93,6 +97,6 @@ export default async function fetcher<
     method: 'GET',
   });
 
-  const data = await response.json();
+  const data: T = await response.json();
   return data;
 }

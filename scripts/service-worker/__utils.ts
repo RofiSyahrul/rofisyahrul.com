@@ -4,7 +4,7 @@ declare const DEBUG: boolean;
 
 export function debug(...messages: any[]) {
   if (DEBUG) {
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console, @typescript-eslint/no-unsafe-argument
     console.debug(...messages);
   }
 }

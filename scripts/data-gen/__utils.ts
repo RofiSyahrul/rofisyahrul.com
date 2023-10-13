@@ -5,7 +5,7 @@ import type {
   MediaItem,
   MultipleMediaResource,
   SingleMediaResource,
-} from '~/types/response';
+} from '@/shared/types/response';
 
 export { default as fs } from 'fs/promises';
 export { path };

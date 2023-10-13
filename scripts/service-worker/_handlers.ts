@@ -58,7 +58,7 @@ async function activate() {
   await worker.clients.claim();
 }
 
-export async function handleActivate(event: ExtendableEvent) {
+export function handleActivate(event: ExtendableEvent) {
   event.waitUntil(activate());
   debug('Service worker activated');
 }
