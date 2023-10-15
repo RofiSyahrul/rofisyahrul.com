@@ -54,6 +54,7 @@ module.exports = {
         '@typescript-eslint/restrict-plus-operands': 0,
         '@typescript-eslint/restrict-template-expressions': 0,
         'import/namespace': 0,
+        'import/no-duplicates': 0,
       },
     },
     {

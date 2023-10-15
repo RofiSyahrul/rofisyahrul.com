@@ -9,6 +9,8 @@ import {
 } from '@/shared/lib/stories';
 import type { GenericStoryItem } from '@/shared/types/stories';
 
+import { requestIdleCallback } from '../lib/client/idle-callback';
+
 interface ActiveStory<T extends GenericStoryItem = GenericStoryItem> {
   canNext: boolean;
   canPrev: boolean;
@@ -48,6 +50,7 @@ const DEFAULT_ACTIVE_STORY: ActiveStory = {
 export const activeStory = writable(DEFAULT_ACTIVE_STORY);
 export const storyProgress = writable<Record<string, number>>({});
 export const isStoryMuted = writable(false);
+export const isWaitingStory = writable(true);
 
 export const handleTimeUpdate: EventHandler<
   Event,
@@ -139,24 +142,30 @@ export function initStoriesStore({
 
   activeStory.set(initialActiveStory);
   storyProgress.set(initialStoryProgress);
+  isWaitingStory.set(false);
 
   function next() {
     const { index, story } = currentActiveStory;
     const newIndex = index + 1;
     if (newIndex >= totalStories) return;
 
-    const prevSlug = story.slug;
-    const newActiveStory = getActiveStory(newIndex);
-    const newSlug = newActiveStory.story.slug;
+    isWaitingStory.set(true);
 
-    storyProgress.set({
-      ...currentStoryProgress,
-      [prevSlug]: 100,
-      [newSlug]: 0,
+    requestIdleCallback(() => {
+      const prevSlug = story.slug;
+      const newActiveStory = getActiveStory(newIndex);
+      const newSlug = newActiveStory.story.slug;
+
+      storyProgress.set({
+        ...currentStoryProgress,
+        [prevSlug]: 100,
+        [newSlug]: 0,
+      });
+
+      activeStory.set(newActiveStory);
+      navigateToNewStory(newSlug);
+      isWaitingStory.set(false);
     });
-
-    activeStory.set(newActiveStory);
-    navigateToNewStory(newSlug);
   }
 
   function prev() {
@@ -164,18 +173,23 @@ export function initStoriesStore({
     const newIndex = index - 1;
     if (newIndex < 0) return;
 
-    const prevSlug = story.slug;
-    const newActiveStory = getActiveStory(newIndex);
-    const newSlug = newActiveStory.story.slug;
+    isWaitingStory.set(true);
 
-    storyProgress.set({
-      ...currentStoryProgress,
-      [prevSlug]: 0,
-      [newSlug]: 0,
+    requestIdleCallback(() => {
+      const prevSlug = story.slug;
+      const newActiveStory = getActiveStory(newIndex);
+      const newSlug = newActiveStory.story.slug;
+
+      storyProgress.set({
+        ...currentStoryProgress,
+        [prevSlug]: 0,
+        [newSlug]: 0,
+      });
+
+      activeStory.set(newActiveStory);
+      navigateToNewStory(newSlug);
+      isWaitingStory.set(false);
     });
-
-    activeStory.set(newActiveStory);
-    navigateToNewStory(newSlug);
   }
 
   function toggleAudio() {
@@ -194,6 +208,7 @@ export function initStoriesStore({
   };
 
   function unsubscribeStores() {
+    isWaitingStory.set(true);
     unsubscribeActiveStory();
     unsubscribeStoryProgress();
     unsubscribeStoryMuted();
@@ -219,6 +234,7 @@ export function initStoriesStore({
   window.addEventListener('popstate', handleStoryClose);
 
   return () => {
+    activeStory.set(DEFAULT_ACTIVE_STORY);
     unsubscribeStores();
     window.removeEventListener('beforeunload', handleStoryClose);
     window.removeEventListener('popstate', handleStoryClose);

@@ -7,6 +7,7 @@
 
   import Audio from './components/audio.svelte';
   import ToggleAudioPlayingButton from './components/toggle-audio-playing-button.svelte';
+  import Transition from './components/transition.svelte';
 
   let audio: Audio;
   let isAudioPlaying: boolean;
@@ -18,36 +19,38 @@
   $: ({ artists, image, previewURL, title, trackURL } = story.detail);
 </script>
 
-{#if image?.url}
-  <img
-    alt={title}
-    loading="eager"
-    src={image.url}
-    height={image.height}
-    width={image.width}
-    {title}
-  />
-{/if}
-
-{#if title}
-  {#if trackURL}
-    <a
-      href={trackURL}
-      target="_blank"
-      class="track-title"
-      rel="noreferrer noopener"
-      title="Play in Spotify"
-    >
+<Transition>
+  {#if image?.url}
+    <img
+      alt={title}
+      loading="eager"
+      src={image.url}
+      height={image.height}
+      width={image.width}
       {title}
-    </a>
-  {:else}
-    <p class="track-title">{title}</p>
+    />
   {/if}
-{/if}
 
-{#if artists?.length}
-  <p class="artists">{artists.join(', ')}</p>
-{/if}
+  {#if title}
+    {#if trackURL}
+      <a
+        href={trackURL}
+        target="_blank"
+        class="track-title"
+        rel="noreferrer noopener"
+        title="Play in Spotify"
+      >
+        {title}
+      </a>
+    {:else}
+      <p class="track-title">{title}</p>
+    {/if}
+  {/if}
+
+  {#if artists?.length}
+    <p class="artists">{artists.join(', ')}</p>
+  {/if}
+</Transition>
 
 <Audio
   bind:this={audio}
