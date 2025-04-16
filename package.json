@@ -59,7 +59,7 @@
     "yargs-parser": "21.0.1"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "license": "ISC",
   "name": "rofisyahrul.com",
